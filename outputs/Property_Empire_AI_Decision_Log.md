@@ -209,3 +209,14 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.8, §3.8, §3.9, §14
 
 **Note (v0.9, 2026-10-10):** the opening net of −$247 in D-008 and D-013 carries the leasing-allocation caveat in P0 spec §12 (about −$400 a month if renewal income is overstated). D-019's scope note on fair housing also applies to the Stable tier in §1.7.
+
+## D-020 — P0 spec v0.9: simplified slice
+
+**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Date:** 2026-10-10  
+**Decision:** The owner chose to simplify the slice to its core rules in answer to the v0.8 Hold. Changes: (1) third-party verification of repair closures is removed from the slice and deferred to P1; completion is company-recorded. (2) City-ordered repairs are not modeled in the slice (P1). (3) Company-initiated non-renewals are removed from the slice. (4) Discretionary cuts and staff hour or layoff cuts are removed from the slice. (5) The brake covers renewals above 3% and the collections push, from RS below 60, released at 62 (a band that prevents flipping at 60). (6) Per-defect funding; the funding step from the reserve is capped at $5,000 per defect, and corporate cash may go below zero at step 3.  
+**Known risk (accepted by the owner's choice, to be confirmed):** critical repairs close on the company's own completion record. The ethics reviewer has flagged this as a resident-safety route. The owner should reverse (1) if verification must stay in the slice.  
+**Reason:** Reviews of v0.2 through v0.8 kept finding new routes in verification, city orders, layoffs, non-renewals, and cuts. Removing those mechanics from the slice removes the routes.  
+**Affected systems:** Repair completion, verification (P1), city orders (P1), non-renewal, cuts and layoffs (P1), brake, funding, criterion 6 closures.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.9, §15
+
