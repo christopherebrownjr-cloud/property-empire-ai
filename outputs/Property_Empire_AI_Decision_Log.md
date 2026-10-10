@@ -175,3 +175,14 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Affected systems:** Safety, reserves, re-letting, rent increases, fair housing, city reputation, bids, outcome tiers, owner sentiment, floor card.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.5, §3.8, §3.9, §11
 
+## D-017 — Critical safety repairs are mandatory; reserve authority widened
+
+**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Date:** 2026-10-10  
+**Decision:** The owner chose, in answer to the v0.5 review, that critical safety repairs are mandatory. The company has no decline option. Repairs up to $5,000 may be funded from the owner's Capital Reserve with owner notice within 24 hours. Above $5,000 the company advances the repair and bills the owner. This widens D-016, which covered only refused repairs, and so it is logged separately. Also chosen: Dismiss is removed from fair-housing complaints; the floor card's Accept option stays with a recurring cost; verified correction must be independent. No locked decision (D-001 to D-007) changed.  
+**Reason:** The ethics re-review of v0.5 returned Hold on the permissive repair wording and the cheapest-path fair-housing option.  
+**Affected systems:** Owner Capital Reserve, critical safety, fair housing, floor card, verification, owner sentiment, costs and payers table (§2.6).  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.6, §3.8, §3.9, §2.6, §12
+
+**Note on D-010 (auditor):** D-010 says every distress level has a non-destructive lever. P0 §3.5 limits that to Levels 0–3; Levels 4 and 5 can force destructive choices. D-010 is not edited, and this entry records the qualification.
+
