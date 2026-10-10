@@ -1,10 +1,10 @@
 # Property Empire AI — P0 Design Locks
 
 **Status:** Proposed — pending owner review and approval (GDD §14: no implementation until P0 locks are approved)
-**Date:** 2026-10-10 (v1.1: revisions recorded as D-013 to D-022)
+**Date:** 2026-10-10 (v1.2: revisions recorded as D-013 to D-023)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
-**Logged as:** D-008 to D-022 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1).
+**Logged as:** D-008 to D-023 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2).
 
 | P0 item (GDD §13) | Section | Decision Log |
 |---|---|---|
@@ -305,7 +305,7 @@ Each community averages one event every six months (λ = 2 per year). Category w
 | Local market softening | 15% | None | Base occupancy −1.5 pts for 3 months | Market trend 1–2 months ahead |
 | Resident dispute (fair-housing complaint) | 10% | Placeholder in the slice; detailed outcomes in P1 (D-019) | Residents and city | Low signal |
 | Vendor failure | 15% | Vendor costs +30% for 2 months | Work-order backlog | Late vendor invoices |
-| Owner request | 10% | Options: approve an in-budget repair (RS up, owner cost); decline and log (no effect). No option defers a critical item or reduces RS | Approve +2 / decline −2 owner sentiment (owner to confirm) | Direct owner contact |
+| Owner request | 10% | Options: approve an in-budget repair (funded from Owner Trust; it clears its named driver, removing that driver's penalty); decline and log (no RS effect). No option defers a critical item or reduces RS | Approve +2 / decline −2 owner sentiment (owner to confirm) | Direct owner contact |
 
 About 60% of events have a warning signal, so the player can prepare or mitigate.
 
@@ -323,7 +323,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 | 1 | Watch | Runway 2–3 months, or one covenant at risk | Runway ≥ 3 months for 2 consecutive months | Cost review prompt; collections push available |
 | 2 | Warning | Runway under 2 months, or any covenant breached | Runway ≥ 2.5 months for 3 consecutive months and covenants passing | Lender notified (lender reputation −5); partner and restructuring options unlock |
 | 3 | Probation | Runway under 1 month; payroll or vendor payment over 30 days late; any Trust Violation | Runway ≥ 2 months for 3 consecutive months | Lender may freeze the line; owner may terminate a contract on 30 days' notice |
-| 4 | Restructuring | Cannot meet payroll after all available levers are used | Runway ≥ 3 months for 6 consecutive months | Forced choices: partner dilution only (contract sale and layoffs are P1). If no option is available, the card states the Level 5 path. |
+| 4 | Restructuring | Cannot meet payroll after all available levers are used | Runway ≥ 3 months for 6 consecutive months | Forced choices: partner dilution (contract sale and layoffs are P1). Payroll deferral and the revolving line remain available as levers. If no option is available, the card states the Level 5 path. |
 | 5 | Insolvency | Level 4 for 90 consecutive days with corporate cash below zero and no lever left | n/a (game over) | Game over |
 
 **Recovery levers.** Levels 0–3 always offer at least one non-destructive lever. At Levels 4 and 5 the restructure and partner options are offered when eligible; if neither is available, the player faces forced choices, and each such card is marked destructive.
@@ -336,7 +336,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 | Draw revolving line | Lender-dependent | Up to the line limit | Immediate | Interest cost; covenant ratio worsens; lender sentiment −3 | $30,000 (Foothill) |
 | Request owner fee advance | Owner sentiment Warm or better | One to two months of that owner's fee | Immediate | Credited back over later months; owner sentiment −3 at request | Once per owner per year |
 | Defer part of payroll (up to 25%) | Any | Cash timing relief | Repaid by next payroll | Morale −10; burnout +5; compliance issue if not repaid | Two months per year |
-| Reduce staff hours or lay off (P1; not in the slice) | Monthly savings | Immediate | Severance; employee reputation −10; city reputation −3 | None |
+| Reduce staff hours or lay off (P1; not in the slice) | Not offered |
 | Sell or transfer a contract (P1; not in the slice) | Not offered | One-time cash; loss of that fee stream | 60–90 days | Owner relationship damage; lender review | One per year |
 | Take partner investment | Level 2 or above; lender reputation 50 or higher | Equity cash | 60–120 days | Equity dilution; shared decision rights | Once |
 | Restructure a loan | Level 2 or above | Covenant reset | 30 days | Restructuring fee; lender sentiment −3 | Once per loan |
@@ -357,8 +357,8 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 ### 3.8 Resident-facing consequences (v0.6)
 
 **Glossary.**
-- *Verified completion:* the vendor completes the critical repair, and one third-party inspector, engaged and paid by the company, signs it off. The inspector may not be the repairing vendor or any owner-affiliated party. Company staff cannot sign off. Panel, rotation, and sampling audit rules are P1 (D-021).
-- *Closed work order:* verified completion. Closure counts for the §3.4 readiness checklist, the §3.2 RS driver, and the §3.2 sentiment gate.
+- *Verified completion (critical items):* the vendor completes the repair, and one third-party inspector, engaged and paid by the company, signs it off. The inspector may not be the repairing vendor or any company-affiliated or owner-affiliated firm. Company staff cannot sign off. The inspector's fee is paid inside the repair's funding step, ahead of discretionary spend. A rejected sign-off leaves the order open and is recorded on the compliance record; the 14-day clock runs from the original open date. A rejected inspector may not be re-engaged on that order, and every engagement is logged. Sign-off confirms the defect is resolved and any required test passed; a reopen within 90 days needs a new sign-off. Panel, rotation, and sampling audit are P1 (D-021).
+- *Closed work order:* for critical items, verified completion. For non-critical items, vendor completion confirmed by the simulation. Only critical closures count for the §3.4 readiness checklist and the §3.2 sentiment gate; both classes clear the §3.2 RS driver. Floor-card drivers count as cleared under these same rules (D-023).
 - *Critical safety work order (approved list):* one with a defect on this list: no heat, no water, gas leak, electrical hazard, lock or door-security failure, sewage backup, pest infestation, or fire-safety defect.
 - *Adverse action (P1):* a filing (eviction or non-renewal notice), a rent increase above 3%, or a service reduction, issued to a complainant.
 - *Accepted reason code (P1):* a reason is accepted only if a matching simulation record exists and predates the complaint: ledger delinquency (nonpayment), a lease-violation record, an owner sale event, or a dated unit-condition record unrelated to the complaint. Otherwise the action is confirmed retaliation. The code list is an owner-verification item.
@@ -366,12 +366,13 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - *Displacement:* the household vacated by an avoidable move-out.
 - *Deferred maintenance:* any open work order past 14 days, or any deferred critical item.
 - *Resident-reported:* logged through the resident intake channel, which the company cannot decline.
+- *Renewal:* any in-place rent change, including month-to-month conversions.
 - *Above market:* asking rent above the community's market comp (§3.2).
 - *Open compliance record:* open until its matter is closed by verified completion (city clearance is P1; D-021).
 
 **Life-safety repairs (decision D-017).**
 - A critical safety work order must be repaired. The company has no option to decline or defer one. An owner cannot order deferral.
-- A defect is one cause at one unit or system, with one work order (not one invoice). Reserve draws per community are capped at $5,000 per 30 days in total. Each draw is listed in the owner notice within 24 hours.
+- A defect is one cause at one unit or system, with one work order (not one invoice). Defect IDs are assigned by the simulation; the player cannot split or merge them. Reserve draws per community are capped at $5,000 in any rolling 30 days. Each draw is listed in the owner notice within 24 hours. The −5 sentiment trigger applies once per defect.
 - Funding order: (1) the Capital Reserve, within a cap of $5,000 per community per 30 days; (2) the company's revolving line, if available; (3) corporate cash, advanced and billed to the owner. Step 3 may take corporate cash below zero, and Level 5 rules then apply. The repair proceeds in every case. Where steps 1 and 2 are unavailable, the vendor is paid from corporate cash. A shortfall registers as a distress event (§3.5), not a deferral.
 - Step 1 covers the remaining 30-day reserve cap, up to $5,000 per community per 30 days. Steps 2 and 3 fund the rest, and the company bills the owner. Owner sentiment drops 5 once when a defect's company-funded amount exceeds $5,000, or when a reserve draw above the 30-day cap is company-funded (owner to confirm).
 - The lender covenant does not excuse a repair. Finance-designer models any covenant effect.
@@ -383,7 +384,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - **Notice:** 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10%. The 90-day branch is reachable only if the verified cap structure allows it; it stays as a placeholder.
 - **Resident cost:** each renewal above 3% costs 0.5 RS per percentage point above 3, scaled to 100 units. Monthly, this is summed across that month's renewals. Example: a sustained 6% increase on all renewals in a 64-unit community costs about 12.5 RS per month.
 - **Market check:** each renewal priced above market costs 0.5 RS, scaled to 100 units, and adds the P_gap penalty (§3.2).
-- Renewal increases above 3% and above-market renewals are unavailable in any community whose §3.9 brake is active or whose floor card is open.
+- Renewal increases above 3%, above-market renewals, and above-market new-lease asks are unavailable in any community whose §3.9 brake is active or whose floor card is open.
 
 **Re-letting and avoidable turnover.**
 - For 12 months after any avoidable move-out, the unit may be re-let at no more than the prior rent plus the cap. The company earns no new-lease fee on it.
@@ -391,17 +392,17 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - Turn cost: $1,200–$2,500 from Owner Trust and about 25 days' vacancy. The loss is the owner's.
 - **Resident-initiated move-outs** (RS 50 or higher) occur at 0.01 + 0.002 × max(0, 50 − RS) per unit per month, capped at 5%. Move-outs below RS 50 count as avoidable.
 
-**Cost cutting (P1; not in the slice).** 
+
 
 **Fair housing (slice placeholder; detailed rules in P1, D-019).**
-- A complaint opens a placeholder card with one response: Investigate (about $1,500, company-funded, 30 days). The complaint closes when the investigation ends.
+- A complaint opens a placeholder card with one response: Investigate (about $1,500, company-funded, 30 days). The card shows 'outcome not modeled in this build' and never displays as resolved.
 - The slice does not model adverse findings, correction funding, retaliation, or community flags. The design must not present the slice as complete for fair housing. These rules are P1 work and need legal review first (§10).
 
 **Other consequences.**
 - Failed inspection: 3 RS. A failed inspection with a life-safety finding also opens a critical order. Missed inspection: 1 RS that month, city reputation −10, and a compliance record.
 - A deposit or owner-trust Trust Violation costs 5 RS one-time. Termination costs 2 RS one-time (transfer is P1).
 - **Owner sentiment tiers:** score 0–100. Hostile below 30; Cool 30–49; Neutral 50–69; Warm 70–84; Strong 85 and above. The update rule is in §3.2.
-- **Owner request (§3.4):** a resident-protective option is one that defers no critical item and reduces no RS.
+- **Owner request (§3.4):** a resident-protective option is one that defers no critical item and reduces no RS. Critical items are excluded from owner requests entirely.
 - **Screening** is not in the slice. Any future screening option requires uniform criteria and ethics review.
 
 ### 3.9 Resident satisfaction floor (v0.6)
@@ -412,7 +413,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
   - *Fund targeted repairs* of the named drivers: $2,000–$5,000 from Owner Trust, with a 30-day lag. RS +1 per month for three months once the drivers clear.
   - *Add a service investment tier* for this community: $1,500 per month, +5 ServiceScore (§3.5).
 - The card closes at the first month-end with RS of 62 or higher, aligned with the brake release (D-021).
-- **Brake (D-019, amended in D-021):** from any month-end RS below 60, until RS is 62 or higher, the company may not raise renewals above 3%, raise any renewal priced above market, or run the collections push in that community.
+- **Brake (D-019, amended in D-021, D-023):** from any month-end RS below 60, until RS is 62 or higher, the company may not raise any renewal above 3%, set any renewal or new-lease ask above market, or run the collections push in that community. Release at 62 generally needs investment, since the drift returns RS toward 60 only when ServiceScore is 60 (§3.2).
 
 ---
 
@@ -659,3 +660,11 @@ Owner decision (D-020): the slice keeps the core rules. Removed from the slice: 
 The leasing-fee reconciliation is closed. The new-lease fee is unit-weighted ($345 across six leases), and renewal fees apply only where the contract has them (Pine Hollow excluded by unit share). Opening revenue is $15,435, the opening net is −$402/month, the post-hire net is about −$4,875/month, and runway after the first hire is about 9.8 months. Founder-as-distribution gives +$3,598/month. All figures in the spec use these numbers. Historical log entries (D-008, D-013) keep the earlier −$247 and are superseded by D-022.
 
 **Still open:** the renewal-volume reconciliation (the §3.8 example assumes about 5.3 renewals a month at Alder; §1.4 books 4 across the portfolio); owner and lender reputation rules; the reserve-shortfall path; the legal items in §10; the placeholder-name check (CLAUDE.md rule 5); the final ethics review and auditor recheck of v1.1.
+
+## 18. v1.2 changes (owner choices on the v1.0 Hold)
+
+Owner decisions (D-023): non-critical closures are vendor-recorded and confirmed by the simulation, and they do not count for the readiness checklist or the sentiment gate; the brake extends to above-market new-lease asks; the verifier-structure risk in D-021 is accepted as a documented owner override.
+
+Applied from the review: a rejected sign-off leaves the order open, with no re-engagement of the same inspector on that order and all engagements logged; independence excludes company-affiliated firms; the inspector's fee is paid inside the repair's funding step; defect IDs come from the simulation with a rolling 30-day cap; the owner-request approve option has a stated driver effect; critical items are excluded from owner requests; the complaint placeholder never shows as resolved; the Level 4 card lists the levers that remain; the brake's exit mechanics are explained.
+
+**Still open:** the renewal-volume reconciliation (§3.8 example vs §1.4); owner and lender reputation rules; the reserve-shortfall path; the legal items in §10; the placeholder-name check (CLAUDE.md rule 5); the final ethics review and auditor recheck of v1.2.

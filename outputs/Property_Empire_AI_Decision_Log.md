@@ -239,3 +239,13 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Affected systems:** Opening P&L (§1.4), runway and the hire scenario, the founder-draw treatment, and any balance tests that use the opening cash position.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.1, §1.4 and §17
 
+## D-023 — P0 spec v1.2: owner decisions on the v1.0 Hold
+
+**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Date:** 2026-10-10  
+**Decision:** Owner decisions: (1) non-critical work-order closures are vendor-recorded and confirmed by the simulation. They do not count for the readiness checklist or the owner-sentiment gate, and they clear the RS driver. Floor-card drivers count as cleared under the same rules. (2) The brake covers above-market new-lease asks as well as renewals, from RS below 60, until RS is 62 or higher. (3) The verifier-structure risk in D-021 is accepted as a documented owner override. Applied from the review in v1.2: rejected sign-offs leave the order open, a rejected inspector may not be re-engaged on that order, company-affiliated firms are excluded, the inspector fee is paid inside the repair's funding step, defect IDs are assigned by the simulation, the reserve cap is rolling 30 days, critical items are excluded from owner requests, and the complaint placeholder never shows as resolved.  
+**Residual risk (owner override):** the company engages and pays the critical-repair inspector. This structural conflict is mitigated only by P1 panel and rotation. It is accepted for the slice.  
+**Reason:** The ethics review of v1.0 returned Hold on non-critical closures as a company-recorded route, the brake gap on new-lease asks, and verification detail.  
+**Affected systems:** Closures, readiness checklist, sentiment gate, brake, owner requests, verification, reserve cap, complaint placeholder.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.2, §18
+
