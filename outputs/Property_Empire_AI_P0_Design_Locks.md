@@ -1,10 +1,10 @@
 # Property Empire AI — P0 Design Locks
 
 **Status:** Proposed — pending owner review and approval (GDD §14: no implementation until P0 locks are approved)
-**Date:** 2026-10-10 (v1.0: revisions recorded as D-013 to D-021)
+**Date:** 2026-10-10 (v1.1: revisions recorded as D-013 to D-022)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
-**Logged as:** D-008 to D-021 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0).
+**Logged as:** D-008 to D-022 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1).
 
 | P0 item (GDD §13) | Section | Decision Log |
 |---|---|---|
@@ -54,8 +54,8 @@ Opening staff have Morale 100 and SkillFit 1.0. The utilization figures in §4.4
 | Line | Amount |
 |---|---|
 | Management fees, collected (three communities) | $12,890 |
-| Leasing and renewal fees (≈ 6 new leases at $350, 4 renewals at $150) | $2,700 |
-| **Total corporate revenue** | **$15,590** |
+| Leasing and renewal fees (unit-weighted new-lease fee $345 × 6; renewal $150 × 4, excluding Pine Hollow's unit share, which has no renewal fee) | $2,545 |
+| **Total corporate revenue** | **$15,435** |
 | Founder draw | $4,000 |
 | Leasing & Resident Coordinator | $5,287 |
 | Bookkeeping | $1,200 |
@@ -66,11 +66,11 @@ Opening staff have Morale 100 and SkillFit 1.0. The utilization figures in §4.4
 | Legal and professional reserve | $400 |
 | Miscellaneous | $400 |
 | **Total corporate expenses** | **$15,837** |
-| **Net corporate operating result** | **−$247** |
+| **Net corporate operating result** | **−$402** |
 
 **Opening cash:** $48,000 corporate operating cash. Undrawn $30,000 revolving line (Foothill Harbor Bank).
 
-**Realism check:** The business is cash-negative from opening, at about −$247/month once the 3.5% collection loss is applied. Adding one $44,000 assistant ($44,000 ÷ 12 × 1.22 = $4,473.33/month) moves the result to about −$4,720/month, which leaves about 10 months of runway at $48,000. Every hire is a visible tradeoff. The leasing-fee allocation (§12) may lower the opening net to about −$400 a month; the −$247 figure carries that caveat. The founder draw is treated as an operating expense (conservative); treating it as a distribution would move the opening result to about +$3,753/month.
+**Realism check:** The business is cash-negative from opening, at about −$402/month once the 3.5% collection loss is applied. Adding one $44,000 assistant ($44,000 ÷ 12 × 1.22 = $4,473.33/month) moves the result to about −$4,875/month, which leaves about 10 months of runway at $48,000. Every hire is a visible tradeoff. The leasing-fee allocation is reconciled in v1.1 (§12). The founder draw is treated as an operating expense (conservative); treating it as a distribution would move the opening result to about +$3,598/month.
 
 ### 1.5 Opening contracts and pipeline
 
@@ -524,7 +524,7 @@ Once these are approved, the Decision Log entries move from **Proposed** to **Ap
 ## 7. v0.2 choices (owner delegated: "You choose")
 
 1. **L-02 removed from the slice** and deferred to P2. Criterion 5 uses L-01 or a new lead.
-2. **Collection loss applied** at 3.5% delinquency. Opening net is about −$247/month, and the business is cash-negative from opening.
+2. **Collection loss applied** at 3.5% delinquency. Opening net is about −$402/month, and the business is cash-negative from opening.
 3. **Founder draw kept as an operating expense** (conservative). Treating it as a distribution is a one-line change if you prefer it.
 4. **Pine Hollow trigger kept** at two consecutive months below 90%; criterion 4 changed to match.
 5. **Criterion 3 counted per owner**, not portfolio-wide.
@@ -616,7 +616,7 @@ Fixes: the RS formula now includes the displacement, missed-inspection, and floo
 - Bid table has no resident-outcome modifier. Consider one for portfolio RS below 55 or open compliance records.
 - Legal items in §10 remain unverified and parked by the owner.
 - Owner and lender reputation (§2.4) have no update rules in §3.2 yet.
-- Leasing fee allocation (§12): §1.4 uses a blended $350 new-lease fee and a $150 renewal fee across all four renewals. Unit-weighted, the new-lease figure is about $345 (not $350), and Pine Hollow has no renewal fee, so renewal income is overstated by about $127 a month. Net would be about −$400 a month, not −$247. Reconcile before approval.
+- Leasing fee allocation: reconciled in v1.1 (§12). Unit-weighted new-lease fee $345; renewal fees only where the contract has them. Opening net −$402/month.
 - Renewal volume: the 12.5-RS-per-month figure assumes about 5.3 renewals a month at Alder, while §1.4 books 4 a month across all 132 units. Reconcile.
 - Readiness checklist: the halving applies only when every work order at the community is closed, which is stricter than the failure-chance count (non-critical orders past 14 days).
 - Ethics re-review and auditor recheck of v0.6 before approval.
@@ -653,3 +653,9 @@ Owner decision (D-020): the slice keeps the core rules. Removed from the slice: 
 - **Owner requests:** options listed in §3.4, with the sentiment direction. No option defers a critical item or reduces RS.
 
 **Still open:** the leasing and renewal-volume reconciliation (§12); owner and lender reputation rules; the reserve-shortfall path; the legal items in §10; the placeholder-name check (CLAUDE.md rule 5); the final ethics review and auditor recheck.
+
+## 17. v1.1 changes (owner choice: reconciled baseline)
+
+The leasing-fee reconciliation is closed. The new-lease fee is unit-weighted ($345 across six leases), and renewal fees apply only where the contract has them (Pine Hollow excluded by unit share). Opening revenue is $15,435, the opening net is −$402/month, the post-hire net is about −$4,875/month, and runway after the first hire is about 9.8 months. Founder-as-distribution gives +$3,598/month. All figures in the spec use these numbers. Historical log entries (D-008, D-013) keep the earlier −$247 and are superseded by D-022.
+
+**Still open:** the renewal-volume reconciliation (the §3.8 example assumes about 5.3 renewals a month at Alder; §1.4 books 4 across the portfolio); owner and lender reputation rules; the reserve-shortfall path; the legal items in §10; the placeholder-name check (CLAUDE.md rule 5); the final ethics review and auditor recheck of v1.1.

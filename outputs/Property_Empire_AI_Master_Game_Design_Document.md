@@ -185,7 +185,7 @@ Avoid false precision, instant scaling, costless hiring, unlimited debt, magical
 
 ### P0 — Required design locks
 
-**Status (2026-10-10):** Proposed in `Property_Empire_AI_P0_Design_Locks.md` (v1.0) as D-008 to D-021 in the Decision Log. Awaiting owner approval before implementation.
+**Status (2026-10-10):** Proposed in `Property_Empire_AI_P0_Design_Locks.md` (v1.1) as D-008 to D-022 in the Decision Log. Awaiting owner approval before implementation.
 
 1. Define the first specialization’s exact opening portfolio, staff, contracts, and twelve-month success criteria.
 2. Write the accounting model separating corporate operations from client/property funds.

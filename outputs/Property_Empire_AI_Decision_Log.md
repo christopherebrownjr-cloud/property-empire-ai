@@ -230,3 +230,12 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Affected systems:** Critical repairs, criterion 6, compliance records, costs and payers (§2.6), Level 4, brake, floor card, reserve, owner requests.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.0, §16
 
+## D-022 — P0 opening P&L baseline reconciled (v1.1)
+
+**Status:** Proposed — pending ethics review, auditor recheck, and owner approval  
+**Date:** 2026-10-10  
+**Decision:** The owner chose the reconciled baseline for the opening P&L. The new-lease fee is unit-weighted across the three contracts ($345 across six leases). Renewal fees ($150 × 4) apply only where the contract has them, which excludes Pine Hollow's unit share. Opening revenue is $15,435; the opening net is −$402/month; the post-hire net is about −$4,875/month; runway after the first hire is about 9.8 months; founder-as-distribution is +$3,598/month. These figures supersede the −$247 headline in D-008 and D-013, which are not edited.  
+**Reason:** The §12 reconciliation found that the blended fees overstated renewal income by about $127 a month. The owner chose to use the contract-accurate figures rather than keep the overstated headline.  
+**Affected systems:** Opening P&L (§1.4), runway and the hire scenario, the founder-draw treatment, and any balance tests that use the opening cash position.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.1, §1.4 and §17
+
