@@ -186,3 +186,13 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 **Note on D-010 (auditor):** D-010 says every distress level has a non-destructive lever. P0 §3.5 limits that to Levels 0–3; Levels 4 and 5 can force destructive choices. D-010 is not edited, and this entry records the qualification.
 
+## D-018 — P0 spec v0.7: owner decisions on the v0.6 Hold; re-letting scope
+
+**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Date:** 2026-10-10  
+**Decision:** Owner decisions on the v0.6 ethics Hold: (1) fair-housing complaints get Investigate only; Settle is removed; (2) verification of repairs and corrections is by a third-party inspector engaged and paid by the company, never the repairing vendor or an owner-affiliated party; (3) the floor card's Accept option is removed; (4) the default critical safety list is approved (§3.8 glossary). Recorded here for the first time, since they are owner decisions:  
+- **Re-letting scope (unlogged change, flagged for owner confirmation):** D-016 limited the re-letting cap to company non-renewal with a reason code. Spec v0.5 onward applies the cap and the no-fee rule to all avoidable move-outs for 12 months, which includes above-market renewals, increases above 3%, and move-outs in months when RS is below 50. The widened scope is what the spec currently says. The owner should confirm it or narrow it back to D-016.  
+**Reason:** The ethics re-review of v0.6 returned Hold on Settle as the cheapest route, unverified closures, retaliation loopholes, and the freeze bypass through non-renewal.  
+**Affected systems:** Fair housing, verification, floor card, critical safety list, re-letting, avoidable turnover.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.7, §3.8, §3.9, §13
+
