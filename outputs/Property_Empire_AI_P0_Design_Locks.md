@@ -68,7 +68,7 @@ Fee calculations: Alder 6.0% × ($1,780 × 64 × 0.93); Riverbend 5.5% × ($1,95
 
 **Opening cash:** $48,000 corporate operating cash. Undrawn $30,000 revolving line (Foothill Harbor Bank).
 
-**Realism check:** The business is barely cash-positive. Adding one $44,000 assistant ($3,667 × 1.22 = $4,473/month) moves the result to about −$4,277/month, which leaves about 11 months of runway at $48,000. Every hire is a visible tradeoff.
+**Realism check:** The business is barely cash-positive. Adding one $44,000 assistant ($3,667 × 1.22 = $4,473/month) moves the result to about −$4,309/month, which leaves about 11 months of runway at $48,000. Every hire is a visible tradeoff.
 
 ### 1.5 Opening contracts and pipeline
 
