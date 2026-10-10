@@ -648,7 +648,7 @@ Owner decision (D-020): the slice keeps the core rules. Removed from the slice: 
 
 ## 16. v1.0 changes (owner choices: verification in the slice; approval after the final review)
 
-- **Verification restored (D-021):** each critical repair needs sign-off by one third-party inspector, engaged and paid by the company, not the vendor and not owner-affiliated. Panel, rotation, and sampling audit are P1. Cost is $350 per critical repair (placeholder). This withdraws the company-recorded-completion risk in §15.
+- **Verification restored (D-021):** each critical repair needs sign-off by one third-party inspector, engaged and paid by the company, not the vendor and not owner-affiliated. Panel, rotation, and sampling audit are P1. Cost was $350 per critical repair (placeholder); superseded by §2.6 (per engagement). This withdraws the company-recorded-completion risk in §15.
 - **Level 3 and 4:** contract sale and layoffs are not offered in the slice. Level 4 offers partner dilution only, and the card states the Level 5 path if none is available.
 - **Cut mechanics:** the restore and cut-card text is removed from §3.2 and §3.8. The lever rows stay labelled not in the slice.
 - **Brake (D-021):** above-market renewals are added. Release and card closure are both at RS 62, so the two cannot disagree.
