@@ -4,7 +4,7 @@
 **Date:** 2026-10-10 (v0.9: revisions recorded as D-013 to D-020)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
-**Logged as:** D-008 to D-019 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9).
+**Logged as:** D-008 to D-020 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9).
 
 | P0 item (GDD §13) | Section | Decision Log |
 |---|---|---|
@@ -194,8 +194,8 @@ Corporate money and client money are kept in separate ledgers. The company may n
 | Turn cost after a move-out | $1,200–$2,500 plus about 25 days' vacancy | Owner | Owner Trust (vacancy lowers the fee base) |
 | New-lease fee not earned after an avoidable move-out | $350 (blended) | Company | Lost corporate revenue |
 | Fair-housing investigation | About $1,500 | Company | Corporate Operating |
-| Critical repair up to $5,000 | Per repair | Owner | Owner Capital Reserve |
-| Critical repair above $5,000 | Per repair | Company advances; billed to owner | Receivable from owner |
+| Critical repair up to $5,000 | Per defect | Owner | Owner Capital Reserve |
+| Critical repair above $5,000 | Per defect | Company funds the amount above the reserve's $5,000 step; billed to owner | Receivable from owner |
 | Targeted floor repair | $2,000–$5,000 | Owner | Owner Trust |
 | Service investment tier | $1,500 per month per tier | Company | Corporate Operating |
 | Inspection-readiness checklist | $300 per month per community | Company | Corporate Operating |
@@ -244,7 +244,7 @@ The first two terms are the service driver and drift back toward 60. Renewals at
 
 **Resident-initiated move-outs (v0.6).** Each unit's monthly move-out probability is 0.01 + 0.002 × max(0, 50 − RS), capped at 5%. Each move-out vacates the unit for about 25 days, which lowers occupancy (§3.8). Avoidable move-outs also carry the re-letting cap, the no-fee rule, and the displacement RS term. The renewal increase cap and notice periods are in §3.8.
 
-**Owner sentiment update (v0.6).** Sentiment(t+1) = clamp(0, 100, S(t) + 1 × [RS ≥ 60, no deferred maintenance, no open critical item] − 2 × [avoidable move-out this month] − 2 × [floor card open] − 5 × [floor trigger this month] − 5 × [critical repair advanced above $5,000 this month]). Tiers are in §3.8.
+**Owner sentiment update (v0.6).** Sentiment(t+1) = clamp(0, 100, S(t) + 1 × [RS ≥ 60, no deferred maintenance, no open critical item] − 2 × [avoidable move-out this month] − 2 × [floor card open] − 5 × [floor trigger this month] − 5 × [defect with company-funded amount above $5,000 this month]). Tiers are in §3.8.
 
 **City reputation update (v0.6).** CityRep(t+1) = clamp(0, 100, CR(t) + 0.5 × (60 − CR(t)) − 10 × [missed inspection this month] − 2 × open compliance records). Opening value 60. Three or more open compliance records open a lender review; the covenant effect is for finance-designer to define (§1.6). Below 40, bids lose 0.05 win probability (bid table).
 
@@ -323,7 +323,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 | 1 | Watch | Runway 2–3 months, or one covenant at risk | Runway ≥ 3 months for 2 consecutive months | Cost review prompt; collections push available |
 | 2 | Warning | Runway under 2 months, or any covenant breached | Runway ≥ 2.5 months for 3 consecutive months and covenants passing | Lender notified (lender reputation −5); partner and restructuring options unlock |
 | 3 | Probation | Runway under 1 month; payroll or vendor payment over 30 days late; any Trust Violation | Runway ≥ 2 months for 3 consecutive months | Lender may freeze the line; owner may terminate a contract on 30 days' notice |
-| 4 | Restructuring | Cannot meet payroll after all available levers are used | Runway ≥ 3 months for 6 consecutive months | Forced choices: layoffs, contract sale, partner dilution |
+| 4 | Restructuring | Cannot meet payroll after all available levers are used | Runway ≥ 3 months for 6 consecutive months | Forced choices: contract sale, partner dilution (layoffs are P1) |
 | 5 | Insolvency | Level 4 for 90 consecutive days with corporate cash below zero and no lever left | n/a (game over) | Game over |
 
 **Recovery levers.** Levels 0–3 always offer at least one non-destructive lever. At Levels 4 and 5 the restructure and partner options are offered when eligible; if neither is available, the player faces forced choices, and each such card is marked destructive.
@@ -373,17 +373,17 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - A critical safety work order must be repaired. The company has no option to decline or defer one. An owner cannot order deferral.
 - At or below $5,000 per defect, the owner's Capital Reserve may fund the repair, with owner notice within 24 hours. Per defect, not per invoice, so a repair cannot be split to avoid the threshold.
 - Funding order: (1) the Capital Reserve, up to $5,000 per defect; (2) the company's revolving line, if available; (3) corporate cash, advanced and billed to the owner. Step 3 may take corporate cash below zero, and Level 5 rules then apply. The repair proceeds in every case. A shortfall registers as a distress event (§3.5), not a deferral.
-- Above $5,000, the company advances the repair, bills the owner, and owner sentiment drops 5 once.
+- Above $5,000 per defect, the reserve covers $5,000 (step 1) and the company funds the rest (steps 2–3) and bills the owner. Owner sentiment drops 5 once when a defect's company-funded amount exceeds $5,000 (owner to confirm this trigger).
 - The lender covenant does not excuse a repair. Finance-designer models any covenant effect.
 - Until repair completion is recorded, the order stays open. Once open more than 14 days, it costs 5 RS per month per order (§3.2), plus a compliance record.
 - A reopen within 90 days re-applies the penalty from the original open date.
 
 **Rent increases.**
-- **Cap:** cumulative increases over any 12 months may not exceed 5% plus the local CPI change, capped at 10% (AB 1482; §10). The CPI input is owner-verified. Scope (per unit or per community) is an owner-verification item; the spec assumes per unit. An increase that would exceed the cap is unavailable.
+- **Cap:** cumulative increases over any 12 months may not exceed 5% plus the local CPI change, capped at 10% (unverified; AB 1482, see §10). The CPI input is owner-verified. Scope (per unit or per community) is an owner-verification item; the spec assumes per unit. An increase that would exceed the cap is unavailable.
 - **Notice:** 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10%. The 90-day branch is reachable only if the verified cap structure allows it; it stays as a placeholder.
 - **Resident cost:** each renewal above 3% costs 0.5 RS per percentage point above 3, scaled to 100 units. Monthly, this is summed across that month's renewals. Example: a sustained 6% increase on all renewals in a 64-unit community costs about 12.5 RS per month.
 - **Market check:** each renewal priced above market costs 0.5 RS, scaled to 100 units, and adds the P_gap penalty (§3.2).
-- Renewal increases above 3% are unavailable in any community whose §3.9 brake is active (RS below 60) or whose floor card is open.
+- Renewal increases above 3% are unavailable in any community whose §3.9 §3.9 brake is active or whose floor card is open.
 
 **Re-letting and avoidable turnover.**
 - For 12 months after any avoidable move-out, the unit may be re-let at no more than the prior rent plus the cap. The company earns no new-lease fee on it.
@@ -391,7 +391,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - Turn cost: $1,200–$2,500 from Owner Trust and about 25 days' vacancy. The loss is the owner's.
 - **Resident-initiated move-outs** (RS 50 or higher) occur at 0.01 + 0.002 × max(0, 50 − RS) per unit per month, capped at 5%. Move-outs below RS 50 count as avoidable.
 
-**Cost cutting.** Discretionary cuts lower ServiceScore, and service investments raise it (§3.2). Non-critical repairs lower RS through resident-reported work orders. Staff cuts lower Q. Every cut card shows its resident cost before the choice.
+**Cost cutting.** (P1, not in the slice) Discretionary cuts lower ServiceScore and staff cuts lower Q; a cut card would show its resident cost before the choice.
 
 **Fair housing (slice placeholder; detailed rules in P1, D-019).**
 - A complaint opens a placeholder card with one response: Investigate (about $1,500, company-funded, 30 days). The complaint closes when the investigation ends.
@@ -407,7 +407,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 ### 3.9 Resident satisfaction floor (v0.6)
 
 - **Trigger:** month-end RS below 55 for two consecutive month-ends. Owner sentiment −5 once, and a card opens. Breaching the floor fails criterion 8 explicitly (§1.7).
-- **While the card is open:** renewal increases above 3% and company non-renewals are unavailable in that community, and owner sentiment −2 each month.
+- **While the card is open:** renewal increases above 3% are unavailable in that community, and owner sentiment −2 each month.
 - **Options:**
   - *Fund targeted repairs* of the named drivers: $2,000–$5,000 from Owner Trust, with a 30-day lag. RS +1 per month for three months once the drivers clear.
   - *Add a service investment tier* for this community: $1,500 per month, +5 ServiceScore (§3.5).
