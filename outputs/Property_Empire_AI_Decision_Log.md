@@ -160,3 +160,8 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Affected systems:** Resident satisfaction, staffing and service, turnover, collections, safety, fair housing, owner sentiment, success criteria, outcome tiers, screens.  
 **Existing material revised:** None outside the P0 spec. No locked decision (D-001 to D-007) changed.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.4, §8 to §10
+
+**Owner decisions recorded after v0.4 (D-015 addendum, 2026-10-10):**
+- Service investment: three tiers stack at $1,500/month each, +5 ServiceScore per tier (kept).
+- Promising now also requires no §3.9 floor breach (owner choice; the spec previously left this open).
+- Legal items: parked by the owner. §10 remains unverified. The 5-day mailing add-on was removed because it is not a notice-statute rule.

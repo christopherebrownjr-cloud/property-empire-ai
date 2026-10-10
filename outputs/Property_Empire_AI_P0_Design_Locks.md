@@ -113,8 +113,8 @@ Criterion 3 (trust violations) and criterion 6 must hold in every month, not onl
 **Outcome tiers:**
 
 - **Stable:** All 8 criteria met, criterion 3 (trust) and criterion 6 met in every month, and no community breached the §3.9 floor.
-- **Promising:** 6 or 7 criteria met, including criteria 3 (trust) and 6 in every month and the resident part of criterion 8 (RS ≥ 65); no Distress Level 3 or above.
-- **Struggling:** 4 or 5 criteria met; or 6 or 7 criteria met without the resident part of criterion 8 (RS below 65); or Distress Level 3 or above reached; or criterion 3 (trust) or criterion 6 failed in any month.
+- **Promising:** 6 or 7 criteria met, including criteria 3 (trust) and 6 in every month, the resident part of criterion 8 (RS ≥ 65), and no community breaching the §3.9 floor; no Distress Level 3 or above.
+- **Struggling:** 4 or 5 criteria met; or 6 or 7 criteria met without the resident part of criterion 8 (RS below 65) or with a §3.9 floor breach; or Distress Level 3 or above reached; or criterion 3 (trust) or criterion 6 failed in any month.
 - **Distressed:** 3 or fewer criteria met, or Distress Level 4 or above reached. Distressed takes precedence when both Struggling and Distressed apply.
 
 Struggling and Distressed outcomes continue play under the recovery rules in §3.6. They do not end the game.
@@ -330,7 +330,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 
 **Rent increases (K1).**
 - **Legal cap:** 5% plus the local CPI change, capped at 10% (AB 1482; see §10). The 5% in this spec is the base of that formula. The CPI input is an owner-verification item. Increases above the legal cap are unavailable to the player.
-- **Notice:** 30 days if the cumulative increase over 12 months is 10% or less; 90 days if above 10%; add 5 days when served by mail (conservative margin). Notice periods are checked when a renewal card is issued.
+- **Notice:** 30 days if the cumulative increase over 12 months is 10% or less; 90 days if above 10%; Notice periods are checked when a renewal card is issued.
 - **Resident cost:** each renewal increase above 3% costs 0.5 RS per percentage point above 3 (a 6% increase costs 1.5 RS). Renewals at or below 3% are neutral.
 - **Market check:** a renewal priced above market costs 0.5 RS and adds the P_gap occupancy penalty (§3.2).
 
@@ -535,7 +535,7 @@ These come from secondary sources (law-firm pages, property-management guides, a
 |---|---|---|---|
 | Rent increase cap | 5% plus local CPI change, capped at 10% (AB 1482, Civil Code §1947.12) | [TenantCloud](https://www.tenantcloud.com/rent-collection/california-rent-increase-laws); [City of Downey](https://www.downeyca.org/our-city/departments/community-development/housing-division/ab1482) | Current CPI figure conflicts across sources; owner to fill from the HCD site. Exemptions (for example, newer buildings) not checked. |
 | Notice for increases | 30 days if cumulative 12-month increase is 10% or less; 90 days if above 10% | [Costa-Hawkins on AB 1110](https://costa-hawkins.com/ca-legislative-update/rent-increases-above-10-percent-now-require-90-days-notice-not-60/); [SF Rent Board archive](https://www.sf.gov/reports--december-2019--san-francisco-rent-board-news-archive-2019) | Some law-firm pages still say 60 days; these predate the 2020 change. Confirm §827. |
-| Mailing | Add 5 days | SF Rent Board notice | Treated as a conservative margin, not a confirmed rule |
+| Mailing | Not modeled | Auditor: the 5-day add-on comes from general civil procedure rules, not the notice statute | Removed from the spec |
 | Security deposit | Return and itemize within 21 days; bad faith can cost up to 2× the deposit | [terms.law, CA Security Deposit Hub](https://terms.law/CA-Security-Deposit-Hub/) | Secondary source; confirm §1950.5. One source claims a one-month deposit cap for leases after July 1, 2024. Conflicting; not used in this spec. |
 | Late fees | No fixed cap; must be a reasonable estimate of loss (Civil Code §1671) | [Tellus](https://www.tellusapp.com/blog/late-fees-in-california/) | Confirm §1671. The 5% figure is a market convention, not law. The spec does not model a late-fee amount. |
 
