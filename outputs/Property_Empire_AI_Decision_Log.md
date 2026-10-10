@@ -135,3 +135,28 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Affected systems:** Success criteria, outcome tiers, resident satisfaction, staffing and service, collections, turnover, safety, fair housing, owner statements.  
 **Existing material revised:** None outside the P0 spec and GDD status line. No locked decision (D-001 to D-007) changed.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.3, §8
+
+## D-015 — P0 spec v0.4: auditor and ethics fixes, service upside, legal figures
+
+**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Date:** 2026-10-10  
+**Decision:** Revise the Proposed P0 spec to v0.4. Changes:
+
+1. RS formula includes every RS effect in §3.4 and §3.8. Renewal credit is removed, so renewals at or below 3% are neutral (§3.2).
+2. Criterion 3 is split: monthly trust test, and a separate per-owner statement test (§1.7).
+3. Criterion 8 floor and §3.9 use the same test: two consecutive month-end readings below 55 (§1.7, §3.9).
+4. Failed inspections open critical orders only with a life-safety finding (§3.8). The D-014 wording is corrected to match.
+5. Renewal increases: legal cap formula, notice periods, RS cost per point above 3%, market check (§3.8, §10).
+6. Settlement gives no RS credit. Only verified correction does. Open complaints carry a monthly RS drag. Investigate has a 40% adverse probability (provisional). Retaliation has a confirmation rule (§3.8).
+7. Neglect: critical penalty per order. Non-critical cap removed. Compliance records reduce city reputation. Owner refusal has defined options. Resident-initiated move-outs are modeled (§3.8).
+8. Service investment lever added: −$1,500/month corporate, +5 ServiceScore, up to +15 (§3.2, §3.5).
+9. RS appears on Executive Snapshot and Communities (§5.2).
+10. Tier precedence: Distressed over Struggling. Numeric sentiment tiers added (§1.7, §3.8).
+11. Same-cycle rule defined as 12 months (§3.8).
+12. Legal figures added in §10 from web sources. They are not verified statute text. The rent cap is 5% plus CPI capped at 10%, not a flat 5%.
+
+**Open:** RS and probability balance; owner verification of §10; Promising and the floor (owner decision).  
+**Reason:** The ethics re-review returned Hold and the auditor returned FAIL on v0.3. The owner chose the service-upside lever and asked for web-checked legal figures.  
+**Affected systems:** Resident satisfaction, staffing and service, turnover, collections, safety, fair housing, owner sentiment, success criteria, outcome tiers, screens.  
+**Existing material revised:** None outside the P0 spec. No locked decision (D-001 to D-007) changed.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.4, §8 to §10
