@@ -165,3 +165,13 @@ Any future change to a locked decision must be recorded here with a new entry, t
 - Service investment: three tiers stack at $1,500/month each, +5 ServiceScore per tier (kept).
 - Promising now also requires no §3.9 floor breach (owner choice; the spec previously left this open).
 - Legal items: parked by the owner. §10 remains unverified. The 5-day mailing add-on was removed because it is not a notice-statute rule.
+
+## D-016 — P0 spec v0.5: owner decisions and ethics Hold fixes
+
+**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Date:** 2026-10-10  
+**Decision:** Owner answers to the v0.4 Hold: (1) for a refused life-safety repair, the company uses the owner's capital reserve up to $5,000 per repair, with owner notice within 24 hours; (2) re-letting after a company non-renewal is capped at the renewal limit, with a reason code; (3) the rent-increase cap is cumulative over 12 months; (4) service tiers stay at three ($4,500/month at full investment, which depends on financing). The v0.5 revisions to the spec then address the remaining ethics blockers B1, B2, B4, and B5 and required changes R1–R10 (P0 spec §3.8, §3.9, §11). No locked decision (D-001 to D-007) changed.  
+**Reason:** The ethics re-review of v0.4 returned Hold.  
+**Affected systems:** Safety, reserves, re-letting, rent increases, fair housing, city reputation, bids, outcome tiers, owner sentiment, floor card.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.5, §3.8, §3.9, §11
+
