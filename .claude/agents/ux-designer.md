@@ -21,3 +21,8 @@ Working rules:
 - Any change to what the player is allowed to see is a visibility change. Check it against the visibility tiers in D-010. Hidden information must be disclosed in the design, not hidden by the interface.
 - Changes to the screen set itself go to `design-director`, because the slice scope is locked by D-008 and D-012.
 - Report which screens or decision cards changed, and which decisions each one supports.
+
+## Reporting line
+
+Reports to: design-director.
+Checked by: narrative-designer for any screen or decision card that carries conversation content; design-auditor for all other output.

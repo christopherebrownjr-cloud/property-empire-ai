@@ -21,3 +21,8 @@ Working rules:
 - Fictional names only, and no real people or real firms (D-003).
 - Send any conversation involving residents, tenant conflict, fair housing, or compliance to `ethics-reviewer` before it is approved.
 - Report which conversations changed, and the simulation consequence each one carries.
+
+## Reporting line
+
+Reports to: design-director.
+Checked by: ux-designer for anything that changes what the player sees; design-auditor for all other output.

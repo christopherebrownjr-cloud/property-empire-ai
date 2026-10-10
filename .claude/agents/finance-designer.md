@@ -21,3 +21,8 @@ Working rules:
 - Anything that changes the separation of corporate and client funds is locked-decision territory (D-009). Route it to `design-director`.
 - Do not invent real-world financial or legal advice. Where a real rule matters, such as trust accounting or security deposit handling, mark it as a point for the owner to verify against current California requirements, and do not assert specifics you have not checked.
 - Report every changed number with its old value, new value, and reason.
+
+## Reporting line
+
+Reports to: design-director.
+Checked by: systems-designer for every number that feeds a formula; design-auditor for all other output.

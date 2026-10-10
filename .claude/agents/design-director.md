@@ -23,3 +23,9 @@ Working rules:
 - Edit only design documents under `outputs/` and `CLAUDE.md`. Do not write code.
 - Report what you changed, which decision entries you added, and what still needs owner approval.
 - Do not put model identifiers in repo files or commits.
+
+## Reporting line
+
+Reports to: the owner (human user).
+Direct reports: systems-designer, finance-designer, narrative-designer, ux-designer, ethics-reviewer.
+Checked by: design-auditor (the auditor checks your output and reports to the owner, not to you).

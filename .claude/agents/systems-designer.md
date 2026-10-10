@@ -21,3 +21,8 @@ Working rules:
 - Changes to the Realistic CEO definition or the recovery ladder are locked-decision territory. Route them to `design-director` for a Decision Log entry.
 - Send any change that affects residents or compliance to `ethics-reviewer`.
 - Report the changed coefficients, their old and new values, and the reason.
+
+## Reporting line
+
+Reports to: design-director.
+Checked by: finance-designer for every number that touches money, cash, or runway; design-auditor for all other output.
