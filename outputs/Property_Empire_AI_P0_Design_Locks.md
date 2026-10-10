@@ -199,7 +199,7 @@ Corporate money and client money are kept in separate ledgers. The company may n
 | Targeted floor repair | $2,000–$5,000 | Owner | Owner Trust |
 | Service investment tier | $1,500 per month per tier | Company | Corporate Operating |
 | Inspection-readiness checklist | $300 per month per community | Company | Corporate Operating |
-| Independent inspector sign-off per engagement (slice; D-021) | $350 per critical repair (placeholder; finance to confirm) | Company | Corporate Operating |
+| Independent inspector sign-off per engagement (slice; D-021) | $350 per engagement (placeholder; finance to confirm) | Company | Corporate Operating |
 
 ---
 
@@ -380,7 +380,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - A reopen within 90 days re-applies the penalty from the original open date.
 
 **Rent increases.**
-- **Cap:** cumulative increases over any 12 months may not exceed 5% plus the local CPI change, capped at 10% (unverified; AB 1482, see §10). The CPI input is owner-verified. Scope (per unit or per community) is an owner-verification item; the spec assumes per unit. An increase that would exceed the cap is unavailable.
+- **Cap:** cumulative increases over any 12 months may not exceed 5% plus the local CPI change, capped at 10% (game value; see §10). The CPI input is owner-verified. Scope (per unit or per community) is an owner-verification item; the spec assumes per unit. An increase that would exceed the cap is unavailable.
 - **Notice:** 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10%. The 90-day branch is reachable only if the verified cap structure allows it; it stays as a placeholder.
 - **Resident cost:** each renewal above 3% costs 0.5 RS per percentage point above 3, scaled to 100 units. Monthly, this is summed across that month's renewals. Example (before the brake applies): at the portfolio's 4 renewals a month, Larkspur has about 1.9 renewals a month. A sustained 6% increase on each costs about 4.5 RS per month, which settles RS near 51 under the drift.
 - **Market check:** each renewal priced above market costs 0.5 RS, scaled to 100 units, and adds the P_gap penalty (§3.2).
@@ -580,9 +580,9 @@ The ethics re-review returned Hold on v0.2. v0.3 responds to it:
 
 These come from secondary sources (law-firm pages, property-management guides, and a San Francisco Rent Board notice). They are not statute text. Each needs confirmation on leginfo.legislature.ca.gov or with counsel before it is treated as fact.
 
-| Item | Figure used in this spec | Sources | Status |
+| Item | Source value (not used as law) | Sources | Used in spec? |
 |---|---|---|---|
-| Rent increase cap | 5% plus local CPI change, capped at 10% (AB 1482, Civil Code §1947.12) | [TenantCloud](https://www.tenantcloud.com/rent-collection/california-rent-increase-laws); [City of Downey](https://www.downeyca.org/our-city/departments/community-development/housing-division/ab1482) | Current CPI figure conflicts across sources; owner to fill from the HCD site. Exemptions (for example, newer buildings) not checked. |
+| Rent increase cap | 5% plus local CPI change, capped at 10% (game value) | [TenantCloud](https://www.tenantcloud.com/rent-collection/california-rent-increase-laws); [City of Downey](https://www.downeyca.org/our-city/departments/community-development/housing-division/ab1482) | Current CPI figure conflicts across sources; owner to fill from the HCD site. Exemptions (for example, newer buildings) not checked. |
 | Notice for increases | 30 days if cumulative 12-month increase is 10% or less; 90 days if above 10% | [Costa-Hawkins on AB 1110](https://costa-hawkins.com/ca-legislative-update/rent-increases-above-10-percent-now-require-90-days-notice-not-60/); [SF Rent Board archive](https://www.sf.gov/reports--december-2019--san-francisco-rent-board-news-archive-2019) | Some law-firm pages still say 60 days; these predate the 2020 change. Confirm §827. |
 | Mailing | Not modeled | Auditor: the 5-day add-on comes from general civil procedure rules, not the notice statute | Removed from the spec |
 | Security deposit | Return and itemize within 21 days; bad faith can cost up to 2× the deposit | [terms.law, CA Security Deposit Hub](https://terms.law/CA-Security-Deposit-Hub/) | Secondary source; confirm §1950.5. One source claims a one-month deposit cap for leases after July 1, 2024. Conflicting; not used in this spec. |
@@ -597,7 +597,7 @@ Owner decisions (D-016): company uses the owner's capital reserve for life-safet
 - **B1 (dismissal):** dismissal keeps the condition open, costs 3 RS per month, and carries a confirmation path. Systems-designer confirms cash parity with investigation.
 - **B2 (decay and city reputation):** a 12-month community flag caps the outcome at Struggling. City reputation below 40 lowers bid win probability by 0.05.
 - **B3 (owner refusal):** capital reserve path added (owner decision).
-- **B4 (verified correction):** defined. Critical orders close only on verified correction. Reopens within 90 days re-apply the penalty.
+- **B4 (inspector sign-off):** defined. Critical orders close only on inspector sign-off. Reopens within 90 days re-apply the penalty.
 - **B5 (re-letting):** capped at the renewal limit with a reason code.
 - **R1:** clean investigations close the complaint. **R2:** glossary added. **R3:** one safety term. **R4:** owner-trust violations cost 5 RS. **R5:** sentiment gate and deferred-maintenance definition. **R6:** floor card has three options. **R7:** cap is cumulative. **R8:** criterion 6 is measured at month-end. **R9:** renewal scale normalized to 100 units. **R10:** inspection-readiness checklist. **R11:** owner decision (keep three tiers).
 
