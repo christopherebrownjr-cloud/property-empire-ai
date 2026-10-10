@@ -1,7 +1,7 @@
 # Property Empire AI — P0 Design Locks
 
 **Status:** Proposed — pending owner review and approval (GDD §14: no implementation until P0 locks are approved)
-**Date:** 2026-10-10
+**Date:** 2026-10-10 (v0.2: revisions recorded as D-013)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
 **Logged as:** D-008 to D-012 in the Decision Log.
@@ -28,13 +28,13 @@ D-002 is unchanged. New saves still let the player choose any of the five specia
 
 ### 1.2 Opening portfolio (Sacramento region, 132 units, 3 communities)
 
-| Community | City | Units | Avg rent | Opening occupancy | Owner | Monthly fee (opening) |
+| Community | City | Units | Avg rent | Opening occupancy | Owner | Monthly fee (opening, collected) |
 |---|---|---|---|---|---|---|
-| Alder Court Apartments | Sacramento (Midtown) | 64 | $1,780 | 93% | Cordova Hollow Holdings | $6,357 |
-| Riverbend Terrace | Rancho Cordova | 40 | $1,950 | 94% | Valley Gate Partners | $4,033 |
-| Pine Hollow Flats | Elk Grove | 28 | $1,650 | 90% | Sutter Pine Realty Trust | $2,911 |
+| Alder Court Apartments | Sacramento (Midtown) | 64 | $1,780 | 93% | Cordova Hollow Holdings | $6,134 |
+| Riverbend Terrace | Rancho Cordova | 40 | $1,950 | 94% | Valley Gate Partners | $3,891 |
+| Pine Hollow Flats | Elk Grove | 28 | $1,650 | 90% | Sutter Pine Realty Trust | $2,809 |
 
-Fee calculations: Alder 6.0% × ($1,780 × 64 × 0.93); Riverbend 5.5% × ($1,950 × 40 × 0.94); Pine Hollow 7.0% × ($1,650 × 28 × 0.90).
+Fee calculations use collected rent, which assumes 3.5% delinquency (§3.2, multiply by 0.965): Alder 6.0% × ($1,780 × 64 × 0.93) × 0.965 = $6,134; Riverbend 5.5% × ($1,950 × 40 × 0.94) × 0.965 = $3,891; Pine Hollow 7.0% × ($1,650 × 28 × 0.90) × 0.965 = $2,809.
 
 ### 1.3 Opening staff
 
@@ -51,9 +51,9 @@ Fee calculations: Alder 6.0% × ($1,780 × 64 × 0.93); Riverbend 5.5% × ($1,95
 
 | Line | Amount |
 |---|---|
-| Management fees (three communities) | $13,301 |
+| Management fees, collected (three communities) | $12,834 |
 | Leasing and renewal fees (≈ 6 new leases at $350, 4 renewals at $150) | $2,700 |
-| **Total corporate revenue** | **$16,001** |
+| **Total corporate revenue** | **$15,534** |
 | Founder draw | $4,000 |
 | Leasing & Resident Coordinator | $5,287 |
 | Bookkeeping | $1,200 |
@@ -64,11 +64,11 @@ Fee calculations: Alder 6.0% × ($1,780 × 64 × 0.93); Riverbend 5.5% × ($1,95
 | Legal and professional reserve | $400 |
 | Miscellaneous | $400 |
 | **Total corporate expenses** | **$15,837** |
-| **Net corporate operating result** | **+$164** |
+| **Net corporate operating result** | **−$303** |
 
 **Opening cash:** $48,000 corporate operating cash. Undrawn $30,000 revolving line (Foothill Harbor Bank).
 
-**Realism check:** The business is barely cash-positive. Adding one $44,000 assistant ($3,667 × 1.22 = $4,473/month) moves the result to about −$4,309/month, which leaves about 11 months of runway at $48,000. Every hire is a visible tradeoff.
+**Realism check:** The business is cash-negative from opening, at about −$303/month once the 3.5% collection loss is applied. Adding one $44,000 assistant ($3,667 × 1.22 = $4,473/month) moves the result to about −$4,776/month, which leaves about 10 months of runway at $48,000. Every hire is a visible tradeoff. The founder draw is treated as an operating expense (conservative); treating it as a distribution would move the opening result to about +$3,697/month.
 
 ### 1.5 Opening contracts and pipeline
 
@@ -81,7 +81,7 @@ Fee calculations: Alder 6.0% × ($1,780 × 64 × 0.93); Riverbend 5.5% × ($1,95
 | ID | Prospect | Units | Baseline win odds | Bid due | Notes |
 |---|---|---|---|---|---|
 | L-01 | Oakline Residential Fund property, Roseville | 48 | 30% | Month 3 | Standard market-rate management |
-| L-02 | Summit Ridge Developers lease-up, Folsom | 72 | 20% | Month 6 | Lease-up service; requires capacity or a hire to win and deliver |
+| L-02 | Summit Ridge Developers lease-up, Folsom | 72 | 20% | Month 6 | **Deferred to P2 and removed from the slice (v0.2).** Lease-up work is a different specialization. |
 
 ### 1.6 Lenders in the slice
 
@@ -100,9 +100,9 @@ All criteria are measured at month 12 unless stated otherwise.
 |---|---|---|
 | 1 | Contracts | All three management agreements active or renewed; zero owner terminations |
 | 2 | Liquidity | Corporate cash ≥ 2.0 × monthly corporate expenses; never at Distress Level 3 or above during months 1–12 |
-| 3 | Trust integrity | Zero trust-account violations; owner statements delivered by day 10 in at least 11 of 12 months |
-| 4 | Occupancy | Portfolio 12-month average ≥ 93%; no community below 90% for 3 or more consecutive months |
-| 5 | Growth | At least one new management contract won (L-01, L-02, or a new lead) |
+| 3 | Trust integrity | Zero trust-account violations; for each owner, owner statements delivered by day 10 in at least 11 of 12 months |
+| 4 | Occupancy | Portfolio 12-month average ≥ 93%; no community below 90% for 2 or more consecutive months (matches the Pine Hollow termination trigger in C-03) |
+| 5 | Growth | At least one new management contract won (L-01 or a new lead) |
 | 6 | Compliance | Zero missed inspections; zero critical safety work orders open for more than 14 days |
 | 7 | Team | No employee at burnout ≥ 85 for 2 or more consecutive months; founder below 85 at month 12 |
 | 8 | Stakeholders | All three owners at Warm or better sentiment; portfolio resident satisfaction ≥ 65 / 100 |
@@ -118,7 +118,7 @@ Struggling and Distressed outcomes continue play under the recovery rules in §3
 
 ### 1.8 Out of scope for the slice
 
-Other specializations, cross-city expansion, development partnerships, affordable-housing compliance depth, maintenance markup billing, property acquisitions, subdivisions, and office progression are all P2. The slice does not include them.
+Other specializations, lease-up services (including L-02), cross-city expansion, development partnerships, affordable-housing compliance depth, maintenance markup billing, property acquisitions, subdivisions, and office progression are all P2. The slice does not include them.
 
 ---
 
@@ -200,7 +200,7 @@ Corporate money and client money are kept in separate ledgers. The company may n
 
 | Term | Definition | Starting values |
 |---|---|---|
-| Base | Market and property-class baseline | Alder 0.90; Riverbend 0.91; Pine Hollow 0.87 |
+| Base | Market and property-class baseline | Alder 0.91; Riverbend 0.92; Pine Hollow 0.88 |
 | L_eff | 0.04 × LeasingScore / 100 | LeasingScore is the leasing function's effective quality, 0–100 |
 | S_eff | 0.03 × (ServiceScore − 50) / 50 | Range −0.03 to +0.03 |
 | P_gap | 0.10 × max(0, AskRent / MarketRent − 1) | Only asking above market reduces occupancy |
@@ -208,7 +208,7 @@ Corporate money and client money are kept in separate ledgers. The company may n
 | Season | Q1 −0.01; Q2 +0.01; Q3 +0.01; Q4 −0.01 | Turnover seasonality |
 | noise | Normal, σ = 0.008 | Bounded by the seed |
 
-At opening, Alder gives 0.90 + 0.028 + 0.006 ≈ 93%, which matches the opening table.
+Opening inputs are pinned: LeasingScore 70, ServiceScore 60, opening month October (Season −0.01), no penalties, noise 0. Opening occupancy: Alder 0.91 + 0.028 + 0.006 − 0.01 = 93.4%; Riverbend 94.4%; Pine Hollow 90.4%. The unit-weighted opening portfolio is 93.1%, only 0.1 points above criterion 4, so a player who does nothing will drift below the 93% threshold.
 
 **Collections.**
 
@@ -287,12 +287,12 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 | 4 | Restructuring | Cannot meet payroll after all available levers are used | Runway ≥ 3 months for 6 consecutive months | Forced choices: layoffs, contract sale, partner dilution |
 | 5 | Insolvency | Level 4 for 90 consecutive days with corporate cash below zero and no lever left | n/a (game over) | Game over |
 
-**Recovery levers.** Every level offers at least one non-destructive lever.
+**Recovery levers.** Levels 0–3 always offer at least one non-destructive lever. At Levels 4 and 5 the restructure and partner options are offered when eligible; if neither is available, the player faces forced choices, and each such card is marked destructive.
 
 | Lever | Available at | Immediate effect | Lag | Side effects | Limit |
 |---|---|---|---|---|---|
-| Collections push | Any | Cash +$1,000–$3,000 over 30–60 days; delinquency −1 pt | 30–60 days | Resident satisfaction −2 | Once per quarter |
-| Cut discretionary spend | Any | +$1,500–$3,000 per month | Immediate | Capacity −5 pts per person; morale −3 | None |
+| Collections push | Any | Recovers up to $2,000 of delinquent rent into Owner Trust over 60 days; corporate gains only its fee share (about 6%) and the owner receives the rest; delinquency −1 pt | 30–60 days | Resident satisfaction −2; tactics limited to lawful, non-harassing contact (ethics review) | Once per quarter |
+| Cut discretionary spend | Any | +$500–$2,000 per month. Discretionary lines are software, marketing, and miscellaneous ($2,000 at opening) | Immediate | ServiceScore −5 until restored; capacity −5 pts per person; morale −3 | None |
 | Draw revolving line | Lender-dependent | Up to the line limit | Immediate | Interest cost; covenant ratio worsens; lender sentiment −3 | $30,000 (Foothill) |
 | Request owner fee advance | Owner sentiment Warm or better | One to two months of that owner's fee | Immediate | Credited back over later months; owner trust −3 at request | Once per owner per year |
 | Defer part of payroll (up to 25%) | Any | Cash timing relief | Repaid by next payroll | Morale −10; burnout +5; compliance issue if not repaid | Two months per year |
@@ -313,6 +313,14 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 
 - **Default (Realistic CEO):** Game over occurs only through sustained insolvency (Level 5).
 - **Optional:** A player may set a stop-loss threshold when starting a new save (for example, cumulative cash loss above a chosen amount). This is opt-in and off by default.
+
+### 3.8 Resident-facing consequences (v0.2, responds to ethics review B1–B4)
+
+- **Turnover (B1).** Each move-out costs the owner a turn of $1,200–$2,500 from Owner Trust and about 25 days of vacancy (lost rent, which lowers the fee base). A renewal keeps the resident and adds +1 to ServiceScore. A move-out forced by a rent increase above 5% reduces resident satisfaction by 2 for that community. New-lease fees therefore do not reward turnover on their own.
+- **Cost cutting (B2).** Discretionary cuts lower ServiceScore (see §3.5), so every saving carries a service cost shown on the Finance and Communities screens.
+- **Safety (B3).** A critical safety work order open for more than 14 days reduces that community's resident satisfaction by 5 per month and adds a compliance record. Pricing or occupancy changes cannot clear it. A failed inspection reduces resident satisfaction by 3.
+- **Fair-housing complaint (B4).** The player chooses one response. Investigate: about $1,500 and 30 days; resident satisfaction unchanged; city reputation neutral if findings are clean. Settle: about $3,000–$5,000 from Owner Trust; resident satisfaction +2; owner sentiment −3. Dismiss: no cost now; if a later event confirms the complaint, city reputation −15 and resident satisfaction −10. Each card shows these effects before the choice.
+- **Occupancy pressure (Pine Hollow).** The levers that restore occupancy are rent pricing (subject to P_gap), leasing effort, and marketing. Screening standards must be applied uniformly, and any screening option is reviewed by ethics-reviewer before approval.
 
 ---
 
@@ -410,6 +418,8 @@ This format carries the "conversations change terms, trust, timing, or workload"
 
 ## 6. Open items for owner approval
 
+**v0.2 status:** items 1–6 were answered by the owner's delegation ("You choose"); the choices are listed in §7. Item 7 (approval itself) and the legal verification items remain open.
+
 1. Confirm **market-rate residential management** as the slice specialization (D-008).
 2. Confirm that all dollar figures, rates, and coefficients are **tuning starting values**, not commitments.
 3. Confirm that all names (companies, owners, lenders, vendors, and the placeholder employee) are fictional and checked against real firms (D-003).
@@ -418,3 +428,18 @@ This format carries the "conversations change terms, trust, timing, or workload"
 6. Confirm that the **default hard-stop is insolvency only**, with stop-loss as an opt-in setting (D-010).
 
 Once these are approved, the Decision Log entries move from **Proposed** to **Approved**. Implementation may then begin under GDD §14.
+
+## 7. v0.2 choices (owner delegated: "You choose")
+
+1. **L-02 removed from the slice** and deferred to P2. Criterion 5 uses L-01 or a new lead.
+2. **Collection loss applied** at 3.5% delinquency. Opening net is about −$303/month, and the business is cash-negative from opening.
+3. **Founder draw kept as an operating expense** (conservative). Treating it as a distribution is a one-line change if you prefer it.
+4. **Pine Hollow trigger kept** at two consecutive months below 90%; criterion 4 changed to match.
+5. **Criterion 3 counted per owner**, not portfolio-wide.
+6. **Non-destructive lever rule kept** for Levels 0–3; Levels 4–5 spell out their options (§3.5).
+7. **Opening pinned to October** with stated inputs; occupancy bases recalibrated to Alder 0.91, Riverbend 0.92, Pine Hollow 0.88.
+8. **Status label: "Proposed,"** matching the Decision Log.
+9. **D-007 approval evidence:** GDD §15 records the owner's acceptance of all board recommendations. D-007's text is unchanged.
+10. **Ethics blockers B1–B4** addressed in §3.8. Ethics re-review is still required before approval.
+
+Still with the owner: approval of P0 and D-008 to D-013, and verification of all California legal rules before they are modeled.
