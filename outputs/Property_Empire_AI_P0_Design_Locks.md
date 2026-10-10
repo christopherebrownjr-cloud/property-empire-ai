@@ -54,7 +54,7 @@ Opening staff have Morale 100 and SkillFit 1.0. The utilization figures in §4.4
 | Line | Amount |
 |---|---|
 | Management fees, collected (three communities) | $12,890 |
-| Leasing and renewal fees (unit-weighted new-lease fee $345 × 6; renewal $150 × 4, excluding Cinder Hollow's unit share, which has no renewal fee) | $2,545 |
+| Leasing and renewal fees (new-lease $345.45 unrounded = (64×$350 + 40×$300 + 28×$400) ÷ 132, × 6 = $2,072.73; renewals $150 × 4 × 104/132 = $472.73, excluding Cinder Hollow, which has no renewal fee) | $2,545 |
 | **Total corporate revenue** | **$15,435** |
 | Founder draw | $4,000 |
 | Leasing & Resident Coordinator | $5,287 |
@@ -199,7 +199,7 @@ Corporate money and client money are kept in separate ledgers. The company may n
 | Targeted floor repair | $2,000–$5,000 | Owner | Owner Trust |
 | Service investment tier | $1,500 per month per tier | Company | Corporate Operating |
 | Inspection-readiness checklist | $300 per month per community | Company | Corporate Operating |
-| Independent inspector sign-off per critical repair (slice; D-021) | $350 per critical repair (placeholder; finance to confirm) | Company | Corporate Operating |
+| Independent inspector sign-off per engagement (slice; D-021) | $350 per critical repair (placeholder; finance to confirm) | Company | Corporate Operating |
 
 ---
 
@@ -309,7 +309,7 @@ Each community averages one event every six months (λ = 2 per year). Category w
 
 About 60% of events have a warning signal, so the player can prepare or mitigate.
 
-**Inspections (v0.6).** One scheduled inspection per community per quarter. Failure chance = 0.20 + 0.02 × open non-critical work orders past 14 days, capped at 0.50. An inspection-readiness checklist ($300 per month per community) halves the 0.20 base only when every critical work order at that community is verified closed.
+**Inspections (v0.6).** One scheduled inspection per community per quarter. Failure chance = 0.20 + 0.02 × open non-critical work orders past 14 days, capped at 0.50. An inspection-readiness checklist ($300 per month per community) halves the 0.20 base only when every critical work order at that community is inspector-signed closed.
 
 **Fair-housing rates (P1).** The 40% adverse-finding rate is provisional and is used only in P1 (D-019).
 
@@ -331,7 +331,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 | Lever | Available at | Immediate effect | Lag | Side effects | Limit |
 |---|---|---|---|---|---|
 | Collections push | Any, but blocked while a §3.9 brake is active | Recovers up to $2,000 of delinquent rent into Owner Trust over 60 days; corporate gains only its fee share (about 6%) and the owner receives the rest; delinquency −0.5 pt | 30–60 days | Resident satisfaction −2 in each month the push is active (one month per use). Permitted: payment plans, hardship review, reminders, and legally required notices. Not permitted: threats, harassment, public or third-party pressure, contacting employers, and fee-driven pressure. The permitted list is an owner-verification item | Once per quarter |
-| Cut discretionary spend (P1; not in the slice) | +$500–$2,000 per month. Discretionary lines are software, marketing, and miscellaneous ($2,000 at opening) | Immediate | ServiceScore −5 until restored (restore = reinstate the line for one month at full cost); capacity −5 pts per person; morale −3 | None |
+| Cut discretionary spend (P1; not in the slice) | Not offered in the slice | +$500–$2,000 per month. Discretionary lines are software, marketing, and miscellaneous ($2,000 at opening) | Immediate | ServiceScore −5 until restored (restore = reinstate the line for one month at full cost); capacity −5 pts per person; morale −3 | None |
 | Service investment | Any | −$1,500 per month per tier (corporate cost). Each active tier gives ServiceScore +5; up to three tiers stack (+15) | Immediate | Ongoing cost; no resident-side cost | Three tiers |
 | Draw revolving line | Lender-dependent | Up to the line limit | Immediate | Interest cost; covenant ratio worsens; lender sentiment −3 | $30,000 (Kestrel) |
 | Request owner fee advance | Owner sentiment Warm or better | One to two months of that owner's fee | Immediate | Credited back over later months; owner sentiment −3 at request | Once per owner per year |
@@ -357,18 +357,18 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 ### 3.8 Resident-facing consequences (v0.6)
 
 **Glossary.**
-- *Company-engaged inspector sign-off (critical items; the label formerly 'verified completion'):* the vendor completes the repair, and one third-party inspector, engaged and paid by the company, signs it off. The inspector may not be the repairing vendor or any affiliated firm. A firm is affiliated if it shares ownership, management, or staff with the company, the vendor, or the owner; subcontracts to or refers work from the vendor; or has been engaged for repeat work by the same vendor. Each engagement carries a logged independence attestation. Company staff cannot sign off. The inspector's fee is paid by the company on every engagement, including rejected sign-offs. A rejected sign-off leaves the order open and is recorded on the compliance record; the 14-day clock runs from the original open date. A rejected inspector may not be re-engaged on that order, and every engagement is logged. Sign-off requires the inspector to confirm the defect is resolved and to perform an on-site functional test, recording the result. Tests by defect class: heat (required room temperature reached); water (flow and pressure restored); gas (leak test passed); electrical (test passed, no exposed hazard); locks (door secures and locks); sewage (flow clear, no backup); pests (no activity on re-inspection); fire safety (device operates). A reopen within 90 days needs a new sign-off. Panel, rotation, and sampling audit are P1 (D-021).
-- *Closed work order:* for critical items, verified completion. For non-critical items, vendor completion confirmed by the simulation. Only critical closures count for the §3.4 readiness checklist and the §3.2 sentiment gate; both classes clear the §3.2 RS driver. Floor-card drivers count as cleared under these same rules (D-023).
+- *Company-engaged inspector sign-off (critical items; the label formerly 'inspector sign-off'):* the vendor completes the repair, and one third-party inspector, engaged and paid by the company, signs it off. The inspector may not be the repairing vendor or any affiliated firm. A firm is affiliated if it shares ownership, management, or staff with the company, the vendor, or the owner; subcontracts to or refers work from the vendor; or has been engaged for repeat work by the same vendor. Each engagement carries a logged independence attestation. Company staff cannot sign off. The inspector's fee is paid by the company on every engagement, including rejected sign-offs. A rejected sign-off leaves the order open and is recorded on the compliance record; the 14-day clock runs from the original open date. A rejected inspector may not be re-engaged on that order, and every engagement is logged. Sign-off requires the inspector to confirm the defect is resolved and to perform an on-site functional test, recording the result. Tests by defect class: heat (required room temperature reached); water (flow and pressure restored); gas (leak test passed); electrical (test passed, no exposed hazard); locks (door secures and locks); sewage (flow clear, no backup); pests (no activity on re-inspection); fire safety (device operates). A reopen within 90 days needs a new sign-off. Panel, rotation, and sampling audit are P1 (D-021).
+- *Closed work order:* for critical items, inspector sign-off. For non-critical items, vendor completion confirmed by the simulation. Only critical closures count for the §3.4 readiness checklist and the §3.2 sentiment gate; both classes clear the §3.2 RS driver. Floor-card drivers count as cleared under these same rules (D-023).
 - *Critical safety work order (approved list):* one with a defect on this list: no heat, no water, gas leak, electrical hazard, lock or door-security failure, sewage backup, pest infestation, or fire-safety defect.
 - *Adverse action (P1):* a filing (eviction or non-renewal notice), a rent increase above 3%, or a service reduction, issued to a complainant.
 - *Accepted reason code (P1):* a reason is accepted only if a matching simulation record exists and predates the complaint: ledger delinquency (nonpayment), a lease-violation record, an owner sale event, or a dated unit-condition record unrelated to the complaint. Otherwise the action is confirmed retaliation. The code list is an owner-verification item.
 - *Avoidable move-out:* a move-out the company initiated (above-market renewal, or increase above 3%), or any move-out in a month where the prior month-end RS was below 50. This definition is used everywhere in this section.
 - *Displacement:* the household vacated by an avoidable move-out.
-- *Deferred maintenance:* any open work order past 14 days, or any deferred critical item.
+- *Deferred maintenance:* any open work order past 14 days, or any open critical item. A vendor-completed non-critical order is closed, so it is not deferred, but it does not count toward readiness or as an inspector-signed closure (D-023).
 - *Resident-reported:* logged through the resident intake channel, which the company cannot decline.
 - *Renewal:* any in-place rent change, including month-to-month conversions.
 - *Above market:* asking rent above the community's market comp (§3.2).
-- *Open compliance record:* open until its matter is closed by verified completion (city clearance is P1; D-021).
+- *Open compliance record:* open until its matter is closed by inspector sign-off (city clearance is P1; D-021).
 
 **Life-safety repairs (decision D-017).**
 - A critical safety work order must be repaired. The company has no option to decline or defer one. An owner cannot order deferral.
@@ -376,13 +376,13 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - Funding order: (1) the Capital Reserve, within a cap of $5,000 per community per 30 days; (2) the company's revolving line, if available; (3) corporate cash, advanced and billed to the owner. Step 3 may take corporate cash below zero, and Level 5 rules then apply. The repair proceeds in every case. Where steps 1 and 2 are unavailable, the vendor is paid from corporate cash. A shortfall registers as a distress event (§3.5), not a deferral. The company absorbs it; finance sizes the revolving line and cash buffer so step 3 is rare.
 - Step 1 covers the remaining 30-day reserve cap, up to $5,000 per community per 30 days. Steps 2 and 3 fund the rest, and the company bills the owner. Owner sentiment drops 5 once when a defect's company-funded amount exceeds $5,000, or when a reserve draw above the 30-day cap is company-funded (owner to confirm).
 - The lender covenant does not excuse a repair. Finance-designer models any covenant effect.
-- Until verified completion, the order stays open. Once open more than 14 days, it costs 5 RS per month per order (§3.2), plus a compliance record.
+- Until inspector sign-off, the order stays open. Once open more than 14 days, it costs 5 RS per month per order (§3.2), plus a compliance record.
 - A reopen within 90 days re-applies the penalty from the original open date.
 
 **Rent increases.**
 - **Cap:** cumulative increases over any 12 months may not exceed 5% plus the local CPI change, capped at 10% (unverified; AB 1482, see §10). The CPI input is owner-verified. Scope (per unit or per community) is an owner-verification item; the spec assumes per unit. An increase that would exceed the cap is unavailable.
 - **Notice:** 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10%. The 90-day branch is reachable only if the verified cap structure allows it; it stays as a placeholder.
-- **Resident cost:** each renewal above 3% costs 0.5 RS per percentage point above 3, scaled to 100 units. Monthly, this is summed across that month's renewals. Example: at the portfolio's 4 renewals a month, Larkspur has about 1.9 renewals a month. A sustained 6% increase on each costs about 4.5 RS per month, which settles RS near 51 under the drift.
+- **Resident cost:** each renewal above 3% costs 0.5 RS per percentage point above 3, scaled to 100 units. Monthly, this is summed across that month's renewals. Example (before the brake applies): at the portfolio's 4 renewals a month, Larkspur has about 1.9 renewals a month. A sustained 6% increase on each costs about 4.5 RS per month, which settles RS near 51 under the drift.
 - **Market check:** each renewal priced above market costs 0.5 RS, scaled to 100 units, and adds the P_gap penalty (§3.2).
 - Renewal increases above 3%, above-market renewals, and above-market new-lease asks are unavailable in any community whose §3.9 brake is active or whose floor card is open.
 
@@ -667,7 +667,7 @@ The leasing-fee reconciliation is closed. The new-lease fee is unit-weighted ($3
 
 Owner decisions (D-023): non-critical closures are vendor-recorded and confirmed by the simulation, and they do not count for the readiness checklist or the sentiment gate; the brake extends to above-market new-lease asks; the verifier-structure risk in D-021 is accepted as a documented owner override.
 
-Applied from the review: a rejected sign-off leaves the order open, with no re-engagement of the same inspector on that order and all engagements logged; independence excludes company-affiliated firms; the inspector's fee is paid inside the repair's funding step; defect IDs come from the simulation with a rolling 30-day cap; the owner-request approve option has a stated driver effect; critical items are excluded from owner requests; the complaint placeholder never shows as resolved; the Level 4 card lists the levers that remain; the brake's exit mechanics are explained.
+Applied from the review: a rejected sign-off leaves the order open, with no re-engagement of the same inspector on that order and all engagements logged; independence excludes company-affiliated firms; the inspector's fee is company-paid on every engagement, including rejected sign-offs; defect IDs come from the simulation with a rolling 30-day cap; the owner-request approve option has a stated driver effect; critical items are excluded from owner requests; the complaint placeholder never shows as resolved; the Level 4 card lists the levers that remain; the brake's exit mechanics are explained.
 
 **Still open:** the renewal-volume reconciliation (§3.8 example vs §1.4); owner and lender reputation rules; the reserve-shortfall path; the legal items in §10; the placeholder-name check (CLAUDE.md rule 5); the final ethics review and auditor recheck of v1.2.
 
@@ -680,7 +680,7 @@ Applied from the review: a rejected sign-off leaves the order open, with no re-e
 - **Inspector fee:** the company pays on every engagement, including rejected sign-offs. Matches §2.6.
 - **Sign-off standard:** on-site functional test per defect class (§3.8).
 - **Affiliation:** any shared ownership, management, or staff; any subcontracting or referral from the vendor; any repeat work for the same vendor. Each engagement logs an attestation.
-- **Readiness:** the 50% failure reduction requires every critical order verified closed.
+- **Readiness:** the 50% failure reduction requires every critical order inspector-signed closed.
 - **Names:** renamed to invented names (D-024). Communities, owners, lenders, vendors, and the placeholder employee.
 - **Game figures:** §10 is labelled fictional game values, not legal guidance.
 - **Residual risk (D-024 and D-023):** the company-engaged inspector can sign off a defect that was not properly tested, and the hazard would persist. The slice does not model reopen probability, so a false closure costs nothing in play. Criterion 6 and the readiness checklist can be met on closures alone. The reversal condition is P1 panel and rotation designed and in place before any P1 release; the owner is the decision-maker.

@@ -235,7 +235,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Status:** Proposed — pending ethics review, auditor recheck, and owner approval  
 **Date:** 2026-10-10  
 **Decision:** The owner chose the reconciled baseline for the opening P&L. The new-lease fee is unit-weighted across the three contracts ($345 across six leases). Renewal fees ($150 × 4) apply only where the contract has them, which excludes Cinder Hollow's unit share. Opening revenue is $15,435; the opening net is −$402/month; the post-hire net is about −$4,875/month; runway after the first hire is about 9.8 months; founder-as-distribution is +$3,598/month. These figures supersede the −$247 headline in D-008 and D-013, which are not edited.  
-**Reason:** The §12 reconciliation found that the blended fees overstated renewal income by about $127 a month. The owner chose to use the contract-accurate figures rather than keep the overstated headline.  
+**Reason:** The §12 reconciliation found that the blended fees overstated renewal income by about $155 a month. The owner chose to use the contract-accurate figures rather than keep the overstated headline.  
 **Affected systems:** Opening P&L (§1.4), runway and the hire scenario, the founder-draw treatment, and any balance tests that use the opening cash position.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.1, §1.4 and §17
 
@@ -255,7 +255,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
 **Date:** 2026-10-10  
 **Decision (owner answers):**
-1. Renewal volume: 4 a month across the portfolio. The §3.8 example is recomputed (Alder about 1.9 renewals a month; a sustained 6% increase settles RS near 51). The 12.5-point figure is withdrawn.
+1. Renewal volume: 4 a month across the portfolio. The §3.8 example is recomputed (Larkspur about 1.9 renewals a month; a sustained 6% increase settles RS near 51). The 12.5-point figure is withdrawn.
 2. Owner and lender reputation: display only in the slice. No update rule until P1.
 3. Reserve shortfall: the company absorbs it from corporate cash, even below zero. Finance sizes the revolving line and cash buffer so this is rare.
 4. Sentiment values approved: +2 for an approved owner request, −2 for a decline, −5 for a company-funded overrun above $5,000 per defect.
@@ -271,3 +271,6 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Reason:** The owner answered the open items. The ethics review of v1.2 and the auditor recheck returned Hold and FAIL on the sign-off standard, fee payer, affiliation, readiness rule, and the residual-risk disclosure.  
 **Affected systems:** Verification, inspector fee, readiness, reputation, reserve funding, renewal example, §10, names.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.3, §19
+
+**D-024 addendum (v1.3 audit):** the inspector fee is company-paid on every engagement, including rejected sign-offs. This supersedes the funding-step wording in D-023. The sentiment gate reads "deferred maintenance" as open orders only: a vendor-completed non-critical order is closed and is not deferred, but it does not count toward readiness or as an inspector-signed closure. That reading is the spec author's interpretation of owner answer 8 and D-023; the owner should confirm it.
+
