@@ -274,3 +274,20 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 **D-024 addendum (v1.3 audit):** the inspector fee is company-paid on every engagement, including rejected sign-offs. This supersedes the funding-step wording in D-023. The sentiment gate reads "deferred maintenance" as open orders only: a vendor-completed non-critical order is closed and is not deferred, but it does not count toward readiness or as an inspector-signed closure. That reading is the spec author's interpretation of owner answer 8 and D-023; the owner should confirm it.
 
+## D-025 — P0 spec v1.4: owner accepts the residual-risk list; certification and affiliation rules
+
+**Status:** Proposed — pending ethics re-review and auditor recheck. The owner's acceptance below is recorded; D-024 remains Proposed until the re-review.  
+**Date:** 2026-10-10  
+**Owner decisions:**
+1. The owner accepts the expanded residual-risk list in full:
+   - **Critical-inspector route:** the company engages and pays the inspector. A defect can be signed off without a proper test, and the hazard persists while residents bear it. The slice does not model reopen probability, so a false closure costs nothing in play. Criterion 6 and the readiness checklist can both be met on closures alone, and a player can reach Stable without the inspector ever failing a job.
+   - **Non-critical route:** vendor-recorded closures clear the RS driver and the floor-card drivers, can release the brake at RS 62, and reduce failure chance through the 0.02 non-critical term. These closures are not inspector-signed.
+   - **Competence gap:** closed by the certification rule below.
+   - **Reversal condition:** P1 panel and rotation, a competence rule, and reopen modeling are all in place before any P1 release. The owner is the decision-maker.
+2. Inspector qualification: a recognised trade certification for the defect class (a game rule). Real-world licensing requirements are for the owner to verify.
+3. Affiliation: a 12-month look-back for repeat work, in both directions. The inspector signs a per-engagement attestation, and the simulation checks it against the affiliation roster.
+
+**Reason:** The ethics review of v1.3 returned Hold on the incomplete residual-risk disclosure, the "verified" wording, the competence gap, and the one-directional affiliation rule.  
+**Affected systems:** Inspector sign-off, affiliation, certification, residual-risk disclosure, §10 labelling.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.4, §20
+
