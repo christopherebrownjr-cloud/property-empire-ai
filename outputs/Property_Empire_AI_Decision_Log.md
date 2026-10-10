@@ -196,3 +196,15 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Affected systems:** Fair housing, verification, floor card, critical safety list, re-letting, avoidable turnover.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.7, §3.8, §3.9, §13
 
+**D-018 addendum (v0.8, 2026-10-10):** the v0.7 changes not previously logged are: the floor card blocks company non-renewals; closure requires verification; the repair funding order (reserve, then revolving line, then corporate cash, with the repair always proceeding); the retaliation test predates the complaint; the market check is per renewal. These are now superseded in part by D-019.
+
+## D-019 — P0 spec v0.8: scope move to P1 and floor-card brake
+
+**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Date:** 2026-10-10  
+**Decision:** The owner chose two things in answer to the v0.7 Hold: (1) fair-housing complaint outcomes, retaliation, community flags, and the verifier panel, rotation, and audit rules move out of P0 and into P1. The slice keeps a complaint placeholder with an Investigate option only. (2) The floor card's brake applies from the first month-end below 60: company non-renewals, renewals above 3%, collections push, discretionary cuts, and staff hour or layoff cuts are blocked in that community until RS is 60 or higher. The card closes at 60.  
+**Reason:** Reviews of v0.2 through v0.7 kept finding new routes in the complaint, retaliation, and verification mechanics. Moving them to P1 removes the routes from the slice until those rules can be designed and reviewed on their own.  
+**Affected systems:** Fair housing, retaliation, verification, the RS and city-reputation formulas, outcome tiers (community flag removed from the slice), the floor card, cost-cutting levers.  
+**Consequence:** The slice does not model fair-housing outcomes. Nothing in the slice may present itself as complete for fair housing. Legal review (§10) is required before P1 designs these rules.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.8, §3.8, §3.9, §14
+

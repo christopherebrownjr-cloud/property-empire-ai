@@ -1,10 +1,10 @@
 # Property Empire AI — P0 Design Locks
 
 **Status:** Proposed — pending owner review and approval (GDD §14: no implementation until P0 locks are approved)
-**Date:** 2026-10-10 (v0.7: revisions recorded as D-013 to D-018)
+**Date:** 2026-10-10 (v0.8: revisions recorded as D-013 to D-019)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
-**Logged as:** D-008 to D-018 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7).
+**Logged as:** D-008 to D-019 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8).
 
 | P0 item (GDD §13) | Section | Decision Log |
 |---|---|---|
@@ -112,9 +112,9 @@ Criterion 3 (trust violations) and criterion 6 must hold in every month, not onl
 
 **Outcome tiers:**
 
-- **Stable:** All 8 criteria met, criterion 3 (trust) and criterion 6 met in every month, no community breached the §3.9 floor, and no 12-month community flag is active.
-- **Promising:** 6 or 7 criteria met, including criteria 3 (trust) and 6 in every month, the resident part of criterion 8 (RS ≥ 65), and no community breaching the §3.9 floor, and no 12-month community flag active; no Distress Level 3 or above.
-- **Struggling:** 4 or 5 criteria met; or 6 or 7 criteria met without the resident part of criterion 8 (RS below 65) or with a §3.9 floor breach; or Distress Level 3 or above reached; or criterion 3 (trust) or criterion 6 failed in any month, or a 12-month community flag is active.
+- **Stable:** All 8 criteria met, criterion 3 (trust) and criterion 6 met in every month, and no community breached the §3.9 floor.
+- **Promising:** 6 or 7 criteria met, including criteria 3 (trust) and 6 in every month, the resident part of criterion 8 (RS ≥ 65), and no community breaching the §3.9 floor; no Distress Level 3 or above.
+- **Struggling:** 4 or 5 criteria met; or 6 or 7 criteria met without the resident part of criterion 8 (RS below 65) or with a §3.9 floor breach; or Distress Level 3 or above reached; or criterion 3 (trust) or criterion 6 failed in any month.
 - **Distressed:** 3 or fewer criteria met, or Distress Level 4 or above reached. Distressed takes precedence when both Struggling and Distressed apply.
 
 Struggling and Distressed outcomes continue play under the recovery rules in §3.6. They do not end the game.
@@ -198,6 +198,7 @@ Corporate money and client money are kept in separate ledgers. The company may n
 | Targeted floor repair | $2,000–$5,000 | Owner | Owner Trust |
 | Service investment tier | $1,500 per month per tier | Company | Corporate Operating |
 | Inspection-readiness checklist | $300 per month per community | Company | Corporate Operating |
+| Third-party verification of a critical repair | $350 per verification (placeholder; finance to confirm the rate) | Company | Corporate Operating |
 
 ---
 
@@ -234,7 +235,7 @@ Opening inputs are pinned: LeasingScore 70, ServiceScore 60, ResidentSatisfactio
 
 **Resident satisfaction (RS, v0.4).** Each community has its own RS, 0–100. Opening value 60. Monthly update, measured at month end after every term below:
 
-> RS(t+1) = clamp(0, 100, RS(t) + 0.2 × (ServiceScore − 60) + 0.5 × (60 − RS(t)) − 0.5 × (resident-reported non-critical work orders open over 7 days, per order) − 5 × (critical safety work orders open over 14 days, per order) − 3 × [failed inspection this month] − 0.5 × Σ(renewal increase above 3%, in percentage points, per renewal this month, scaled to 100 units by multiplying by 100 / units) − 0.5 × (renewals priced above market this month, scaled to 100 units) − 2 × [collections push active] − 3 × [adverse fair-housing finding open and uncorrected] − 1 × [missed inspection this month] + 1 × [funded targeted floor repair, drivers cleared, for three months] − one-time terms in the month they occur: 3 for a plumbing or HVAC emergency, 10 for confirmed retaliation, 5 for a deposit or owner-trust Trust Violation, 2 for contract termination or transfer; +2 when a complaint is closed by verified correction; 1 for each avoidable move-out's displaced household, one time; these are one-time)
+> RS(t+1) = clamp(0, 100, RS(t) + 0.2 × (ServiceScore − 60) + 0.5 × (60 − RS(t)) − 0.5 × (resident-reported non-critical work orders open over 7 days, per order) − 5 × (critical safety work orders open over 14 days, per order) − 3 × [failed inspection this month] − 0.5 × Σ(renewal increase above 3%, in percentage points, per renewal this month, scaled to 100 units by multiplying by 100 / units) − 0.5 × (renewals priced above market this month, scaled to 100 units) − 2 × [collections push active] − 1 × [missed inspection this month] + 1 × [funded targeted floor repair, drivers cleared, for three months] − one-time terms in the month they occur: 3 for a plumbing or HVAC emergency, 10 for confirmed retaliation, 5 for a deposit or owner-trust Trust Violation, 2 for contract termination or transfer; +2 when a complaint is closed by verified correction; 1 for each avoidable move-out's displaced household, one time; these are one-time)
 
 The first two terms are the service driver and drift back toward 60. Renewals at or below a 3% increase are neutral. Opening state: ServiceScore 60, opening renewals at or below 3%, no events, so RS stays at 60.
 
@@ -244,7 +245,7 @@ The first two terms are the service driver and drift back toward 60. Renewals at
 
 **Owner sentiment update (v0.6).** Sentiment(t+1) = clamp(0, 100, S(t) + 1 × [RS ≥ 60, no deferred maintenance, no open critical item] − 2 × [avoidable move-out this month] − 2 × [floor card open] − 5 × [floor trigger this month] − 5 × [critical repair advanced above $5,000 this month]). Tiers are in §3.8.
 
-**City reputation update (v0.6).** CityRep(t+1) = clamp(0, 100, CR(t) + 0.5 × (60 − CR(t)) − 10 × [missed inspection this month] − 5 × [adverse finding this month] − 15 × [confirmed retaliation this month] − 2 × open compliance records). Opening value 60. Three or more open compliance records open a lender review; the covenant effect is for finance-designer to define (§1.6). Below 40, bids lose 0.05 win probability (bid table).
+**City reputation update (v0.6).** CityRep(t+1) = clamp(0, 100, CR(t) + 0.5 × (60 − CR(t)) − 10 × [missed inspection this month] − 2 × open compliance records). Opening value 60. Three or more open compliance records open a lender review; the covenant effect is for finance-designer to define (§1.6). Below 40, bids lose 0.05 win probability (bid table).
 
 **Owner statement timing.** P(late statement) = 0.15 base, plus 0.10 if owner sentiment is Cool or worse, plus 0.10 if a reconciliation exception is open.
 
@@ -301,7 +302,7 @@ Each community averages one event every six months (λ = 2 per year). Category w
 | Plumbing or HVAC emergency | 30% | $3,000–$12,000 (Owner Trust) | Critical work order; resident satisfaction −3 | Aging work orders (about 25% foreseeable) |
 | City code inspection | 20% | Fee $0–$500; repairs $1,000–$6,000 | Compliance record; city relationship | Inspection notice 2 weeks ahead |
 | Local market softening | 15% | None | Base occupancy −1.5 pts for 3 months | Market trend 1–2 months ahead |
-| Resident dispute (fair-housing complaint) | 10% | Set by the chosen response (§3.8); no separate charge | Residents and city | Low signal |
+| Resident dispute (fair-housing complaint) | 10% | Placeholder in the slice; detailed outcomes in P1 (D-019) | Residents and city | Low signal |
 | Vendor failure | 15% | Vendor costs +30% for 2 months | Work-order backlog | Late vendor invoices |
 | Owner request | 10% | None | Owner sentiment ±5; options always include one resident-protective choice; an owner cannot order deferral of life-safety repairs (§3.8) | Direct owner contact |
 
@@ -309,7 +310,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 
 **Inspections (v0.6).** One scheduled inspection per community per quarter. Failure chance = 0.20 + 0.02 × open non-critical work orders past 14 days, capped at 0.50. An inspection-readiness checklist ($300 per month per community) halves the 0.20 base only when every work order at that community is closed.
 
-**Fair-housing rates (v0.6).** Investigation finds an adverse condition 40% of the time (provisional, Band).
+**Fair-housing rates (P1).** The 40% adverse-finding rate is provisional and is used only in P1 (D-019).
 
 ### 3.5 Recovery ladder
 
@@ -355,11 +356,11 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 ### 3.8 Resident-facing consequences (v0.6)
 
 **Glossary.**
-- *Verified correction:* the work is done, and a third-party inspector engaged and paid by the company confirms it. The inspector may not be the repairing vendor or any owner-affiliated party. Company staff cannot sign off. A status change is not a correction.
+- *Verified correction:* the work is done, and a third-party inspector engaged and paid by the company confirms it. The inspector may not be the repairing vendor or any owner-affiliated party. Company staff cannot sign off. A status change is not a correction. Verifier panel, rotation, and audit rules are deferred to P1 (D-019).
 - *Closed work order:* verified correction only. A closure without verification does not count for the §3.4 readiness checklist, the §3.2 RS driver, or the §3.2 sentiment gate.
 - *Critical safety work order (approved list):* one with a defect on this list: no heat, no water, gas leak, electrical hazard, lock or door-security failure, sewage backup, pest infestation, or fire-safety defect.
-- *Adverse action:* a filing (eviction or non-renewal notice), a rent increase above 3%, or a service reduction, issued to a complainant.
-- *Accepted reason code:* a reason is accepted only if a matching simulation record exists and predates the complaint: ledger delinquency (nonpayment), a lease-violation record, an owner sale event, or a dated unit-condition record unrelated to the complaint. Otherwise the action is confirmed retaliation. The code list is an owner-verification item.
+- *Adverse action (P1):* a filing (eviction or non-renewal notice), a rent increase above 3%, or a service reduction, issued to a complainant.
+- *Accepted reason code (P1):* a reason is accepted only if a matching simulation record exists and predates the complaint: ledger delinquency (nonpayment), a lease-violation record, an owner sale event, or a dated unit-condition record unrelated to the complaint. Otherwise the action is confirmed retaliation. The code list is an owner-verification item.
 - *Avoidable move-out:* a move-out the company initiated (non-renewal, above-market renewal, or increase above 3%), or any move-out in a month where the prior month-end RS was below 50. This definition is used everywhere in this section.
 - *Displacement:* the household vacated by an avoidable move-out.
 - *Deferred maintenance:* any open work order past 14 days, or any deferred critical item.
@@ -391,10 +392,9 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 
 **Cost cutting.** Discretionary cuts lower ServiceScore, and service investments raise it (§3.2). Non-critical repairs lower RS through resident-reported work orders. Staff cuts lower Q. Every cut card shows its resident cost before the choice.
 
-**Fair housing (Dismiss removed).** A complaint opens a card with one response, Investigate. Settlement is removed (owner decision):
-- **Investigate** (about $1,500, 30 days). 40% of investigations find an adverse condition (provisional). Clean: the complaint closes with no RS change. Adverse: the company must correct it (about $1,000–$6,000). Until verified correction, the condition costs 3 RS per month and city reputation −5 once. Verified correction closes the complaint and gives +2 RS one time.
-- **Retaliation:** any adverse action against a complainant within 12 months is confirmed retaliation unless an accepted reason code exists that predates the complaint. Effect: city reputation −15, 10 RS one-time, a compliance record, and a 12-month community flag.
-- **12-month community flag:** a confirmed retaliation sets a flag for 12 months. An active flag caps the outcome at Struggling (§1.7).
+**Fair housing (slice placeholder; detailed rules in P1, D-019).**
+- A complaint opens a placeholder card with one response: Investigate (about $1,500, company-funded, 30 days). The complaint closes when the investigation ends.
+- The slice does not model adverse findings, correction funding, retaliation, or community flags. The design must not present the slice as complete for fair housing. These rules are P1 work and need legal review first (§10).
 
 **Other consequences.**
 - Failed inspection: 3 RS. A failed inspection with a life-safety finding also opens a critical order. Missed inspection: 1 RS that month, city reputation −10, and a compliance record.
@@ -410,7 +410,8 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - **Options:**
   - *Fund targeted repairs* of the named drivers: $2,000–$5,000 from Owner Trust, with a 30-day lag. RS +1 per month for three months once the drivers clear.
   - *Add a service investment tier* for this community: $1,500 per month, +5 ServiceScore (§3.5).
-- The card closes at the first month-end with RS of 55 or higher.
+- The card closes at the first month-end with RS of 60 or higher (owner decision).
+- **Brake (owner decision, D-019):** from any month-end RS below 60, until RS is 60 or higher, the company may not raise renewals above 3%, non-renew a tenant, run the collections push, make discretionary cuts, or cut staff hours or lay off staff in that community.
 
 ---
 
@@ -624,3 +625,11 @@ Fixes: the RS formula now includes the displacement, missed-inspection, and floo
 Owner decisions: Settle removed (Investigate only); the verifier is a third-party inspector engaged and paid by the company; the floor card's Accept option is removed; the critical safety list is approved as the default list. Also applied: the retaliation test predates the complaint; closure requires verification; a funding order for repairs is stated; the inspection rule uses the life-safety finding (D-015); the reserve "may fund" wording matches D-017; the floor card blocks company non-renewals; the market check is per renewal; the renewal and move-out and notice cross-references are added; the body-text label in §7 is replaced.
 
 **Still open:** renewal volume reconciliation; owner and lender reputation update rules; the reserve-shortfall distress path (finance-designer); the sentiment consequence of the floor card (owner decision, now that Accept is removed); systems-designer balance of the dismissal-free fair-housing path.
+
+## 14. v0.8 changes (ethics Hold on v0.7)
+
+Owner decisions (D-019): the complaint, retaliation, and verifier-panel mechanics move to P1. The slice keeps a complaint placeholder. The floor card's brake blocks cost-cutting levers and renewal increases from the first below-60 reading, and the card closes at 60.
+
+Also applied: the adverse-finding and retaliation terms are removed from the RS and city-reputation formulas (they belong to P1). Community flags are not used in the slice. The verifier cost is added to §2.6 as a placeholder with a payer. The "life-safety finding" wording follows the approved list.
+
+**Still open:** the renewal-volume and leasing-fee reconciliations (§13); owner and lender reputation rules; the reserve-shortfall path (finance-designer); the P1 fair-housing, retaliation, and verifier design, which needs legal review; the legal items in §10; and a check that the placeholder names don't match real firms (CLAUDE.md rule 5).
