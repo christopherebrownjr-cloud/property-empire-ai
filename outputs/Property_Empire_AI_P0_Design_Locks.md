@@ -185,20 +185,19 @@ Corporate money and client money are kept in separate ledgers. The company may n
 - Covenant certificate per lender
 
 
-### 2.6 Costs added in v0.6 and their payer
+### 2.6 Costs and payers (P0)
 
 | Cost | Amount | Payer | Ledger |
 |---|---|---|---|
 | Turn cost after a move-out | $1,200–$2,500 plus about 25 days' vacancy | Owner | Owner Trust (vacancy lowers the fee base) |
 | New-lease fee not earned after an avoidable move-out | $350 (blended) | Company | Lost corporate revenue |
 | Fair-housing investigation | About $1,500 | Company | Corporate Operating |
-| Correction after an adverse finding | $1,000–$6,000 (midpoint $3,500) | Owner | Owner Trust |
 | Critical repair up to $5,000 | Per repair | Owner | Owner Capital Reserve |
 | Critical repair above $5,000 | Per repair | Company advances; billed to owner | Receivable from owner |
 | Targeted floor repair | $2,000–$5,000 | Owner | Owner Trust |
 | Service investment tier | $1,500 per month per tier | Company | Corporate Operating |
 | Inspection-readiness checklist | $300 per month per community | Company | Corporate Operating |
-| Third-party verification of a critical repair | $350 per verification (placeholder; finance to confirm the rate) | Company | Corporate Operating |
+| Third-party verification of every verified closure, critical and non-critical | $350 per verification (placeholder; finance to confirm the rate); volume follows closures | Company | Corporate Operating |
 
 ---
 
@@ -235,7 +234,7 @@ Opening inputs are pinned: LeasingScore 70, ServiceScore 60, ResidentSatisfactio
 
 **Resident satisfaction (RS, v0.4).** Each community has its own RS, 0–100. Opening value 60. Monthly update, measured at month end after every term below:
 
-> RS(t+1) = clamp(0, 100, RS(t) + 0.2 × (ServiceScore − 60) + 0.5 × (60 − RS(t)) − 0.5 × (resident-reported non-critical work orders open over 7 days, per order) − 5 × (critical safety work orders open over 14 days, per order) − 3 × [failed inspection this month] − 0.5 × Σ(renewal increase above 3%, in percentage points, per renewal this month, scaled to 100 units by multiplying by 100 / units) − 0.5 × (renewals priced above market this month, scaled to 100 units) − 2 × [collections push active] − 1 × [missed inspection this month] + 1 × [funded targeted floor repair, drivers cleared, for three months] − one-time terms in the month they occur: 3 for a plumbing or HVAC emergency, 10 for confirmed retaliation, 5 for a deposit or owner-trust Trust Violation, 2 for contract termination or transfer; +2 when a complaint is closed by verified correction; 1 for each avoidable move-out's displaced household, one time; these are one-time)
+> RS(t+1) = clamp(0, 100, RS(t) + 0.2 × (ServiceScore − 60) + 0.5 × (60 − RS(t)) − 0.5 × (resident-reported non-critical work orders open over 14 days, per order) − 5 × (critical safety work orders open over 14 days, per order) − 3 × [failed inspection this month] − 0.5 × Σ(renewal increase above 3%, in percentage points, per renewal this month, scaled to 100 units by multiplying by 100 / units) − 0.5 × (renewals priced above market this month, scaled to 100 units) − 2 × [collections push active] − 1 × [missed inspection this month] + 1 × [funded targeted floor repair, drivers cleared, for three months] − one-time terms in the month they occur: 3 for a plumbing or HVAC emergency, 5 for a deposit or owner-trust Trust Violation, 2 for contract termination or transfer; 1 for each avoidable move-out's displaced household, one time; these are one-time)
 
 The first two terms are the service driver and drift back toward 60. Renewals at or below a 3% increase are neutral. Opening state: ServiceScore 60, opening renewals at or below 3%, no events, so RS stays at 60.
 
@@ -329,8 +328,8 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 
 | Lever | Available at | Immediate effect | Lag | Side effects | Limit |
 |---|---|---|---|---|---|
-| Collections push | Any | Recovers up to $2,000 of delinquent rent into Owner Trust over 60 days; corporate gains only its fee share (about 6%) and the owner receives the rest; delinquency −0.5 pt | 30–60 days | Resident satisfaction −2 in each month the push is active (one month per use). Permitted: payment plans, hardship review, reminders, and legally required notices. Not permitted: threats, harassment, public or third-party pressure, contacting employers, and fee-driven pressure. The permitted list is an owner-verification item | Once per quarter |
-| Cut discretionary spend | Any | +$500–$2,000 per month. Discretionary lines are software, marketing, and miscellaneous ($2,000 at opening) | Immediate | ServiceScore −5 until restored (restore = reinstate the line for one month at full cost); capacity −5 pts per person; morale −3 | None |
+| Collections push | Any, but blocked while a §3.9 brake is active | Recovers up to $2,000 of delinquent rent into Owner Trust over 60 days; corporate gains only its fee share (about 6%) and the owner receives the rest; delinquency −0.5 pt | 30–60 days | Resident satisfaction −2 in each month the push is active (one month per use). Permitted: payment plans, hardship review, reminders, and legally required notices. Not permitted: threats, harassment, public or third-party pressure, contacting employers, and fee-driven pressure. The permitted list is an owner-verification item | Once per quarter |
+| Cut discretionary spend | Any, but blocked while a §3.9 brake is active | +$500–$2,000 per month. Discretionary lines are software, marketing, and miscellaneous ($2,000 at opening) | Immediate | ServiceScore −5 until restored (restore = reinstate the line for one month at full cost); capacity −5 pts per person; morale −3 | None |
 | Service investment | Any | −$1,500 per month per tier (corporate cost). Each active tier gives ServiceScore +5; up to three tiers stack (+15) | Immediate | Ongoing cost; no resident-side cost | Three tiers |
 | Draw revolving line | Lender-dependent | Up to the line limit | Immediate | Interest cost; covenant ratio worsens; lender sentiment −3 | $30,000 (Foothill) |
 | Request owner fee advance | Owner sentiment Warm or better | One to two months of that owner's fee | Immediate | Credited back over later months; owner sentiment −3 at request | Once per owner per year |
@@ -382,7 +381,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - **Notice:** 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10%. The 90-day branch is reachable only if the verified cap structure allows it; it stays as a placeholder.
 - **Resident cost:** each renewal above 3% costs 0.5 RS per percentage point above 3, scaled to 100 units. Monthly, this is summed across that month's renewals. Example: a sustained 6% increase on all renewals in a 64-unit community costs about 12.5 RS per month.
 - **Market check:** each renewal priced above market costs 0.5 RS, scaled to 100 units, and adds the P_gap penalty (§3.2).
-- Renewal increases above 3% are unavailable in any community whose floor card is open (§3.9).
+- Renewal increases above 3% are unavailable in any community whose §3.9 brake is active (RS below 60) or whose floor card is open.
 
 **Re-letting and avoidable turnover.**
 - For 12 months after any avoidable move-out, the unit may be re-let at no more than the prior rent plus the cap. The company earns no new-lease fee on it.
@@ -411,7 +410,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
   - *Fund targeted repairs* of the named drivers: $2,000–$5,000 from Owner Trust, with a 30-day lag. RS +1 per month for three months once the drivers clear.
   - *Add a service investment tier* for this community: $1,500 per month, +5 ServiceScore (§3.5).
 - The card closes at the first month-end with RS of 60 or higher (owner decision).
-- **Brake (owner decision, D-019):** from any month-end RS below 60, until RS is 60 or higher, the company may not raise renewals above 3%, non-renew a tenant, run the collections push, make discretionary cuts, or cut staff hours or lay off staff in that community.
+- **Brake (owner decision, D-019):** from any month-end RS below 60, until RS is 60 or higher, the company may not raise renewals above 3%, non-renew a tenant, run the collections push, make discretionary cuts affecting that community's service, or cut staff hours or lay off staff there.
 
 ---
 
@@ -615,7 +614,7 @@ Fixes: the RS formula now includes the displacement, missed-inspection, and floo
 - Bid table has no resident-outcome modifier. Consider one for portfolio RS below 55 or open compliance records.
 - Legal items in §10 remain unverified and parked by the owner.
 - Owner and lender reputation (§2.4) have no update rules in §3.2 yet.
-- Leasing fee allocation: §1.4 uses a blended $350 new-lease fee and a $150 renewal fee across all four renewals. Unit-weighted, the new-lease figure is about $345 (not $350), and Pine Hollow has no renewal fee, so renewal income is overstated by about $127 a month. Net would be about −$400 a month, not −$247. Reconcile before approval.
+- Leasing fee allocation (§12): §1.4 uses a blended $350 new-lease fee and a $150 renewal fee across all four renewals. Unit-weighted, the new-lease figure is about $345 (not $350), and Pine Hollow has no renewal fee, so renewal income is overstated by about $127 a month. Net would be about −$400 a month, not −$247. Reconcile before approval.
 - Renewal volume: the 12.5-RS-per-month figure assumes about 5.3 renewals a month at Alder, while §1.4 books 4 a month across all 132 units. Reconcile.
 - Readiness checklist: the halving applies only when every work order at the community is closed, which is stricter than the failure-chance count (non-critical orders past 14 days).
 - Ethics re-review and auditor recheck of v0.6 before approval.
@@ -632,4 +631,4 @@ Owner decisions (D-019): the complaint, retaliation, and verifier-panel mechanic
 
 Also applied: the adverse-finding and retaliation terms are removed from the RS and city-reputation formulas (they belong to P1). Community flags are not used in the slice. The verifier cost is added to §2.6 as a placeholder with a payer. The "life-safety finding" wording follows the approved list.
 
-**Still open:** the renewal-volume and leasing-fee reconciliations (§13); owner and lender reputation rules; the reserve-shortfall path (finance-designer); the P1 fair-housing, retaliation, and verifier design, which needs legal review; the legal items in §10; and a check that the placeholder names don't match real firms (CLAUDE.md rule 5).
+**Still open:** the renewal-volume and leasing-fee reconciliations (§12); owner and lender reputation rules; the reserve-shortfall path (finance-designer); the P1 fair-housing, retaliation, and verifier design, which needs legal review; the legal items in §10; and a check that the placeholder names don't match real firms (CLAUDE.md rule 5).
