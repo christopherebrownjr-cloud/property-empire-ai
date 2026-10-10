@@ -107,10 +107,10 @@ Any future change to a locked decision must be recorded here with a new entry, t
 1. D-008: L-02 (Folsom lease-up, 72 units) is removed from the slice and deferred to P2. The slice has one prospect, L-01. Criterion 5 counts L-01 or a new lead.
 2. D-009: The opening P&L applies a 3.5% collection loss, so fees are on collected rent. Opening net is −$247/month, and the business is cash-negative from opening. The post-hire net is −$4,720/month, with about 10 months of runway.
 3. D-009: The founder draw stays an operating expense (conservative).
-4. D-010: The Pine Hollow trigger stays at two consecutive months below 90%. Success criterion 4 changes to match.
+4. D-010: The Cinder Hollow trigger stays at two consecutive months below 90%. Success criterion 4 changes to match.
 5. D-010: Criterion 3 is counted per owner.
 6. D-010: The non-destructive lever rule holds for Levels 0–3. Levels 4 and 5 spell out their options, and forced-choice cards are marked destructive.
-7. D-010: Opening inputs are pinned (LeasingScore 70, ServiceScore 60, October season −0.01). Occupancy bases are recalibrated to Alder 0.91, Riverbend 0.92, and Pine Hollow 0.88. The unit-weighted opening portfolio is 93.1%.
+7. D-010: Opening inputs are pinned (LeasingScore 70, ServiceScore 60, October season −0.01). Occupancy bases are recalibrated to Larkspur 0.91, Stillwater 0.92, and Cinder Hollow 0.88. The unit-weighted opening portfolio is 93.1%.
 8. D-011/D-012: Resident-facing consequences for turnover, cost cutting, safety work orders, and fair-housing complaints are added (P0 spec §3.8). These address the ethics-reviewer's blocking items B1–B4.
 9. D-007 approval evidence: GDD §15 records the owner's acceptance of all board recommendations. D-007's text is not changed.
 
@@ -234,7 +234,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 **Status:** Proposed — pending ethics review, auditor recheck, and owner approval  
 **Date:** 2026-10-10  
-**Decision:** The owner chose the reconciled baseline for the opening P&L. The new-lease fee is unit-weighted across the three contracts ($345 across six leases). Renewal fees ($150 × 4) apply only where the contract has them, which excludes Pine Hollow's unit share. Opening revenue is $15,435; the opening net is −$402/month; the post-hire net is about −$4,875/month; runway after the first hire is about 9.8 months; founder-as-distribution is +$3,598/month. These figures supersede the −$247 headline in D-008 and D-013, which are not edited.  
+**Decision:** The owner chose the reconciled baseline for the opening P&L. The new-lease fee is unit-weighted across the three contracts ($345 across six leases). Renewal fees ($150 × 4) apply only where the contract has them, which excludes Cinder Hollow's unit share. Opening revenue is $15,435; the opening net is −$402/month; the post-hire net is about −$4,875/month; runway after the first hire is about 9.8 months; founder-as-distribution is +$3,598/month. These figures supersede the −$247 headline in D-008 and D-013, which are not edited.  
 **Reason:** The §12 reconciliation found that the blended fees overstated renewal income by about $127 a month. The owner chose to use the contract-accurate figures rather than keep the overstated headline.  
 **Affected systems:** Opening P&L (§1.4), runway and the hire scenario, the founder-draw treatment, and any balance tests that use the opening cash position.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.1, §1.4 and §17
@@ -249,3 +249,25 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Affected systems:** Closures, readiness checklist, sentiment gate, brake, owner requests, verification, reserve cap, complaint placeholder.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.2, §18
 
+
+## D-024 — P0 spec v1.3: owner answers to open items; names; residual risk
+
+**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Date:** 2026-10-10  
+**Decision (owner answers):**
+1. Renewal volume: 4 a month across the portfolio. The §3.8 example is recomputed (Alder about 1.9 renewals a month; a sustained 6% increase settles RS near 51). The 12.5-point figure is withdrawn.
+2. Owner and lender reputation: display only in the slice. No update rule until P1.
+3. Reserve shortfall: the company absorbs it from corporate cash, even below zero. Finance sizes the revolving line and cash buffer so this is rare.
+4. Sentiment values approved: +2 for an approved owner request, −2 for a decline, −5 for a company-funded overrun above $5,000 per defect.
+5. Inspector fee ($350): the company pays on every engagement, including rejected sign-offs.
+6. Sign-off standard: an on-site functional test per defect class (§3.8).
+7. Affiliation: shared ownership, management, or staff with the company, the vendor, or the owner; subcontracting or referral from the vendor; repeat work for the same vendor. Each engagement logs an attestation.
+8. Readiness: the 50% failure reduction requires every critical order verified closed.
+9. Names: placeholder names renamed to invented names. Communities: Larkspur Court, Stillwater Terrace, Cinder Hollow Flats. Owners: Quillmark Hollow Holdings, Veridian Gate Partners, Ostrava Pine Realty Trust. Lenders: Kestrel Harbor Bank, Lumenfall Credit Partners. Prospects: Brindlewood Residential Fund, Halcyon Crest Developers. Vendors: Pellmere Ledger Services, Orison Turn Services, Marrow Peak Handyworks. Employee: Ilse Varrin. The historical entries in D-008 through D-023 are updated for names only; their decisions are unchanged.
+10. Game figures: §10 is fictional game values, not legal guidance and not a statement of California law. The sources listed there are background only and were not verified.
+
+**Residual risk (owner override, restated):** The company engages and pays the critical-repair inspector. The routes this allows are: a defect is signed off by an inspector who did not properly test it, and the hazard persists while residents bear it. The slice does not model reopen probability, so a false closure costs nothing in play. Criterion 6 and the readiness checklist can both be met on closures alone, and a player can reach Stable without the inspector ever failing a job. The on-screen label is "company-engaged inspector sign-off," not "verified." The reversal condition is that P1 panel and rotation are designed and in place before any P1 release. The owner is the decision-maker.  
+**Open:** the brake release at RS 62 is reachable only with two service tiers (equilibrium 64). With one tier the equilibrium is 62 and is never reached. Systems-designer to rebalance, or the owner chooses another release value.  
+**Reason:** The owner answered the open items. The ethics review of v1.2 and the auditor recheck returned Hold and FAIL on the sign-off standard, fee payer, affiliation, readiness rule, and the residual-risk disclosure.  
+**Affected systems:** Verification, inspector fee, readiness, reputation, reserve funding, renewal example, §10, names.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.3, §19

@@ -1,10 +1,10 @@
 # Property Empire AI — P0 Design Locks
 
 **Status:** Proposed — pending owner review and approval (GDD §14: no implementation until P0 locks are approved)
-**Date:** 2026-10-10 (v1.2: revisions recorded as D-013 to D-023)
+**Date:** 2026-10-10 (v1.3: revisions recorded as D-013 to D-024)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
-**Logged as:** D-008 to D-023 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2).
+**Logged as:** D-008 to D-024 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2, D-024 v1.3).
 
 | P0 item (GDD §13) | Section | Decision Log |
 |---|---|---|
@@ -30,20 +30,20 @@ D-002 is unchanged. New saves still let the player choose any of the five specia
 
 | Community | City | Units | Avg rent | Opening occupancy | Owner | Monthly fee (opening, collected) |
 |---|---|---|---|---|---|---|
-| Alder Court Apartments | Sacramento (Midtown) | 64 | $1,780 | 93.4% | Cordova Hollow Holdings | $6,161 |
-| Riverbend Terrace | Rancho Cordova | 40 | $1,950 | 94.4% | Valley Gate Partners | $3,908 |
-| Pine Hollow Flats | Elk Grove | 28 | $1,650 | 90.4% | Sutter Pine Realty Trust | $2,821 |
+| Larkspur Court Apartments | Sacramento (Midtown) | 64 | $1,780 | 93.4% | Quillmark Hollow Holdings | $6,161 |
+| Stillwater Terrace | Rancho Quillmark | 40 | $1,950 | 94.4% | Veridian Gate Partners | $3,908 |
+| Cinder Hollow Flats | Elk Grove | 28 | $1,650 | 90.4% | Ostrava Pine Realty Trust | $2,821 |
 
-Fee calculations use collected rent, which assumes 3.5% delinquency (§3.2, multiply by 0.965): Occupancy uses the pinned §3.2 values (93.4%, 94.4%, 90.4%). Alder 6.0% × ($1,780 × 64 × 0.934) × 0.965 = $6,161; Riverbend 5.5% × ($1,950 × 40 × 0.944) × 0.965 = $3,908; Pine Hollow 7.0% × ($1,650 × 28 × 0.904) × 0.965 = $2,821.
+Fee calculations use collected rent, which assumes 3.5% delinquency (§3.2, multiply by 0.965): Occupancy uses the pinned §3.2 values (93.4%, 94.4%, 90.4%). Larkspur 6.0% × ($1,780 × 64 × 0.934) × 0.965 = $6,161; Stillwater 5.5% × ($1,950 × 40 × 0.944) × 0.965 = $3,908; Cinder Hollow 7.0% × ($1,650 × 28 × 0.904) × 0.965 = $2,821.
 
 ### 1.3 Opening staff
 
 | Role | Holder | Burdened monthly cost | Capacity | Starting burnout | Notes |
 |---|---|---|---|---|---|
 | Founder-CEO | Player | $4,000 draw | 100 pts | 35 | Owner reporting, inspections, work-order escalations, bids |
-| Leasing & Resident Coordinator | Placeholder: Jordan Okafor | $5,287 ($52,000 ÷ 12 × 1.22) | 100 pts | 20 | Resident service for all units, leasing, renewals |
-| Bookkeeping | Outsourced vendor (placeholder: Harbor Ledger Services) | $1,200 | n/a | n/a | Monthly close support |
-| Maintenance vendor pool | Valley Turn Services; Foothill Handyworks (placeholders) | Per-job billing | n/a | n/a | Work orders billed to owner trust |
+| Leasing & Resident Coordinator | Placeholder: Ilse Varrin | $5,287 ($52,000 ÷ 12 × 1.22) | 100 pts | 20 | Resident service for all units, leasing, renewals |
+| Bookkeeping | Outsourced vendor (placeholder: Pellmere Ledger Services) | $1,200 | n/a | n/a | Monthly close support |
+| Maintenance vendor pool | Orison Turn Services; Marrow Peak Handyworks (placeholders) | Per-job billing | n/a | n/a | Work orders billed to owner trust |
 
 Opening staff have Morale 100 and SkillFit 1.0. The utilization figures in §4.4 depend on these values.
 
@@ -54,7 +54,7 @@ Opening staff have Morale 100 and SkillFit 1.0. The utilization figures in §4.4
 | Line | Amount |
 |---|---|
 | Management fees, collected (three communities) | $12,890 |
-| Leasing and renewal fees (unit-weighted new-lease fee $345 × 6; renewal $150 × 4, excluding Pine Hollow's unit share, which has no renewal fee) | $2,545 |
+| Leasing and renewal fees (unit-weighted new-lease fee $345 × 6; renewal $150 × 4, excluding Cinder Hollow's unit share, which has no renewal fee) | $2,545 |
 | **Total corporate revenue** | **$15,435** |
 | Founder draw | $4,000 |
 | Leasing & Resident Coordinator | $5,287 |
@@ -68,30 +68,30 @@ Opening staff have Morale 100 and SkillFit 1.0. The utilization figures in §4.4
 | **Total corporate expenses** | **$15,837** |
 | **Net corporate operating result** | **−$402** |
 
-**Opening cash:** $48,000 corporate operating cash. Undrawn $30,000 revolving line (Foothill Harbor Bank).
+**Opening cash:** $48,000 corporate operating cash. Undrawn $30,000 revolving line (Kestrel Harbor Bank).
 
-**Realism check:** The business is cash-negative from opening, at about −$402/month once the 3.5% collection loss is applied. Adding one $44,000 assistant ($44,000 ÷ 12 × 1.22 = $4,473.33/month) moves the result to about −$4,875/month, which leaves about 10 months of runway at $48,000. Every hire is a visible tradeoff. The leasing-fee allocation is reconciled in v1.1 (§12). The founder draw is treated as an operating expense (conservative); treating it as a distribution would move the opening result to about +$3,598/month.
+**Realism check:** The business is cash-negative from opening, at about −$402/month once the 3.5% collection loss is applied. Adding one $44,000 assistant ($44,000 ÷ 12 × 1.22 = $4,473.33/month) moves the result to about −$4,875/month, which leaves about 9.8 months of runway at $48,000. Every hire is a visible tradeoff. The leasing-fee allocation is reconciled in v1.1 (§17). The founder draw is treated as an operating expense (conservative); treating it as a distribution would move the opening result to about +$3,598/month.
 
 ### 1.5 Opening contracts and pipeline
 
 | ID | Contract | Term | Fee model | Key terms | Decision point in slice |
 |---|---|---|---|---|---|
-| C-01 | Alder Court | 24 months | 6.0% of collected rent; $350 per new lease; $150 per renewal | Owner may terminate for convenience with 90 days' notice after month 9 | Early termination risk from month 9 |
-| C-02 | Riverbend Terrace | 12 months, auto-renewing | 5.5% of collected rent; $1,200 monthly minimum; $300 per new lease; $150 per renewal | 60-day non-renewal notice | Renewal decision due month 10 |
-| C-03 | Pine Hollow Flats | 24 months | 7.0% of collected rent; $1,500 monthly minimum; $400 per new lease | If occupancy is below 90% for 2 consecutive months, owner may terminate on 30 days' notice | Occupancy trigger is live from month 1 |
+| C-01 | Larkspur Court | 24 months | 6.0% of collected rent; $350 per new lease; $150 per renewal | Owner may terminate for convenience with 90 days' notice after month 9 | Early termination risk from month 9 |
+| C-02 | Stillwater Terrace | 12 months, auto-renewing | 5.5% of collected rent; $1,200 monthly minimum; $300 per new lease; $150 per renewal | 60-day non-renewal notice | Renewal decision due month 10 |
+| C-03 | Cinder Hollow Flats | 24 months | 7.0% of collected rent; $1,500 monthly minimum; $400 per new lease | If occupancy is below 90% for 2 consecutive months, owner may terminate on 30 days' notice | Occupancy trigger is live from month 1 |
 
 | ID | Prospect | Units | Baseline win odds | Bid due | Notes |
 |---|---|---|---|---|---|
-| L-01 | Oakline Residential Fund property, Roseville | 48 | 30% | Month 3 | Standard market-rate management |
+| L-01 | Brindlewood Residential Fund property, Roseville | 48 | 30% | Month 3 | Standard market-rate management |
 
-L-02 (Summit Ridge Developers lease-up, Folsom, 72 units, 20% baseline odds) is deferred to P2 and is not in the slice (v0.2). Lease-up work is a different specialization.
+L-02 (Halcyon Crest Developers lease-up, Folsom, 72 units, 20% baseline odds) is deferred to P2 and is not in the slice (v0.2). Lease-up work is a different specialization.
 
 ### 1.6 Lenders in the slice
 
 | Lender | Product | Terms (starting) | Requirements |
 |---|---|---|---|
-| Foothill Harbor Bank | $30,000 revolving line | 9.5% interest | Corporate cash ≥ 1.5 × monthly expenses; aged receivables (over 60 days) ≤ 15% of trailing 3-month billings; no active covenant breach |
-| Brightwater Credit Partners | $60,000 term loan (optional) | 13.5% interest, 10-day decision | Revenue run-rate ≥ $180,000 per year; founder personal guarantee |
+| Kestrel Harbor Bank | $30,000 revolving line | 9.5% interest | Corporate cash ≥ 1.5 × monthly expenses; aged receivables (over 60 days) ≤ 15% of trailing 3-month billings; no active covenant breach |
+| Lumenfall Credit Partners | $60,000 term loan (optional) | 13.5% interest, 10-day decision | Revenue run-rate ≥ $180,000 per year; founder personal guarantee |
 
 The full lender roster (five lenders, P1) is out of scope for the slice.
 
@@ -104,7 +104,7 @@ Criterion 3 (trust violations) and criterion 6 must hold in every month, not onl
 | 1 | Contracts | All three management agreements active or renewed; zero owner terminations |
 | 2 | Liquidity | Corporate cash ≥ 2.0 × monthly corporate expenses; never at Distress Level 3 or above during months 1–12 |
 | 3 | Trust integrity | Zero trust-account violations in every month (1–12). Separate test: for each owner, owner statements delivered by day 10 in at least 11 of 12 months |
-| 4 | Occupancy | Portfolio 12-month average ≥ 93%; no community below 90% for 2 or more consecutive months (matches the Pine Hollow termination trigger in C-03) |
+| 4 | Occupancy | Portfolio 12-month average ≥ 93%; no community below 90% for 2 or more consecutive months (matches the Cinder Hollow termination trigger in C-03) |
 | 5 | Growth | At least one new management contract won (L-01 or a new lead) |
 | 6 | Compliance | In each of months 1–12, measured at the month-end snapshot: zero missed inspections and zero critical safety work orders open for more than 14 days |
 | 7 | Team | No employee at burnout ≥ 85 for 2 or more consecutive months; founder below 85 at month 12 |
@@ -138,7 +138,7 @@ Corporate money and client money are kept in separate ledgers. The company may n
 | **Corporate Operating** | Company | Earned management and leasing fees; other company income | Payroll, software, insurance, office, corporate payables | Yes |
 | **Owner Trust** (one per community) | Owner, held by company | Resident rent and resident charges; owner deposits | Property payables, owner distributions, scheduled fee sweep to Corporate | Only through the scheduled fee sweep |
 | **Security Deposit Trust** (one per community) | Residents, held in trust | Resident security deposits | Refunds; documented deductions only | No |
-| **Owner Capital Reserve** (one per community, restricted) | Owner | Required reserve transfers from Owner Trust | Capital and repair spend above threshold, with owner approval. Exception: reserve draws up to $5,000 per community per 30 days, per defect (one cause, one work order), may proceed without approval, with owner notice within 24 hours (§3.8) | No |
+| **Owner Capital Reserve** (one per community, restricted) | Owner | Required reserve transfers from Owner Trust | Capital and repair spend above the owner's written approval threshold (set per community at onboarding), with owner approval. Exception: reserve draws up to $5,000 per community per rolling 30 days (one cause, one work order), may proceed without approval, with owner notice within 24 hours (§3.8) | No |
 | **Receivables** | Company | Fees earned but not yet collected from owner trust (by owner, aged) | Collections | n/a |
 | **Payables** | Company and owner (separately tagged) | Bills received | Payments | Corporate payables from Corporate Operating only; property payables from Owner Trust only |
 | **Debt and Credit** | Company | Line draws, loan proceeds | Repayments, interest | n/a |
@@ -220,7 +220,7 @@ Corporate money and client money are kept in separate ledgers. The company may n
 
 | Term | Definition | Starting values |
 |---|---|---|
-| Base | Market and property-class baseline | Alder 0.91; Riverbend 0.92; Pine Hollow 0.88 |
+| Base | Market and property-class baseline | Larkspur 0.91; Stillwater 0.92; Cinder Hollow 0.88 |
 | L_eff | 0.04 × LeasingScore / 100 | LeasingScore is the leasing function's effective quality, 0–100 |
 | S_eff | 0.03 × (ServiceScore − 50) / 50 | Range −0.03 to +0.03 |
 | P_gap | 0.10 × max(0, AskRent / MarketRent − 1) | Only asking above market reduces occupancy |
@@ -228,7 +228,7 @@ Corporate money and client money are kept in separate ledgers. The company may n
 | Season | Q1 −0.01; Q2 +0.01; Q3 +0.01; Q4 −0.01 | Turnover seasonality |
 | noise | Normal, σ = 0.008 | Bounded by the seed |
 
-Opening inputs are pinned: LeasingScore 70, ServiceScore 60, ResidentSatisfaction 60, opening month October (Season −0.01), no penalties, noise 0. Opening occupancy: Alder 0.91 + 0.028 + 0.006 − 0.01 = 93.4%; Riverbend 94.4%; Pine Hollow 90.4%. The unit-weighted opening portfolio is 93.1%, only 0.1 points above criterion 4, so a player who does nothing will drift below the 93% threshold.
+Opening inputs are pinned: LeasingScore 70, ServiceScore 60, ResidentSatisfaction 60, opening month October (Season −0.01), no penalties, noise 0. Opening occupancy: Larkspur 0.91 + 0.028 + 0.006 − 0.01 = 93.4%; Stillwater 94.4%; Cinder Hollow 90.4%. The unit-weighted opening portfolio is 93.1%, only 0.1 points above criterion 4, so a player who does nothing will drift below the 93% threshold.
 
 **Collections.**
 
@@ -246,7 +246,7 @@ The first two terms are the service driver and drift back toward 60. Renewals at
 
 **Owner sentiment update (v0.6).** Sentiment(t+1) = clamp(0, 100, S(t) + 1 × [RS ≥ 60, no deferred maintenance, no open critical item] − 2 × [avoidable move-out this month] − 2 × [floor card open] − 5 × [floor trigger this month] − 5 × [defect with company-funded amount above $5,000, or a reserve draw above the 30-day cap that is company-funded, this month]). Tiers are in §3.8.
 
-**City reputation update (v0.6).** CityRep(t+1) = clamp(0, 100, CR(t) + 0.5 × (60 − CR(t)) − 10 × [missed inspection this month] − 2 × open compliance records). Opening value 60. Three or more open compliance records open a lender review; the covenant effect is for finance-designer to define (§1.6). Below 40, bids lose 0.05 win probability (bid table).
+**City reputation update (v0.6).** CityRep(t+1) = clamp(0, 100, CR(t) + 0.5 × (60 − CR(t)) − 10 × [missed inspection this month] − 2 × open compliance records). Opening value 60. Owner and lender reputation are displayed as numbers in the slice, with no update rule (modeling is P1; D-024). Three or more open compliance records open a lender review; the covenant effect is for finance-designer to define (§1.6). Below 40, bids lose 0.05 win probability (bid table).
 
 **Owner statement timing.** P(late statement) = 0.15 base, plus 0.10 if owner sentiment is Cool or worse, plus 0.10 if a reconciliation exception is open.
 
@@ -305,11 +305,11 @@ Each community averages one event every six months (λ = 2 per year). Category w
 | Local market softening | 15% | None | Base occupancy −1.5 pts for 3 months | Market trend 1–2 months ahead |
 | Resident dispute (fair-housing complaint) | 10% | Placeholder in the slice; detailed outcomes in P1 (D-019) | Residents and city | Low signal |
 | Vendor failure | 15% | Vendor costs +30% for 2 months | Work-order backlog | Late vendor invoices |
-| Owner request | 10% | Options: approve an in-budget repair (funded from Owner Trust; it clears its named driver, removing that driver's penalty); decline and log (no RS effect). No option defers a critical item or reduces RS | Approve +2 / decline −2 owner sentiment (owner to confirm) | Direct owner contact |
+| Owner request | 10% | Options: approve an in-budget repair (funded from Owner Trust; it clears its named driver, removing that driver's penalty); decline and log (the named driver stays active and its penalty continues). No option defers a critical item or reduces RS | Approve +2 / decline −2 owner sentiment (owner-approved) | Direct owner contact |
 
 About 60% of events have a warning signal, so the player can prepare or mitigate.
 
-**Inspections (v0.6).** One scheduled inspection per community per quarter. Failure chance = 0.20 + 0.02 × open non-critical work orders past 14 days, capped at 0.50. An inspection-readiness checklist ($300 per month per community) halves the 0.20 base only when every work order at that community is closed.
+**Inspections (v0.6).** One scheduled inspection per community per quarter. Failure chance = 0.20 + 0.02 × open non-critical work orders past 14 days, capped at 0.50. An inspection-readiness checklist ($300 per month per community) halves the 0.20 base only when every critical work order at that community is verified closed.
 
 **Fair-housing rates (P1).** The 40% adverse-finding rate is provisional and is used only in P1 (D-019).
 
@@ -333,11 +333,11 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 | Collections push | Any, but blocked while a §3.9 brake is active | Recovers up to $2,000 of delinquent rent into Owner Trust over 60 days; corporate gains only its fee share (about 6%) and the owner receives the rest; delinquency −0.5 pt | 30–60 days | Resident satisfaction −2 in each month the push is active (one month per use). Permitted: payment plans, hardship review, reminders, and legally required notices. Not permitted: threats, harassment, public or third-party pressure, contacting employers, and fee-driven pressure. The permitted list is an owner-verification item | Once per quarter |
 | Cut discretionary spend (P1; not in the slice) | +$500–$2,000 per month. Discretionary lines are software, marketing, and miscellaneous ($2,000 at opening) | Immediate | ServiceScore −5 until restored (restore = reinstate the line for one month at full cost); capacity −5 pts per person; morale −3 | None |
 | Service investment | Any | −$1,500 per month per tier (corporate cost). Each active tier gives ServiceScore +5; up to three tiers stack (+15) | Immediate | Ongoing cost; no resident-side cost | Three tiers |
-| Draw revolving line | Lender-dependent | Up to the line limit | Immediate | Interest cost; covenant ratio worsens; lender sentiment −3 | $30,000 (Foothill) |
+| Draw revolving line | Lender-dependent | Up to the line limit | Immediate | Interest cost; covenant ratio worsens; lender sentiment −3 | $30,000 (Kestrel) |
 | Request owner fee advance | Owner sentiment Warm or better | One to two months of that owner's fee | Immediate | Credited back over later months; owner sentiment −3 at request | Once per owner per year |
 | Defer part of payroll (up to 25%) | Any | Cash timing relief | Repaid by next payroll | Morale −10; burnout +5; compliance issue if not repaid | Two months per year |
-| Reduce staff hours or lay off (P1; not in the slice) | Not offered |
-| Sell or transfer a contract (P1; not in the slice) | Not offered | One-time cash; loss of that fee stream | 60–90 days | Owner relationship damage; lender review | One per year |
+| Reduce staff hours or lay off (P1; not in the slice) | Not offered | Not applicable | Not applicable | Not applicable | Not applicable |
+| Sell or transfer a contract (P1; not in the slice) | Not offered | Not applicable | Not applicable | Not applicable | Not applicable |
 | Take partner investment | Level 2 or above; lender reputation 50 or higher | Equity cash | 60–120 days | Equity dilution; shared decision rights | Once |
 | Restructure a loan | Level 2 or above | Covenant reset | 30 days | Restructuring fee; lender sentiment −3 | Once per loan |
 
@@ -357,7 +357,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 ### 3.8 Resident-facing consequences (v0.6)
 
 **Glossary.**
-- *Verified completion (critical items):* the vendor completes the repair, and one third-party inspector, engaged and paid by the company, signs it off. The inspector may not be the repairing vendor or any company-affiliated or owner-affiliated firm. Company staff cannot sign off. The inspector's fee is paid inside the repair's funding step, ahead of discretionary spend. A rejected sign-off leaves the order open and is recorded on the compliance record; the 14-day clock runs from the original open date. A rejected inspector may not be re-engaged on that order, and every engagement is logged. Sign-off confirms the defect is resolved and any required test passed; a reopen within 90 days needs a new sign-off. Panel, rotation, and sampling audit are P1 (D-021).
+- *Company-engaged inspector sign-off (critical items; the label formerly 'verified completion'):* the vendor completes the repair, and one third-party inspector, engaged and paid by the company, signs it off. The inspector may not be the repairing vendor or any affiliated firm. A firm is affiliated if it shares ownership, management, or staff with the company, the vendor, or the owner; subcontracts to or refers work from the vendor; or has been engaged for repeat work by the same vendor. Each engagement carries a logged independence attestation. Company staff cannot sign off. The inspector's fee is paid by the company on every engagement, including rejected sign-offs. A rejected sign-off leaves the order open and is recorded on the compliance record; the 14-day clock runs from the original open date. A rejected inspector may not be re-engaged on that order, and every engagement is logged. Sign-off requires the inspector to confirm the defect is resolved and to perform an on-site functional test, recording the result. Tests by defect class: heat (required room temperature reached); water (flow and pressure restored); gas (leak test passed); electrical (test passed, no exposed hazard); locks (door secures and locks); sewage (flow clear, no backup); pests (no activity on re-inspection); fire safety (device operates). A reopen within 90 days needs a new sign-off. Panel, rotation, and sampling audit are P1 (D-021).
 - *Closed work order:* for critical items, verified completion. For non-critical items, vendor completion confirmed by the simulation. Only critical closures count for the §3.4 readiness checklist and the §3.2 sentiment gate; both classes clear the §3.2 RS driver. Floor-card drivers count as cleared under these same rules (D-023).
 - *Critical safety work order (approved list):* one with a defect on this list: no heat, no water, gas leak, electrical hazard, lock or door-security failure, sewage backup, pest infestation, or fire-safety defect.
 - *Adverse action (P1):* a filing (eviction or non-renewal notice), a rent increase above 3%, or a service reduction, issued to a complainant.
@@ -373,7 +373,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 **Life-safety repairs (decision D-017).**
 - A critical safety work order must be repaired. The company has no option to decline or defer one. An owner cannot order deferral.
 - A defect is one cause at one unit or system, with one work order (not one invoice). Defect IDs are assigned by the simulation; the player cannot split or merge them. Reserve draws per community are capped at $5,000 in any rolling 30 days. Each draw is listed in the owner notice within 24 hours. The −5 sentiment trigger applies once per defect.
-- Funding order: (1) the Capital Reserve, within a cap of $5,000 per community per 30 days; (2) the company's revolving line, if available; (3) corporate cash, advanced and billed to the owner. Step 3 may take corporate cash below zero, and Level 5 rules then apply. The repair proceeds in every case. Where steps 1 and 2 are unavailable, the vendor is paid from corporate cash. A shortfall registers as a distress event (§3.5), not a deferral.
+- Funding order: (1) the Capital Reserve, within a cap of $5,000 per community per 30 days; (2) the company's revolving line, if available; (3) corporate cash, advanced and billed to the owner. Step 3 may take corporate cash below zero, and Level 5 rules then apply. The repair proceeds in every case. Where steps 1 and 2 are unavailable, the vendor is paid from corporate cash. A shortfall registers as a distress event (§3.5), not a deferral. The company absorbs it; finance sizes the revolving line and cash buffer so step 3 is rare.
 - Step 1 covers the remaining 30-day reserve cap, up to $5,000 per community per 30 days. Steps 2 and 3 fund the rest, and the company bills the owner. Owner sentiment drops 5 once when a defect's company-funded amount exceeds $5,000, or when a reserve draw above the 30-day cap is company-funded (owner to confirm).
 - The lender covenant does not excuse a repair. Finance-designer models any covenant effect.
 - Until verified completion, the order stays open. Once open more than 14 days, it costs 5 RS per month per order (§3.2), plus a compliance record.
@@ -382,7 +382,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 **Rent increases.**
 - **Cap:** cumulative increases over any 12 months may not exceed 5% plus the local CPI change, capped at 10% (unverified; AB 1482, see §10). The CPI input is owner-verified. Scope (per unit or per community) is an owner-verification item; the spec assumes per unit. An increase that would exceed the cap is unavailable.
 - **Notice:** 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10%. The 90-day branch is reachable only if the verified cap structure allows it; it stays as a placeholder.
-- **Resident cost:** each renewal above 3% costs 0.5 RS per percentage point above 3, scaled to 100 units. Monthly, this is summed across that month's renewals. Example: a sustained 6% increase on all renewals in a 64-unit community costs about 12.5 RS per month.
+- **Resident cost:** each renewal above 3% costs 0.5 RS per percentage point above 3, scaled to 100 units. Monthly, this is summed across that month's renewals. Example: at the portfolio's 4 renewals a month, Larkspur has about 1.9 renewals a month. A sustained 6% increase on each costs about 4.5 RS per month, which settles RS near 51 under the drift.
 - **Market check:** each renewal priced above market costs 0.5 RS, scaled to 100 units, and adds the P_gap penalty (§3.2).
 - Renewal increases above 3%, above-market renewals, and above-market new-lease asks are unavailable in any community whose §3.9 brake is active or whose floor card is open.
 
@@ -517,7 +517,7 @@ This format carries the "conversations change terms, trust, timing, or workload"
 2. Confirm that all dollar figures, rates, and coefficients are **tuning starting values**, not commitments.
 3. Confirm that all names (companies, owners, lenders, vendors, and the placeholder employee) are fictional and checked against real firms (D-003).
 4. Confirm the success-criteria thresholds in §1.7, especially the 93% occupancy target and the 2.0-month cash target.
-5. Confirm that the Brightwater term loan is optional in the slice, so the slice does not depend on it.
+5. Confirm that the Lumenfall term loan is optional in the slice, so the slice does not depend on it.
 6. Confirm that the **default hard-stop is insolvency only**, with stop-loss as an opt-in setting (D-010).
 
 Once these are approved, the Decision Log entries move from **Proposed** to **Approved**. Implementation may then begin under GDD §14.
@@ -527,10 +527,10 @@ Once these are approved, the Decision Log entries move from **Proposed** to **Ap
 1. **L-02 removed from the slice** and deferred to P2. Criterion 5 uses L-01 or a new lead.
 2. **Collection loss applied** at 3.5% delinquency. Opening net is about −$402/month, and the business is cash-negative from opening.
 3. **Founder draw kept as an operating expense** (conservative). Treating it as a distribution is a one-line change if you prefer it.
-4. **Pine Hollow trigger kept** at two consecutive months below 90%; criterion 4 changed to match.
+4. **Cinder Hollow trigger kept** at two consecutive months below 90%; criterion 4 changed to match.
 5. **Criterion 3 counted per owner**, not portfolio-wide.
 6. **Non-destructive lever rule kept** for Levels 0–3; Levels 4–5 spell out their options (§3.5).
-7. **Opening pinned to October** with stated inputs; occupancy bases recalibrated to Alder 0.91, Riverbend 0.92, Pine Hollow 0.88.
+7. **Opening pinned to October** with stated inputs; occupancy bases recalibrated to Larkspur 0.91, Stillwater 0.92, Cinder Hollow 0.88.
 8. **Status label: "Proposed,"** matching the Decision Log.
 9. **D-007 approval evidence:** GDD §15 records the owner's acceptance of all board recommendations. D-007's text is unchanged.
 10. **Ethics blockers from the v0.2 review** addressed in §3.8. Ethics re-review is still required before approval.
@@ -574,7 +574,9 @@ The ethics re-review returned Hold on v0.2. v0.3 responds to it:
 - Ethics re-review and auditor recheck of v0.4 before approval.
 - Owner decision: should Promising require the floor as well as RS ≥65? (v0.4 does not.)
 
-## 10. Legal figures (web-checked, owner to confirm)
+## 10. Game figures for rent, notice, deposits, and late fees
+
+**Owner decision (D-024): these are fictional game values chosen for play, not legal guidance and not a statement of California law.** The source notes below are background only and were not verified against current statutes. Do not treat any figure as a real-world rule.
 
 These come from secondary sources (law-firm pages, property-management guides, and a San Francisco Rent Board notice). They are not statute text. Each needs confirmation on leginfo.legislature.ca.gov or with counsel before it is treated as fact.
 
@@ -617,8 +619,8 @@ Fixes: the RS formula now includes the displacement, missed-inspection, and floo
 - Bid table has no resident-outcome modifier. Consider one for portfolio RS below 55 or open compliance records.
 - Legal items in §10 remain unverified and parked by the owner.
 - Owner and lender reputation (§2.4) have no update rules in §3.2 yet.
-- Leasing fee allocation: reconciled in v1.1 (§12). Unit-weighted new-lease fee $345; renewal fees only where the contract has them. Opening net −$402/month.
-- Renewal volume: the 12.5-RS-per-month figure assumes about 5.3 renewals a month at Alder, while §1.4 books 4 a month across all 132 units. Reconcile.
+- Leasing fee allocation: reconciled in v1.1 (§17). Unit-weighted new-lease fee $345; renewal fees only where the contract has them. Opening net −$402/month.
+- Renewal volume: the 12.5-RS-per-month figure assumes about 5.3 renewals a month at Larkspur, while §1.4 books 4 a month across all 132 units. Reconcile.
 - Readiness checklist: the halving applies only when every work order at the community is closed, which is stricter than the failure-chance count (non-critical orders past 14 days).
 - Ethics re-review and auditor recheck of v0.6 before approval.
 
@@ -657,9 +659,9 @@ Owner decision (D-020): the slice keeps the core rules. Removed from the slice: 
 
 ## 17. v1.1 changes (owner choice: reconciled baseline)
 
-The leasing-fee reconciliation is closed. The new-lease fee is unit-weighted ($345 across six leases), and renewal fees apply only where the contract has them (Pine Hollow excluded by unit share). Opening revenue is $15,435, the opening net is −$402/month, the post-hire net is about −$4,875/month, and runway after the first hire is about 9.8 months. Founder-as-distribution gives +$3,598/month. All figures in the spec use these numbers. Historical log entries (D-008, D-013) keep the earlier −$247 and are superseded by D-022.
+The leasing-fee reconciliation is closed. The new-lease fee is unit-weighted ($345 across six leases), and renewal fees apply only where the contract has them (Cinder Hollow excluded by unit share). Opening revenue is $15,435, the opening net is −$402/month, the post-hire net is about −$4,875/month, and runway after the first hire is about 9.8 months. Founder-as-distribution gives +$3,598/month. All figures in the spec use these numbers. Historical log entries (D-008, D-013) keep the earlier −$247 and are superseded by D-022.
 
-**Still open:** the renewal-volume reconciliation (the §3.8 example assumes about 5.3 renewals a month at Alder; §1.4 books 4 across the portfolio); owner and lender reputation rules; the reserve-shortfall path; the legal items in §10; the placeholder-name check (CLAUDE.md rule 5); the final ethics review and auditor recheck of v1.1.
+**Still open:** the renewal-volume reconciliation (the §3.8 example assumes about 5.3 renewals a month at Larkspur; §1.4 books 4 across the portfolio); owner and lender reputation rules; the reserve-shortfall path; the legal items in §10; the placeholder-name check (CLAUDE.md rule 5); the final ethics review and auditor recheck of v1.1.
 
 ## 18. v1.2 changes (owner choices on the v1.0 Hold)
 
@@ -668,3 +670,19 @@ Owner decisions (D-023): non-critical closures are vendor-recorded and confirmed
 Applied from the review: a rejected sign-off leaves the order open, with no re-engagement of the same inspector on that order and all engagements logged; independence excludes company-affiliated firms; the inspector's fee is paid inside the repair's funding step; defect IDs come from the simulation with a rolling 30-day cap; the owner-request approve option has a stated driver effect; critical items are excluded from owner requests; the complaint placeholder never shows as resolved; the Level 4 card lists the levers that remain; the brake's exit mechanics are explained.
 
 **Still open:** the renewal-volume reconciliation (§3.8 example vs §1.4); owner and lender reputation rules; the reserve-shortfall path; the legal items in §10; the placeholder-name check (CLAUDE.md rule 5); the final ethics review and auditor recheck of v1.2.
+
+## 19. v1.3 changes (owner answers to open items)
+
+- **Renewal volume (D-024):** 4 a month across the portfolio. The §3.8 example is recomputed: Larkspur has about 1.9 renewals a month, and a sustained 6% increase settles RS near 51.
+- **Owner and lender reputation:** display only in the slice; no update rule until P1.
+- **Reserve shortfall:** the company absorbs it from corporate cash. Finance sizes the revolving line and cash buffer so this is rare.
+- **Sentiment values:** approved (+2 approve, −2 decline, −5 company-funded overrun above $5,000).
+- **Inspector fee:** the company pays on every engagement, including rejected sign-offs. Matches §2.6.
+- **Sign-off standard:** on-site functional test per defect class (§3.8).
+- **Affiliation:** any shared ownership, management, or staff; any subcontracting or referral from the vendor; any repeat work for the same vendor. Each engagement logs an attestation.
+- **Readiness:** the 50% failure reduction requires every critical order verified closed.
+- **Names:** renamed to invented names (D-024). Communities, owners, lenders, vendors, and the placeholder employee.
+- **Game figures:** §10 is labelled fictional game values, not legal guidance.
+- **Residual risk (D-024 and D-023):** the company-engaged inspector can sign off a defect that was not properly tested, and the hazard would persist. The slice does not model reopen probability, so a false closure costs nothing in play. Criterion 6 and the readiness checklist can be met on closures alone. The reversal condition is P1 panel and rotation designed and in place before any P1 release; the owner is the decision-maker.
+
+**Still open:** the brake release at RS 62 needs two service tiers (equilibrium 64) to be reachable; with one tier, the equilibrium is 62 and is never reached. Systems-designer to rebalance or the owner to choose a different release value. Ethics re-review and auditor recheck of v1.3.
