@@ -115,3 +115,23 @@ Any future change to a locked decision must be recorded here with a new entry, t
 9. D-007 approval evidence: GDD §15 records the owner's acceptance of all board recommendations. D-007's text is not changed.
 
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.2, §7 and §3.8
+
+## D-014 — P0 spec v0.3: ethics re-review fixes
+
+**Status:** Proposed — pending ethics re-review and owner approval  
+**Date:** 2026-10-10  
+**Decision:** Revise the Proposed P0 spec to v0.3 in response to the ethics re-review (Hold on v0.2). Changes:
+
+1. Criteria 3 and 6 must hold in every month. Criterion 8 gets a per-community resident-satisfaction floor of 55 (§1.7, §3.9).
+2. Outcome tiers: Stable and Promising require criterion 6 and the resident criteria. A criterion 6 failure caps the outcome at Struggling (§1.7).
+3. Resident satisfaction gets an opening value of 60, an explicit monthly formula, and named drivers. ServiceScore is linked to staffing and cuts (§3.2).
+4. Collections push lists permitted and forbidden actions. Its effect matches the formula (−0.5 pt) (§3.5).
+5. Company-initiated turnover nets the company a loss, and appears as avoidable turnover on the owner statement (§3.8).
+6. "Critical safety" is defined as a list. Life-safety repairs cannot be deferred for cash. Failed inspections open critical orders (§3.8).
+7. Fair-housing response: Investigate has an adverse branch, Dismiss carries a probability and window, the event cost is not double-counted, and retaliation is covered (§3.4, §3.8).
+
+**Open:** ServiceScore has no upside above 60 (a service-improvement lever is needed in v0.4). All legal items remain owner-verification items.  
+**Reason:** The ethics reviewer's binding Hold on v0.2 (D-013 context) must be resolved before any approval.  
+**Affected systems:** Success criteria, outcome tiers, resident satisfaction, staffing and service, collections, turnover, safety, fair housing, owner statements.  
+**Existing material revised:** None outside the P0 spec and GDD status line. No locked decision (D-001 to D-007) changed.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.3, §8

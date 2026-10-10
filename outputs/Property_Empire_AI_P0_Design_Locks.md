@@ -1,10 +1,10 @@
 # Property Empire AI — P0 Design Locks
 
 **Status:** Proposed — pending owner review and approval (GDD §14: no implementation until P0 locks are approved)
-**Date:** 2026-10-10 (v0.2: revisions recorded as D-013)
+**Date:** 2026-10-10 (v0.3: revisions recorded as D-013 and D-014)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
-**Logged as:** D-008 to D-013 in the Decision Log (D-013 records the v0.2 revisions).
+**Logged as:** D-008 to D-014 in the Decision Log (D-013 records v0.2 revisions; D-014 records v0.3).
 
 | P0 item (GDD §13) | Section | Decision Log |
 |---|---|---|
@@ -95,25 +95,25 @@ The full lender roster (five lenders, P1) is out of scope for the slice.
 
 ### 1.7 Twelve-month success criteria
 
-All criteria are measured at month 12 unless stated otherwise.
+Criteria 3 and 6 must hold in every month, not only at month 12. Criterion 8 is also checked every month against the community floor in §3.9. Other criteria are measured at month 12.
 
 | # | Criterion | Threshold |
 |---|---|---|
 | 1 | Contracts | All three management agreements active or renewed; zero owner terminations |
 | 2 | Liquidity | Corporate cash ≥ 2.0 × monthly corporate expenses; never at Distress Level 3 or above during months 1–12 |
-| 3 | Trust integrity | Zero trust-account violations; for each owner, owner statements delivered by day 10 in at least 11 of 12 months |
+| 3 | Trust integrity | Zero trust-account violations in each of months 1–12; for each owner, owner statements delivered by day 10 in at least 11 of 12 months |
 | 4 | Occupancy | Portfolio 12-month average ≥ 93%; no community below 90% for 2 or more consecutive months (matches the Pine Hollow termination trigger in C-03) |
 | 5 | Growth | At least one new management contract won (L-01 or a new lead) |
-| 6 | Compliance | Zero missed inspections; zero critical safety work orders open for more than 14 days |
+| 6 | Compliance | In each of months 1–12: zero missed inspections and zero critical safety work orders open for more than 14 days |
 | 7 | Team | No employee at burnout ≥ 85 for 2 or more consecutive months; founder below 85 at month 12 |
-| 8 | Stakeholders | All three owners at Warm or better sentiment; portfolio resident satisfaction ≥ 65 / 100 |
+| 8 | Stakeholders | At month 12: all three owners at Warm or better sentiment and portfolio resident satisfaction ≥ 65 / 100; in every month, no community below the 55 floor (§3.9) |
 
 **Outcome tiers:**
 
-- **Stable:** All 8 criteria met.
-- **Promising:** 6 or 7 met, and no Distress Level 3 or above.
-- **Struggling:** 4 or 5 met, or Distress Level 3 or above reached at any point.
-- **Distressed:** 3 or fewer met, or Distress Level 4 or above reached.
+- **Stable:** All 8 criteria met, criterion 6 met in every month, and no community breached the §3.9 floor.
+- **Promising:** 6 or 7 criteria met, including criterion 6 in every month and the resident part of criterion 8; no Distress Level 3 or above.
+- **Struggling:** 4 or 5 criteria met, or Distress Level 3 or above reached, or criterion 6 failed in any month.
+- **Distressed:** 3 or fewer criteria met, or Distress Level 4 or above reached.
 
 Struggling and Distressed outcomes continue play under the recovery rules in §3.6. They do not end the game.
 
@@ -193,7 +193,7 @@ Corporate money and client money are kept in separate ledgers. The company may n
 3. **Randomness is bounded and previewed.** Events have warning signals and plausible causes (see §3.5). Each save has a stored RNG seed for replay and debugging. The player does not see the seed.
 4. **Failure is gradual and announced.** Each distress level is shown days or weeks before it takes effect when possible.
 
-### 3.2 Core formulas (v0.1)
+### 3.2 Core formulas (v0.3)
 
 **Occupancy.** Occupancy moves 35% of the gap toward a target each month.
 
@@ -214,6 +214,14 @@ Opening inputs are pinned: LeasingScore 70, ServiceScore 60, ResidentSatisfactio
 **Collections.**
 
 > Delinquency rate = 0.035 + 0.001 × max(0, 60 − ResidentSatisfaction) − 0.005 × [collections push active]
+
+**Resident satisfaction (RS, v0.3).** Each community has its own RS, 0–100. Opening value: 60. Monthly update:
+
+> RS(t+1) = clamp(0, 100, RS(t) + 0.2 × (ServiceScore − 60) + 0.5 × (60 − RS(t)) + 0.5 × renewals this month (capped at +2) − 0.5 × resident-reported work orders open over 7 days (capped at −3) − 5 × [critical safety work order open over 14 days] − 3 × [failed inspection this month] − 2 × [move-out forced by an increase above the cap] − 2 × [collections push active] + 2 × [settlement this month])
+
+The first two terms give the service driver; the 0.5 × (60 − RS) term is drift back toward 60. Every other term is a named event or lever whose effect is shown on the community screen. The opening state is stable: ServiceScore 60 and no events leave RS at 60.
+
+**Service score (v0.3).** ServiceScore = clamp(0, 100, 60 × Q_avg − 5 × active discretionary cuts), where Q_avg is the average service-quality multiplier (§3.2 staffing) of staff assigned to the community. Restoring a cut means reinstating that line for one month at full cost (about $2,000 for all three lines). *Balance note for systems-designer:* in v0.3 ServiceScore cannot rise above 60, so service has downside but no upside. A service-improvement lever is needed in v0.4.
 
 **Owner statement timing.** P(late statement) = 0.15 base, plus 0.10 if owner sentiment is Cool or worse, plus 0.10 if a reconciliation exception is open.
 
@@ -269,9 +277,9 @@ Each community averages one event every six months (λ = 2 per year). Category w
 | Plumbing or HVAC emergency | 30% | $3,000–$12,000 (Owner Trust) | Critical work order; resident satisfaction −3 | Aging work orders (about 25% foreseeable) |
 | City code inspection | 20% | Fee $0–$500; repairs $1,000–$6,000 | Compliance record; city relationship | Inspection notice 2 weeks ahead |
 | Local market softening | 15% | None | Base occupancy −1.5 pts for 3 months | Market trend 1–2 months ahead |
-| Resident dispute (fair-housing complaint) | 10% | Legal $1,500–$5,000 | Residents, city, and employee morale | Low signal |
+| Resident dispute (fair-housing complaint) | 10% | Set by the chosen response (§3.8); no separate charge | Residents, city, and employee morale | Low signal |
 | Vendor failure | 15% | Vendor costs +30% for 2 months | Work-order backlog | Late vendor invoices |
-| Owner request | 10% | None | Owner sentiment ±5 | Direct owner contact |
+| Owner request | 10% | None | Owner sentiment ±5; options always include one resident-protective choice; an owner cannot order deferral of life-safety repairs (§3.8) | Direct owner contact |
 
 About 60% of events have a warning signal, so the player can prepare or mitigate.
 
@@ -292,8 +300,8 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 
 | Lever | Available at | Immediate effect | Lag | Side effects | Limit |
 |---|---|---|---|---|---|
-| Collections push | Any | Recovers up to $2,000 of delinquent rent into Owner Trust over 60 days; corporate gains only its fee share (about 6%) and the owner receives the rest; delinquency −0.5 pt | 30–60 days | Resident satisfaction −2; tactics limited to lawful, non-harassing contact (ethics review) | Once per quarter |
-| Cut discretionary spend | Any | +$500–$2,000 per month. Discretionary lines are software, marketing, and miscellaneous ($2,000 at opening) | Immediate | ServiceScore −5 until restored; capacity −5 pts per person; morale −3 | None |
+| Collections push | Any | Recovers up to $2,000 of delinquent rent into Owner Trust over 60 days; corporate gains only its fee share (about 6%) and the owner receives the rest; delinquency −0.5 pt | 30–60 days | Resident satisfaction −2 for the month. Permitted: payment plans, hardship review, reminders, and legally required notices. Not permitted: threats, harassment, public or third-party pressure, contacting employers, and fee-driven pressure. The permitted list is an owner-verification item | Once per quarter |
+| Cut discretionary spend | Any | +$500–$2,000 per month. Discretionary lines are software, marketing, and miscellaneous ($2,000 at opening) | Immediate | ServiceScore −5 until restored (restore = reinstate the line for one month at full cost); capacity −5 pts per person; morale −3 | None |
 | Draw revolving line | Lender-dependent | Up to the line limit | Immediate | Interest cost; covenant ratio worsens; lender sentiment −3 | $30,000 (Foothill) |
 | Request owner fee advance | Owner sentiment Warm or better | One to two months of that owner's fee | Immediate | Credited back over later months; owner trust −3 at request | Once per owner per year |
 | Defer part of payroll (up to 25%) | Any | Cash timing relief | Repaid by next payroll | Morale −10; burnout +5; compliance issue if not repaid | Two months per year |
@@ -315,13 +323,38 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - **Default (Realistic CEO):** Game over occurs only through sustained insolvency (Level 5).
 - **Optional:** A player may set a stop-loss threshold when starting a new save (for example, cumulative cash loss above a chosen amount). This is opt-in and off by default.
 
-### 3.8 Resident-facing consequences (v0.2, responds to ethics review B1–B4)
+### 3.8 Resident-facing consequences (v0.3)
 
-- **Turnover (B1).** Each move-out costs the owner a turn of $1,200–$2,500 from Owner Trust and about 25 days of vacancy (lost rent, which lowers the fee base). A renewal keeps the resident and adds +1 to ServiceScore. A move-out forced by a rent increase above 5% reduces resident satisfaction by 2 for that community. New-lease fees therefore do not reward turnover on their own.
-- **Cost cutting (B2).** Discretionary cuts lower ServiceScore (see §3.5), so every saving carries a service cost shown on the Finance and Communities screens.
-- **Safety (B3).** A critical safety work order open for more than 14 days reduces that community's resident satisfaction by 5 per month and adds a compliance record. Pricing or occupancy changes cannot clear it. A failed inspection reduces resident satisfaction by 3.
-- **Fair-housing complaint (B4).** The player chooses one response. Investigate: about $1,500 and 30 days; resident satisfaction unchanged; city reputation neutral if findings are clean. Settle: about $3,000–$5,000 from Owner Trust; resident satisfaction +2; owner sentiment −3. Dismiss: no cost now; if a later event confirms the complaint, city reputation −15 and resident satisfaction −10. Each card shows these effects before the choice.
-- **Occupancy pressure (Pine Hollow).** The levers that restore occupancy are rent pricing (subject to P_gap), leasing effort, and marketing. Screening standards must be applied uniformly, and any screening option is reviewed by ethics-reviewer before approval.
+**Turnover (ethics B1).**
+- Each move-out costs the owner a turn of $1,200–$2,500 from Owner Trust and about 25 days of vacancy. This is the owner's loss, and it lowers the fee base.
+- A move-out the company initiates (non-renewal, or a renewal increase above the cap) earns no new-lease fee when the unit is re-let in the same cycle, and the company loses its fee on the vacancy. A company-initiated turnover therefore nets the company a loss, not a gain.
+- Company-initiated turnover appears as "avoidable turnover" on the owner statement and lowers owner sentiment by 2.
+- Renewal increases above 3% add a resident cost: −0.5 RS per affected unit, scaled to the excess. The cap itself (5% is the working figure) is an owner-verification item.
+
+**Cost cutting (ethics B2).** Discretionary cuts lower ServiceScore (§3.2). Deferred non-critical repairs lower RS through resident-reported work orders (§3.2). Staff cuts lower Q and therefore ServiceScore. Every cut card shows its resident cost before the choice.
+
+**Safety (ethics B3).**
+- *Critical safety work order* means a work order on this list: no heat, no water, gas leak, electrical hazard, lock or door-security failure, sewage backup, pest infestation, or fire-safety defect. The list is an owner-verification item.
+- A critical order open more than 14 days reduces RS by 5 per month, adds a compliance record, and cannot be cleared by pricing or occupancy changes.
+- Life-safety repairs cannot be deferred for cash reasons. If the owner refuses approval, the refusal is logged, the case escalates, and the company's compliance record is affected.
+- A failed inspection with a life-safety finding opens a critical work order automatically. Any failed inspection reduces RS by 3. A missed inspection reduces city reputation by 10 and adds a compliance record.
+
+**Fair housing (ethics B4).** A complaint opens a decision card with one choice:
+- **Investigate** (about $1,500, 30 days). Clean findings: city reputation neutral. Adverse findings: the company must correct the issue (about $1,000–$6,000), city reputation −5, and RS −3 until corrected.
+- **Settle** (about $3,000–$5,000 from Owner Trust). RS +2, owner sentiment −3. Settlement does not end any underlying obligation (owner verification).
+- **Dismiss** (no cost now). The complaint stays open for 12 months. Each month there is a provisional 5% chance that a later event confirms it. If confirmed: city reputation −15, RS −10 for the community, and a compliance record. The 5% and the 12-month window are owner-verification items and are shown as Signal.
+- **Retaliation.** Any adverse action against a complainant within 12 months (non-renewal, rent increase, or filing) is tagged as retaliation risk. If confirmed, city reputation −15 and RS −10. The tag appears on the decision card before the action is taken.
+
+**Other consequences (ethics suggestions).**
+- A Trust Violation involving security deposits also reduces RS by 5 at the affected community.
+- Termination or transfer of a contract hands residents to a new manager. RS −2 at that community, and deposit transfer follows the legal review.
+- Owner statements show deferred maintenance as a liability. Owner sentiment does not rise from NOI that depends on deferred maintenance.
+- **Screening** is not in the slice. Any future screening option requires uniform criteria and ethics review.
+
+### 3.9 Resident satisfaction floor (v0.3)
+
+- No community's RS may stay below 55 for two consecutive months. If it does, that community's owner sentiment drops by 5 and an owner-relations decision card opens.
+- Criterion 8 (§1.7) is judged on the portfolio average at month 12 and on this floor in every month.
 
 ---
 
@@ -444,3 +477,22 @@ Once these are approved, the Decision Log entries move from **Proposed** to **Ap
 10. **Ethics blockers B1–B4** addressed in §3.8. Ethics re-review is still required before approval.
 
 Still with the owner: approval of P0 and D-008 to D-013, and verification of all California legal rules before they are modeled.
+
+## 8. v0.3 changes (ethics re-review: Hold)
+
+The ethics re-review returned Hold on v0.2. v0.3 responds to it:
+
+1. **N1 (timing):** criteria 3 and 6 are checked in every month (§1.7).
+2. **N2 (tiers):** Stable and Promising require criterion 6 and the resident criteria. A criterion 6 failure caps the outcome at Struggling (§1.7).
+3. **N3 (resident satisfaction):** RS has an opening value, an explicit formula, drivers, and a per-community floor of 55 (§3.2, §3.9). RS must appear on screen (UX item for v0.4).
+4. **N4 (collections push):** permitted and forbidden actions are listed, and the effect matches the formula (−0.5 pt) (§3.5).
+5. **B1 (turnover):** a company-initiated turnover nets the company a loss, and avoidable turnover appears on the owner statement (§3.8).
+6. **B2 (cost cutting):** ServiceScore is linked to staffing and cuts, and it feeds RS (§3.2, §3.8).
+7. **B3 (safety):** "critical" is defined as a list, life-safety repairs cannot be deferred for cash, and failed inspections open critical orders (§3.8).
+8. **B4 (fair housing):** Investigate has an adverse branch, Dismiss carries a probability and a window, the event cost is no longer double-counted, and retaliation is covered (§3.4, §3.8).
+
+**Still open:**
+- ServiceScore has no upside above 60, so service has downside but no upside. A service-improvement lever is needed (systems-designer, v0.4).
+- The RS figures and the 5% dismissal probability are provisional and need balance testing.
+- Owner verification of all legal items: the 5% renewal-increase cap, the life-safety list, the permitted collections actions, the investigation and settlement rules, the anti-retaliation scope, deposit rules, and the city fee and repair amounts.
+- Ethics re-review and the auditor recheck of v0.3 before approval.
