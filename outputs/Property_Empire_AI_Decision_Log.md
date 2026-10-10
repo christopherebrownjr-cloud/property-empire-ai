@@ -226,7 +226,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Date:** 2026-10-10  
 **Decision:** The owner chose to restore independent verification in the slice. This withdraws the known risk recorded in D-020 item 1. Each critical repair needs one third-party inspector's sign-off, engaged and paid by the company. The inspector may not be the repairing vendor or owner-affiliated. Panel, rotation, and sampling audit are P1. Also in v1.0: contract sale and layoffs are not offered in the slice; the brake adds above-market renewals and releases at RS 62, with the floor card also closing at 62; reserve draws are capped at $5,000 per community per 30 days, with one work order per defect; owner-request options are listed with their effects.  
 **Reason:** The ethics review of v0.9 returned Hold on company-recorded completion (a safety route), layoffs and sale in Level 4, unbraked above-market renewals, the defect-splitting route, and unlisted owner-request options.  
-**Supersedes:** D-020 item 1 (company-recorded completion) and D-020 item 5 (brake release at 62 is kept; the card-close alignment is new).  
+**Supersedes:** D-020 item 1 (company-recorded completion); D-020 item 6 (per-defect $5,000 reserve cap, replaced by a per-community 30-day cap); D-019 card-close-at-60 (now 62).  
 **Affected systems:** Critical repairs, criterion 6, compliance records, costs and payers (§2.6), Level 4, brake, floor card, reserve, owner requests.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.0, §16
 

@@ -138,7 +138,7 @@ Corporate money and client money are kept in separate ledgers. The company may n
 | **Corporate Operating** | Company | Earned management and leasing fees; other company income | Payroll, software, insurance, office, corporate payables | Yes |
 | **Owner Trust** (one per community) | Owner, held by company | Resident rent and resident charges; owner deposits | Property payables, owner distributions, scheduled fee sweep to Corporate | Only through the scheduled fee sweep |
 | **Security Deposit Trust** (one per community) | Residents, held in trust | Resident security deposits | Refunds; documented deductions only | No |
-| **Owner Capital Reserve** (one per community, restricted) | Owner | Required reserve transfers from Owner Trust | Capital and repair spend above threshold, with owner approval. Exception: a critical safety repair up to $5,000 may proceed without approval, with owner notice within 24 hours (§3.8) | No |
+| **Owner Capital Reserve** (one per community, restricted) | Owner | Required reserve transfers from Owner Trust | Capital and repair spend above threshold, with owner approval. Exception: reserve draws up to $5,000 per community per 30 days, per defect (one cause, one work order), may proceed without approval, with owner notice within 24 hours (§3.8) | No |
 | **Receivables** | Company | Fees earned but not yet collected from owner trust (by owner, aged) | Collections | n/a |
 | **Payables** | Company and owner (separately tagged) | Bills received | Payments | Corporate payables from Corporate Operating only; property payables from Owner Trust only |
 | **Debt and Credit** | Company | Line draws, loan proceeds | Repayments, interest | n/a |
@@ -194,8 +194,8 @@ Corporate money and client money are kept in separate ledgers. The company may n
 | Turn cost after a move-out | $1,200–$2,500 plus about 25 days' vacancy | Owner | Owner Trust (vacancy lowers the fee base) |
 | New-lease fee not earned after an avoidable move-out | $350 (blended) | Company | Lost corporate revenue |
 | Fair-housing investigation | About $1,500 | Company | Corporate Operating |
-| Critical repair up to $5,000 | Per defect | Owner | Owner Capital Reserve |
-| Critical repair above $5,000 | Per defect | Company funds the amount above the reserve's $5,000 step; billed to owner | Receivable from owner |
+| Critical repair, reserve draw (up to $5,000 per community per 30 days) | Per defect | Owner | Owner Capital Reserve, then revolving line if the cap is used |
+| Critical repair, company-funded remainder | Per defect | Company funds the remainder after steps 1 and 2 (§3.8); billed to owner | Receivable from owner |
 | Targeted floor repair | $2,000–$5,000 | Owner | Owner Trust |
 | Service investment tier | $1,500 per month per tier | Company | Corporate Operating |
 | Inspection-readiness checklist | $300 per month per community | Company | Corporate Operating |
@@ -244,7 +244,7 @@ The first two terms are the service driver and drift back toward 60. Renewals at
 
 **Resident-initiated move-outs (v0.6).** Each unit's monthly move-out probability is 0.01 + 0.002 × max(0, 50 − RS), capped at 5%. Each move-out vacates the unit for about 25 days, which lowers occupancy (§3.8). Avoidable move-outs also carry the re-letting cap, the no-fee rule, and the displacement RS term. The renewal increase cap and notice periods are in §3.8.
 
-**Owner sentiment update (v0.6).** Sentiment(t+1) = clamp(0, 100, S(t) + 1 × [RS ≥ 60, no deferred maintenance, no open critical item] − 2 × [avoidable move-out this month] − 2 × [floor card open] − 5 × [floor trigger this month] − 5 × [defect with company-funded amount above $5,000 this month]). Tiers are in §3.8.
+**Owner sentiment update (v0.6).** Sentiment(t+1) = clamp(0, 100, S(t) + 1 × [RS ≥ 60, no deferred maintenance, no open critical item] − 2 × [avoidable move-out this month] − 2 × [floor card open] − 5 × [floor trigger this month] − 5 × [defect with company-funded amount above $5,000, or a reserve draw above the 30-day cap that is company-funded, this month]). Tiers are in §3.8.
 
 **City reputation update (v0.6).** CityRep(t+1) = clamp(0, 100, CR(t) + 0.5 × (60 − CR(t)) − 10 × [missed inspection this month] − 2 × open compliance records). Opening value 60. Three or more open compliance records open a lender review; the covenant effect is for finance-designer to define (§1.6). Below 40, bids lose 0.05 win probability (bid table).
 
@@ -373,7 +373,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - A critical safety work order must be repaired. The company has no option to decline or defer one. An owner cannot order deferral.
 - A defect is one cause at one unit or system, with one work order (not one invoice). Reserve draws per community are capped at $5,000 per 30 days in total. Each draw is listed in the owner notice within 24 hours.
 - Funding order: (1) the Capital Reserve, within a cap of $5,000 per community per 30 days; (2) the company's revolving line, if available; (3) corporate cash, advanced and billed to the owner. Step 3 may take corporate cash below zero, and Level 5 rules then apply. The repair proceeds in every case. Where steps 1 and 2 are unavailable, the vendor is paid from corporate cash. A shortfall registers as a distress event (§3.5), not a deferral.
-- Above $5,000 per defect, the reserve covers $5,000 (step 1) and the company funds the rest (steps 2–3) and bills the owner. Owner sentiment drops 5 once when a defect's company-funded amount exceeds $5,000, or when a reserve draw above the 30-day cap is company-funded (owner to confirm).
+- Step 1 covers the remaining 30-day reserve cap, up to $5,000 per community per 30 days. Steps 2 and 3 fund the rest, and the company bills the owner. Owner sentiment drops 5 once when a defect's company-funded amount exceeds $5,000, or when a reserve draw above the 30-day cap is company-funded (owner to confirm).
 - The lender covenant does not excuse a repair. Finance-designer models any covenant effect.
 - Until verified completion, the order stays open. Once open more than 14 days, it costs 5 RS per month per order (§3.2), plus a compliance record.
 - A reopen within 90 days re-applies the penalty from the original open date.
@@ -383,7 +383,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - **Notice:** 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10%. The 90-day branch is reachable only if the verified cap structure allows it; it stays as a placeholder.
 - **Resident cost:** each renewal above 3% costs 0.5 RS per percentage point above 3, scaled to 100 units. Monthly, this is summed across that month's renewals. Example: a sustained 6% increase on all renewals in a 64-unit community costs about 12.5 RS per month.
 - **Market check:** each renewal priced above market costs 0.5 RS, scaled to 100 units, and adds the P_gap penalty (§3.2).
-- Renewal increases above 3% are unavailable in any community whose §3.9 §3.9 brake is active or whose floor card is open.
+- Renewal increases above 3% and above-market renewals are unavailable in any community whose §3.9 brake is active or whose floor card is open.
 
 **Re-letting and avoidable turnover.**
 - For 12 months after any avoidable move-out, the unit may be re-let at no more than the prior rent plus the cap. The company earns no new-lease fee on it.
@@ -391,7 +391,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - Turn cost: $1,200–$2,500 from Owner Trust and about 25 days' vacancy. The loss is the owner's.
 - **Resident-initiated move-outs** (RS 50 or higher) occur at 0.01 + 0.002 × max(0, 50 − RS) per unit per month, capped at 5%. Move-outs below RS 50 count as avoidable.
 
-**Cost cutting.** 
+**Cost cutting (P1; not in the slice).** 
 
 **Fair housing (slice placeholder; detailed rules in P1, D-019).**
 - A complaint opens a placeholder card with one response: Investigate (about $1,500, company-funded, 30 days). The complaint closes when the investigation ends.
@@ -399,7 +399,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 
 **Other consequences.**
 - Failed inspection: 3 RS. A failed inspection with a life-safety finding also opens a critical order. Missed inspection: 1 RS that month, city reputation −10, and a compliance record.
-- A deposit or owner-trust Trust Violation costs 5 RS one-time. Termination or transfer costs 2 RS one-time.
+- A deposit or owner-trust Trust Violation costs 5 RS one-time. Termination costs 2 RS one-time (transfer is P1).
 - **Owner sentiment tiers:** score 0–100. Hostile below 30; Cool 30–49; Neutral 50–69; Warm 70–84; Strong 85 and above. The update rule is in §3.2.
 - **Owner request (§3.4):** a resident-protective option is one that defers no critical item and reduces no RS.
 - **Screening** is not in the slice. Any future screening option requires uniform criteria and ethics review.
@@ -639,7 +639,7 @@ Also applied: the adverse-finding and retaliation terms are removed from the RS 
 
 Owner decision (D-020): the slice keeps the core rules. Removed from the slice: third-party verification of closures (deferred to P1, with completion company-recorded as a known risk); city-ordered repairs; company-initiated non-renewals; discretionary cuts and staff hour or layoff cuts. The brake is limited to renewals above 3% and the collections push, from below 60, released at 62. Funding per defect, with step 3 allowed to take cash below zero.
 
-**Known risks the owner accepts with D-020:** company-recorded completion of critical repairs (no independent verification in the slice). The ethics reviewer has flagged this as a resident-safety route; it is reversible if the owner decides verification must stay in the slice.
+**Withdrawn in v1.0 (§16; D-021):** company-recorded completion. Former text: **Known risks the owner accepted with D-020:** company-recorded completion of critical repairs (no independent verification in the slice). The ethics reviewer has flagged this as a resident-safety route; it is reversible if the owner decides verification must stay in the slice.
 
 **Still open:** the leasing and renewal-volume reconciliation (§12); owner and lender reputation rules; the reserve-shortfall path (finance-designer); the legal items in §10; the placeholder-name check (CLAUDE.md rule 5); ethics re-review and auditor recheck of v0.9.
 
