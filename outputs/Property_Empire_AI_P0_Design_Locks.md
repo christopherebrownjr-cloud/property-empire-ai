@@ -45,6 +45,8 @@ Fee calculations use collected rent, which assumes 3.5% delinquency (§3.2, mult
 | Bookkeeping | Outsourced vendor (placeholder: Harbor Ledger Services) | $1,200 | n/a | n/a | Monthly close support |
 | Maintenance vendor pool | Valley Turn Services; Foothill Handyworks (placeholders) | Per-job billing | n/a | n/a | Work orders billed to owner trust |
 
+Opening staff have Morale 100 and SkillFit 1.0. The utilization figures in §4.4 depend on these values.
+
 **Opening pressure:** The coordinator starts near capacity (utilization ≈ 0.97). The founder has spare capacity (≈ 0.66). The first real staffing decision is whether to add an assistant before the coordinator burns out.
 
 ### 1.4 Opening corporate P&L (monthly, illustrative)
@@ -112,7 +114,7 @@ Criterion 3 (trust violations) and criterion 6 must hold in every month, not onl
 
 - **Stable:** All 8 criteria met, criterion 3 (trust) and criterion 6 met in every month, and no community breached the §3.9 floor.
 - **Promising:** 6 or 7 criteria met, including criteria 3 (trust) and 6 in every month and the resident part of criterion 8 (RS ≥ 65); no Distress Level 3 or above.
-- **Struggling:** 4 or 5 criteria met, or Distress Level 3 or above reached, or criterion 3 (trust) or criterion 6 failed in any month.
+- **Struggling:** 4 or 5 criteria met; or 6 or 7 criteria met without the resident part of criterion 8 (RS below 65); or Distress Level 3 or above reached; or criterion 3 (trust) or criterion 6 failed in any month.
 - **Distressed:** 3 or fewer criteria met, or Distress Level 4 or above reached. Distressed takes precedence when both Struggling and Distressed apply.
 
 Struggling and Distressed outcomes continue play under the recovery rules in §3.6. They do not end the game.
@@ -221,7 +223,7 @@ Opening inputs are pinned: LeasingScore 70, ServiceScore 60, ResidentSatisfactio
 
 The first two terms are the service driver and drift back toward 60. Renewals at or below a 3% increase are neutral. Opening state: ServiceScore 60, opening renewals at or below 3%, no events, so RS stays at 60.
 
-**Service score (v0.4).** ServiceScore = clamp(0, 100, 60 × Q_avg − 5 × active discretionary cuts + 5 × active service investments, max +15), where Q_avg is the average service-quality multiplier of staff assigned to the community. Restoring a cut means reinstating that line for one month at full cost (about $2,000 for all three lines). With full service investment, ServiceScore reaches 75 and RS settles near 66, so criterion 8 is reachable.
+**Service score (v0.4).** ServiceScore = clamp(0, 100, 60 × Q_avg − 5 × active discretionary cuts + 5 × active service investments, max +15), where Q_avg is the average service-quality multiplier of staff assigned to the community. Restoring a cut means reinstating that line for one month at full cost (about $2,000 for all three lines). With all three investment tiers, ServiceScore reaches 75 and RS settles near 66, so criterion 8 is reachable. The three tiers cost $4,500 per month, which the opening business cannot afford. Whether criterion 8 is reachable therefore depends on financing, a question for the owner.
 
 **Owner statement timing.** P(late statement) = 0.15 base, plus 0.10 if owner sentiment is Cool or worse, plus 0.10 if a reconciliation exception is open.
 
@@ -302,7 +304,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 |---|---|---|---|---|---|
 | Collections push | Any | Recovers up to $2,000 of delinquent rent into Owner Trust over 60 days; corporate gains only its fee share (about 6%) and the owner receives the rest; delinquency −0.5 pt | 30–60 days | Resident satisfaction −2 for the month. Permitted: payment plans, hardship review, reminders, and legally required notices. Not permitted: threats, harassment, public or third-party pressure, contacting employers, and fee-driven pressure. The permitted list is an owner-verification item | Once per quarter |
 | Cut discretionary spend | Any | +$500–$2,000 per month. Discretionary lines are software, marketing, and miscellaneous ($2,000 at opening) | Immediate | ServiceScore −5 until restored (restore = reinstate the line for one month at full cost); capacity −5 pts per person; morale −3 | None |
-| Service investment | Any | −$1,500 per month (corporate cost). ServiceScore +5 while active, up to +15 | Immediate | Ongoing cost; no resident-side cost | Up to +15 ServiceScore |
+| Service investment | Any | −$1,500 per month per tier (corporate cost). Each active tier gives ServiceScore +5; up to three tiers stack (+15) | Immediate | Ongoing cost; no resident-side cost | Three tiers |
 | Draw revolving line | Lender-dependent | Up to the line limit | Immediate | Interest cost; covenant ratio worsens; lender sentiment −3 | $30,000 (Foothill) |
 | Request owner fee advance | Owner sentiment Warm or better | One to two months of that owner's fee | Immediate | Credited back over later months; owner trust −3 at request | Once per owner per year |
 | Defer part of payroll (up to 25%) | Any | Cash timing relief | Repaid by next payroll | Morale −10; burnout +5; compliance issue if not repaid | Two months per year |
@@ -486,7 +488,7 @@ Once these are approved, the Decision Log entries move from **Proposed** to **Ap
 9. **D-007 approval evidence:** GDD §15 records the owner's acceptance of all board recommendations. D-007's text is unchanged.
 10. **Ethics blockers B1–B4** addressed in §3.8. Ethics re-review is still required before approval.
 
-Still with the owner: approval of P0 and D-008 to D-013, and verification of all California legal rules before they are modeled.
+Still with the owner: approval of P0 and D-008 to D-015, and verification of all California legal rules before they are modeled.
 
 ## 8. v0.3 changes (ethics re-review: Hold)
 
@@ -536,3 +538,5 @@ These come from secondary sources (law-firm pages, property-management guides, a
 | Mailing | Add 5 days | SF Rent Board notice | Treated as a conservative margin, not a confirmed rule |
 | Security deposit | Return and itemize within 21 days; bad faith can cost up to 2× the deposit | [terms.law, CA Security Deposit Hub](https://terms.law/CA-Security-Deposit-Hub/) | Secondary source; confirm §1950.5. One source claims a one-month deposit cap for leases after July 1, 2024. Conflicting; not used in this spec. |
 | Late fees | No fixed cap; must be a reasonable estimate of loss (Civil Code §1671) | [Tellus](https://www.tellusapp.com/blog/late-fees-in-california/) | Confirm §1671. The 5% figure is a market convention, not law. The spec does not model a late-fee amount. |
+
+**v0.4 correction (auditor):** Outcome tiers now cover every combination: 6 or 7 criteria with RS below 65 is Struggling (§1.7).
