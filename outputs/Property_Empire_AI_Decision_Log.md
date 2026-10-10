@@ -52,7 +52,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 **Status:** Proposed — pending owner approval (P0 lock review)  
 **Date:** 2026-10-10  
-**Decision:** The vertical slice and tuning baseline use market-rate residential management in Sacramento: three communities, 132 units, one coordinator, one founder-CEO, three management contracts, and two prospects. Twelve-month success criteria and outcome tiers are defined in P0 spec §1.  
+**Decision:** The vertical slice and tuning baseline use market-rate residential management in Sacramento: three communities, 132 units, one coordinator, one founder-CEO, three management contracts, and one prospect (L-01). Twelve-month success criteria and outcome tiers are defined in P0 spec §1.  
 **Reason:** Monthly leasing and collections give the fastest feedback, and fee economics and compliance load are simplest, so cash, staffing, and reputation systems can be tested first.  
 **Affected systems:** Opening state, contracts, staffing, lenders (two in slice), success criteria.  
 **Existing material revised:** Master GDD §13 (P0 status line added). D-002 is unchanged: new saves still let the player choose any specialization.  
@@ -105,7 +105,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Decision:** Revise the Proposed D-008 to D-012 as follows. The owner delegated these choices ("You choose"). None changes a locked decision.
 
 1. D-008: L-02 (Folsom lease-up, 72 units) is removed from the slice and deferred to P2. The slice has one prospect, L-01. Criterion 5 counts L-01 or a new lead.
-2. D-009: The opening P&L applies a 3.5% collection loss, so fees are on collected rent. Opening net is −$303/month, and the business is cash-negative from opening. The post-hire net is −$4,776/month, with about 10 months of runway.
+2. D-009: The opening P&L applies a 3.5% collection loss, so fees are on collected rent. Opening net is −$247/month, and the business is cash-negative from opening. The post-hire net is −$4,720/month, with about 10 months of runway.
 3. D-009: The founder draw stays an operating expense (conservative).
 4. D-010: The Pine Hollow trigger stays at two consecutive months below 90%. Success criterion 4 changes to match.
 5. D-010: Criterion 3 is counted per owner.

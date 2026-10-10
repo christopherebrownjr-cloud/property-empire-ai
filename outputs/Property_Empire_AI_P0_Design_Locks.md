@@ -4,7 +4,7 @@
 **Date:** 2026-10-10 (v0.2: revisions recorded as D-013)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
-**Logged as:** D-008 to D-012 in the Decision Log.
+**Logged as:** D-008 to D-013 in the Decision Log (D-013 records the v0.2 revisions).
 
 | P0 item (GDD §13) | Section | Decision Log |
 |---|---|---|
@@ -30,18 +30,18 @@ D-002 is unchanged. New saves still let the player choose any of the five specia
 
 | Community | City | Units | Avg rent | Opening occupancy | Owner | Monthly fee (opening, collected) |
 |---|---|---|---|---|---|---|
-| Alder Court Apartments | Sacramento (Midtown) | 64 | $1,780 | 93% | Cordova Hollow Holdings | $6,134 |
-| Riverbend Terrace | Rancho Cordova | 40 | $1,950 | 94% | Valley Gate Partners | $3,891 |
-| Pine Hollow Flats | Elk Grove | 28 | $1,650 | 90% | Sutter Pine Realty Trust | $2,809 |
+| Alder Court Apartments | Sacramento (Midtown) | 64 | $1,780 | 93.4% | Cordova Hollow Holdings | $6,161 |
+| Riverbend Terrace | Rancho Cordova | 40 | $1,950 | 94.4% | Valley Gate Partners | $3,908 |
+| Pine Hollow Flats | Elk Grove | 28 | $1,650 | 90.4% | Sutter Pine Realty Trust | $2,821 |
 
-Fee calculations use collected rent, which assumes 3.5% delinquency (§3.2, multiply by 0.965): Alder 6.0% × ($1,780 × 64 × 0.93) × 0.965 = $6,134; Riverbend 5.5% × ($1,950 × 40 × 0.94) × 0.965 = $3,891; Pine Hollow 7.0% × ($1,650 × 28 × 0.90) × 0.965 = $2,809.
+Fee calculations use collected rent, which assumes 3.5% delinquency (§3.2, multiply by 0.965): Occupancy uses the pinned §3.2 values (93.4%, 94.4%, 90.4%). Alder 6.0% × ($1,780 × 64 × 0.934) × 0.965 = $6,161; Riverbend 5.5% × ($1,950 × 40 × 0.944) × 0.965 = $3,908; Pine Hollow 7.0% × ($1,650 × 28 × 0.904) × 0.965 = $2,821.
 
 ### 1.3 Opening staff
 
 | Role | Holder | Burdened monthly cost | Capacity | Starting burnout | Notes |
 |---|---|---|---|---|---|
 | Founder-CEO | Player | $4,000 draw | 100 pts | 35 | Owner reporting, inspections, work-order escalations, bids |
-| Leasing & Resident Coordinator | Placeholder: Jordan Okafor | $5,287 ($52,000 salary × 1.22) | 100 pts | 20 | Resident service for all units, leasing, renewals |
+| Leasing & Resident Coordinator | Placeholder: Jordan Okafor | $5,287 ($52,000 ÷ 12 × 1.22) | 100 pts | 20 | Resident service for all units, leasing, renewals |
 | Bookkeeping | Outsourced vendor (placeholder: Harbor Ledger Services) | $1,200 | n/a | n/a | Monthly close support |
 | Maintenance vendor pool | Valley Turn Services; Foothill Handyworks (placeholders) | Per-job billing | n/a | n/a | Work orders billed to owner trust |
 
@@ -51,9 +51,9 @@ Fee calculations use collected rent, which assumes 3.5% delinquency (§3.2, mult
 
 | Line | Amount |
 |---|---|
-| Management fees, collected (three communities) | $12,834 |
+| Management fees, collected (three communities) | $12,890 |
 | Leasing and renewal fees (≈ 6 new leases at $350, 4 renewals at $150) | $2,700 |
-| **Total corporate revenue** | **$15,534** |
+| **Total corporate revenue** | **$15,590** |
 | Founder draw | $4,000 |
 | Leasing & Resident Coordinator | $5,287 |
 | Bookkeeping | $1,200 |
@@ -64,11 +64,11 @@ Fee calculations use collected rent, which assumes 3.5% delinquency (§3.2, mult
 | Legal and professional reserve | $400 |
 | Miscellaneous | $400 |
 | **Total corporate expenses** | **$15,837** |
-| **Net corporate operating result** | **−$303** |
+| **Net corporate operating result** | **−$247** |
 
 **Opening cash:** $48,000 corporate operating cash. Undrawn $30,000 revolving line (Foothill Harbor Bank).
 
-**Realism check:** The business is cash-negative from opening, at about −$303/month once the 3.5% collection loss is applied. Adding one $44,000 assistant ($3,667 × 1.22 = $4,473/month) moves the result to about −$4,776/month, which leaves about 10 months of runway at $48,000. Every hire is a visible tradeoff. The founder draw is treated as an operating expense (conservative); treating it as a distribution would move the opening result to about +$3,697/month.
+**Realism check:** The business is cash-negative from opening, at about −$247/month once the 3.5% collection loss is applied. Adding one $44,000 assistant ($3,667 × 1.22 = $4,473/month) moves the result to about −$4,720/month, which leaves about 10 months of runway at $48,000. Every hire is a visible tradeoff. The founder draw is treated as an operating expense (conservative); treating it as a distribution would move the opening result to about +$3,753/month.
 
 ### 1.5 Opening contracts and pipeline
 
@@ -81,7 +81,8 @@ Fee calculations use collected rent, which assumes 3.5% delinquency (§3.2, mult
 | ID | Prospect | Units | Baseline win odds | Bid due | Notes |
 |---|---|---|---|---|---|
 | L-01 | Oakline Residential Fund property, Roseville | 48 | 30% | Month 3 | Standard market-rate management |
-| L-02 | Summit Ridge Developers lease-up, Folsom | 72 | 20% | Month 6 | **Deferred to P2 and removed from the slice (v0.2).** Lease-up work is a different specialization. |
+
+L-02 (Summit Ridge Developers lease-up, Folsom, 72 units, 20% baseline odds) is deferred to P2 and is not in the slice (v0.2). Lease-up work is a different specialization.
 
 ### 1.6 Lenders in the slice
 
@@ -208,7 +209,7 @@ Corporate money and client money are kept in separate ledgers. The company may n
 | Season | Q1 −0.01; Q2 +0.01; Q3 +0.01; Q4 −0.01 | Turnover seasonality |
 | noise | Normal, σ = 0.008 | Bounded by the seed |
 
-Opening inputs are pinned: LeasingScore 70, ServiceScore 60, opening month October (Season −0.01), no penalties, noise 0. Opening occupancy: Alder 0.91 + 0.028 + 0.006 − 0.01 = 93.4%; Riverbend 94.4%; Pine Hollow 90.4%. The unit-weighted opening portfolio is 93.1%, only 0.1 points above criterion 4, so a player who does nothing will drift below the 93% threshold.
+Opening inputs are pinned: LeasingScore 70, ServiceScore 60, ResidentSatisfaction 60, opening month October (Season −0.01), no penalties, noise 0. Opening occupancy: Alder 0.91 + 0.028 + 0.006 − 0.01 = 93.4%; Riverbend 94.4%; Pine Hollow 90.4%. The unit-weighted opening portfolio is 93.1%, only 0.1 points above criterion 4, so a player who does nothing will drift below the 93% threshold.
 
 **Collections.**
 
@@ -291,7 +292,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 
 | Lever | Available at | Immediate effect | Lag | Side effects | Limit |
 |---|---|---|---|---|---|
-| Collections push | Any | Recovers up to $2,000 of delinquent rent into Owner Trust over 60 days; corporate gains only its fee share (about 6%) and the owner receives the rest; delinquency −1 pt | 30–60 days | Resident satisfaction −2; tactics limited to lawful, non-harassing contact (ethics review) | Once per quarter |
+| Collections push | Any | Recovers up to $2,000 of delinquent rent into Owner Trust over 60 days; corporate gains only its fee share (about 6%) and the owner receives the rest; delinquency −0.5 pt | 30–60 days | Resident satisfaction −2; tactics limited to lawful, non-harassing contact (ethics review) | Once per quarter |
 | Cut discretionary spend | Any | +$500–$2,000 per month. Discretionary lines are software, marketing, and miscellaneous ($2,000 at opening) | Immediate | ServiceScore −5 until restored; capacity −5 pts per person; morale −3 | None |
 | Draw revolving line | Lender-dependent | Up to the line limit | Immediate | Interest cost; covenant ratio worsens; lender sentiment −3 | $30,000 (Foothill) |
 | Request owner fee advance | Owner sentiment Warm or better | One to two months of that owner's fee | Immediate | Credited back over later months; owner trust −3 at request | Once per owner per year |
@@ -432,7 +433,7 @@ Once these are approved, the Decision Log entries move from **Proposed** to **Ap
 ## 7. v0.2 choices (owner delegated: "You choose")
 
 1. **L-02 removed from the slice** and deferred to P2. Criterion 5 uses L-01 or a new lead.
-2. **Collection loss applied** at 3.5% delinquency. Opening net is about −$303/month, and the business is cash-negative from opening.
+2. **Collection loss applied** at 3.5% delinquency. Opening net is about −$247/month, and the business is cash-negative from opening.
 3. **Founder draw kept as an operating expense** (conservative). Treating it as a distribution is a one-line change if you prefer it.
 4. **Pine Hollow trigger kept** at two consecutive months below 90%; criterion 4 changed to match.
 5. **Criterion 3 counted per owner**, not portfolio-wide.
