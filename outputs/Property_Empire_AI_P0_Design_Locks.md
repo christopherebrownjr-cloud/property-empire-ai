@@ -70,7 +70,7 @@ Opening staff have Morale 100 and SkillFit 1.0. The utilization figures in §4.4
 
 **Opening cash:** $48,000 corporate operating cash. Undrawn $30,000 revolving line (Foothill Harbor Bank).
 
-**Realism check:** The business is cash-negative from opening, at about −$247/month once the 3.5% collection loss is applied. Adding one $44,000 assistant ($44,000 ÷ 12 × 1.22 = $4,473.33/month) moves the result to about −$4,720/month, which leaves about 10 months of runway at $48,000. Every hire is a visible tradeoff. The founder draw is treated as an operating expense (conservative); treating it as a distribution would move the opening result to about +$3,753/month.
+**Realism check:** The business is cash-negative from opening, at about −$247/month once the 3.5% collection loss is applied. Adding one $44,000 assistant ($44,000 ÷ 12 × 1.22 = $4,473.33/month) moves the result to about −$4,720/month, which leaves about 10 months of runway at $48,000. Every hire is a visible tradeoff. The leasing-fee allocation (§12) may lower the opening net to about −$400 a month; the −$247 figure carries that caveat. The founder draw is treated as an operating expense (conservative); treating it as a distribution would move the opening result to about +$3,753/month.
 
 ### 1.5 Opening contracts and pipeline
 
@@ -118,6 +118,8 @@ Criterion 3 (trust violations) and criterion 6 must hold in every month, not onl
 - **Distressed:** 3 or fewer criteria met, or Distress Level 4 or above reached. Distressed takes precedence when both Struggling and Distressed apply.
 
 Struggling and Distressed outcomes continue play under the recovery rules in §3.6. They do not end the game.
+
+**Scope note (D-019):** the slice does not model fair-housing outcomes. Stable does not mean fair-housing compliance was tested.
 
 ### 1.8 Out of scope for the slice
 
@@ -334,7 +336,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 | Draw revolving line | Lender-dependent | Up to the line limit | Immediate | Interest cost; covenant ratio worsens; lender sentiment −3 | $30,000 (Foothill) |
 | Request owner fee advance | Owner sentiment Warm or better | One to two months of that owner's fee | Immediate | Credited back over later months; owner sentiment −3 at request | Once per owner per year |
 | Defer part of payroll (up to 25%) | Any | Cash timing relief | Repaid by next payroll | Morale −10; burnout +5; compliance issue if not repaid | Two months per year |
-| Reduce staff hours or lay off | Level 2 or above | Monthly savings | Immediate | Severance; employee reputation −10; city reputation −3 | None |
+| Reduce staff hours or lay off | Level 2 or above, blocked while a §3.9 brake is active | Monthly savings | Immediate | Severance; employee reputation −10; city reputation −3 | None |
 | Sell or transfer a contract | Level 3 or above | One-time cash; loss of that fee stream | 60–90 days | Owner relationship damage; lender review | One per year |
 | Take partner investment | Level 2 or above; lender reputation 50 or higher | Equity cash | 60–120 days | Equity dilution; shared decision rights | Once |
 | Restructure a loan | Level 2 or above | Covenant reset | 30 days | Restructuring fee; lender sentiment −3 | Once per loan |
@@ -627,7 +629,7 @@ Owner decisions: Settle removed (Investigate only); the verifier is a third-part
 
 ## 14. v0.8 changes (ethics Hold on v0.7)
 
-Owner decisions (D-019): the complaint, retaliation, and verifier-panel mechanics move to P1. The slice keeps a complaint placeholder. The floor card's brake blocks cost-cutting levers and renewal increases from the first below-60 reading, and the card closes at 60.
+Owner decisions (D-019): the complaint, retaliation, and verifier-panel mechanics move to P1. The slice keeps a complaint placeholder. The floor card's brake blocks renewal increases above 3%, non-renewals, the collections push, discretionary cuts, and staff hour or layoff cuts from the first below-60 reading, and the card closes at 60.
 
 Also applied: the adverse-finding and retaliation terms are removed from the RS and city-reputation formulas (they belong to P1). Community flags are not used in the slice. The verifier cost is added to §2.6 as a placeholder with a payer. The "life-safety finding" wording follows the approved list.
 

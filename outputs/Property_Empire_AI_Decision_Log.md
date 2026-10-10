@@ -208,3 +208,4 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Consequence:** The slice does not model fair-housing outcomes. Nothing in the slice may present itself as complete for fair housing. Legal review (§10) is required before P1 designs these rules.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v0.8, §3.8, §3.9, §14
 
+**Note (v0.9, 2026-10-10):** the opening net of −$247 in D-008 and D-013 carries the leasing-allocation caveat in P0 spec §12 (about −$400 a month if renewal income is overstated). D-019's scope note on fair housing also applies to the Stable tier in §1.7.
