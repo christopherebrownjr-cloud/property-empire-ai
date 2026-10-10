@@ -4,7 +4,7 @@
 **Date:** 2026-10-10 (v0.7: revisions recorded as D-013 to D-018)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
-**Logged as:** D-008 to D-017 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7).
+**Logged as:** D-008 to D-018 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7).
 
 | P0 item (GDD §13) | Section | Decision Log |
 |---|---|---|
@@ -234,7 +234,7 @@ Opening inputs are pinned: LeasingScore 70, ServiceScore 60, ResidentSatisfactio
 
 **Resident satisfaction (RS, v0.4).** Each community has its own RS, 0–100. Opening value 60. Monthly update, measured at month end after every term below:
 
-> RS(t+1) = clamp(0, 100, RS(t) + 0.2 × (ServiceScore − 60) + 0.5 × (60 − RS(t)) − 0.5 × (resident-reported non-critical work orders open over 7 days, per order) − 5 × (critical safety work orders open over 14 days, per order) − 3 × [failed inspection this month] − 0.5 × Σ(renewal increase above 3%, in percentage points, per renewal this month, scaled to 100 units by multiplying by 100 / units) − 0.5 × (renewals priced above market this month, scaled to 100 units) − 2 × [collections push active] − 3 × [adverse fair-housing finding open and uncorrected] − 1 × [any complaint open and uncorrected] − 1 × [missed inspection this month] + 1 × [funded targeted floor repair, drivers cleared, for three months] − one-time terms in the month they occur: 3 for a plumbing or HVAC emergency, 10 for confirmed retaliation, 5 for a deposit or owner-trust Trust Violation, 2 for contract termination or transfer; +2 when a complaint is closed by verified correction; 1 for each avoidable move-out's displaced household, one time; these are one-time)
+> RS(t+1) = clamp(0, 100, RS(t) + 0.2 × (ServiceScore − 60) + 0.5 × (60 − RS(t)) − 0.5 × (resident-reported non-critical work orders open over 7 days, per order) − 5 × (critical safety work orders open over 14 days, per order) − 3 × [failed inspection this month] − 0.5 × Σ(renewal increase above 3%, in percentage points, per renewal this month, scaled to 100 units by multiplying by 100 / units) − 0.5 × (renewals priced above market this month, scaled to 100 units) − 2 × [collections push active] − 3 × [adverse fair-housing finding open and uncorrected] − 1 × [missed inspection this month] + 1 × [funded targeted floor repair, drivers cleared, for three months] − one-time terms in the month they occur: 3 for a plumbing or HVAC emergency, 10 for confirmed retaliation, 5 for a deposit or owner-trust Trust Violation, 2 for contract termination or transfer; +2 when a complaint is closed by verified correction; 1 for each avoidable move-out's displaced household, one time; these are one-time)
 
 The first two terms are the service driver and drift back toward 60. Renewals at or below a 3% increase are neutral. Opening state: ServiceScore 60, opening renewals at or below 3%, no events, so RS stays at 60.
 
@@ -614,6 +614,7 @@ Fixes: the RS formula now includes the displacement, missed-inspection, and floo
 - Bid table has no resident-outcome modifier. Consider one for portfolio RS below 55 or open compliance records.
 - Legal items in §10 remain unverified and parked by the owner.
 - Owner and lender reputation (§2.4) have no update rules in §3.2 yet.
+- Leasing fee allocation: §1.4 uses a blended $350 new-lease fee and a $150 renewal fee across all four renewals. Unit-weighted, the new-lease figure is about $345 (not $350), and Pine Hollow has no renewal fee, so renewal income is overstated by about $127 a month. Net would be about −$400 a month, not −$247. Reconcile before approval.
 - Renewal volume: the 12.5-RS-per-month figure assumes about 5.3 renewals a month at Alder, while §1.4 books 4 a month across all 132 units. Reconcile.
 - Readiness checklist: the halving applies only when every work order at the community is closed, which is stricter than the failure-chance count (non-critical orders past 14 days).
 - Ethics re-review and auditor recheck of v0.6 before approval.
