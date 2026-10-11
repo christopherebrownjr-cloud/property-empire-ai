@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Pre-production design. **No code, data pipelines, or deployment** until the P0 locks in `outputs/Property_Empire_AI_P0_Design_Locks.md` are approved (GDD §14).
+P0 design approved by the owner on 2026-10-11 (D-029, with the ethics Hold overridden). Implementation may begin under GDD §14. Start with `HANDOFF.md`.
 
 ## Source of truth
 
