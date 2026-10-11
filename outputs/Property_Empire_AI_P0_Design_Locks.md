@@ -1,10 +1,10 @@
 # Property Empire AI — P0 Design Locks
 
 **Status:** Proposed — pending owner review and approval (GDD §14: no implementation until P0 locks are approved)
-**Date:** 2026-10-10 (v1.4: revisions recorded as D-013 to D-025)
+**Date:** 2026-10-10 (v1.5: revisions recorded as D-013 to D-026)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
-**Logged as:** D-008 to D-025 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2, D-024 v1.3, D-025 v1.4).
+**Logged as:** D-008 to D-026 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2, D-024 v1.3, D-025 v1.4, D-026 v1.5).
 
 | P0 item (GDD §13) | Section | Decision Log |
 |---|---|---|
@@ -120,6 +120,8 @@ Criterion 3 (trust violations) and criterion 6 must hold in every month, not onl
 Struggling and Distressed outcomes continue play under the recovery rules in §3.6. They do not end the game.
 
 **Scope note (D-019):** the slice does not model fair-housing outcomes. Stable does not mean fair-housing compliance was tested.
+
+**Scope note (D-025):** Stable does not mean hazards were tested beyond inspector sign-off, or that any inspector ever failed a job.
 
 ### 1.8 Out of scope for the slice
 
@@ -357,7 +359,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 ### 3.8 Resident-facing consequences (v0.6)
 
 **Glossary.**
-- *Company-engaged inspector sign-off (critical items; the inspector must hold a recognised trade certification for the defect class, a game rule; real licensing is for the owner to verify):* the vendor completes the repair, and one third-party inspector, engaged and paid by the company, signs it off. The inspector may not be the repairing vendor or any affiliated firm. A firm is affiliated if it shares ownership, management, or staff with the company, the vendor, or the owner; if it subcontracts to or refers work from the vendor, or the vendor subcontracts to or refers work from it, in either direction; or if it has done repeat work for the same vendor in the past 12 months. The inspector signs an independence attestation for each engagement, and the simulation checks it against the affiliation roster. Company staff cannot sign off. The inspector's fee is paid by the company on every engagement, including rejected sign-offs. A rejected sign-off leaves the order open and is recorded on the compliance record; the 14-day clock runs from the original open date. A rejected inspector may not be re-engaged on that order, and every engagement is logged. Sign-off requires the inspector to confirm the defect is resolved and to perform an on-site functional test, recording the result. Tests by defect class: heat (required room temperature reached); water (flow and pressure restored); gas (leak test passed); electrical (test passed, no exposed hazard); locks (door secures and locks); sewage (flow clear, no backup); pests (no activity on re-inspection); fire safety (device operates). A reopen within 90 days needs a new sign-off. Panel, rotation, and sampling audit are P1 (D-021).
+- *Company-engaged inspector sign-off (critical items):* the vendor completes the repair, and one third-party inspector, engaged and paid by the company, signs it off. The inspector must hold the certification for the defect class (§3.8). The inspector may not be the repairing vendor or any affiliated firm. A firm is affiliated if it shares ownership, management, or staff with the company, the vendor, or the owner, or if the firm and the vendor have subcontracted to or referred work for each other, in either direction, in the 12 months before engagement, or have done repeat work for each other in that period. Ownership, staff, and subcontract ties are checked as of the engagement date. The inspector signs an independence attestation for each engagement. The simulation checks each attestation against the company-maintained affiliation roster (§4.1). A failed check blocks the engagement and is logged. Company staff cannot sign off. The inspector's fee is paid by the company on every engagement, including rejected sign-offs. A rejected sign-off leaves the order open; the company pays only the fee, and no compliance record is added for a rejection. The 14-day clock runs from the original open date. A rejected inspector may not be re-engaged on that order, and every engagement is logged. Sign-off requires the inspector to confirm the defect is resolved and to perform an on-site functional test, recording the result. Tests by defect class: heat (required room temperature reached); water (flow and pressure restored); gas (leak test passed); electrical (test passed, no exposed hazard); locks (door secures and locks); sewage (flow clear, no backup); pests (no activity on re-inspection); fire safety (device operates). A reopen within 90 days needs a new sign-off. Panel, rotation, and sampling audit are P1 (D-021).
 - *Closed work order:* for critical items, inspector sign-off. For non-critical items, vendor completion confirmed by the simulation. Only critical closures count for the §3.4 readiness checklist and the §3.2 sentiment gate; both classes clear the §3.2 RS driver. Floor-card drivers count as cleared under these same rules (D-023).
 - *Critical safety work order (approved list):* one with a defect on this list: no heat, no water, gas leak, electrical hazard, lock or door-security failure, sewage backup, pest infestation, or fire-safety defect.
 - *Adverse action (P1):* a filing (eviction or non-renewal notice), a rent increase above 3%, or a service reduction, issued to a complainant.
@@ -376,6 +378,8 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - Funding order: (1) the Capital Reserve, within a cap of $5,000 per community per 30 days; (2) the company's revolving line, if available; (3) corporate cash, advanced and billed to the owner. Step 3 may take corporate cash below zero, and Level 5 rules then apply. The repair proceeds in every case. Where steps 1 and 2 are unavailable, the vendor is paid from corporate cash. A shortfall registers as a distress event (§3.5), not a deferral. The company absorbs it; finance sizes the revolving line and cash buffer so step 3 is rare.
 - Step 1 covers the remaining 30-day reserve cap, up to $5,000 per community per 30 days. Steps 2 and 3 fund the rest, and the company bills the owner. Owner sentiment drops 5 once when a defect's company-funded amount exceeds $5,000, or when a reserve draw above the 30-day cap is company-funded (owner to confirm).
 - The lender covenant does not excuse a repair. Finance-designer models any covenant effect.
+- **Certifications by class (game rule, D-026):** heat: HVAC technician; water: plumber; gas: gas fitter; electrical: electrician; locks: locksmith; sewage: plumber (drain specialist); pests: licensed pest control operator; fire safety: fire protection technician. An engagement whose inspector lacks the class certification, or holds an expired one, is blocked and logged. Real licensing requirements are for the owner to verify.
+- **Hazard list:** the eight classes above are the complete life-safety list for the slice (D-026). Any hazard not on it is non-critical and closes on vendor completion alone.
 - Until inspector sign-off, the order stays open. Once open more than 14 days, it costs 5 RS per month per order (§3.2), plus a compliance record.
 - A reopen within 90 days re-applies the penalty from the original open date.
 
@@ -415,6 +419,18 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - The card closes at the first month-end with RS of 62 or higher, aligned with the brake release (D-021).
 - **Brake (D-019, amended in D-021, D-023):** from any month-end RS below 60, until RS is 62 or higher, the company may not raise any renewal above 3%, set any renewal or new-lease ask above market, or run the collections push in that community. Release at 62 generally needs investment, since the drift returns RS toward 60 only when ServiceScore is 60 (§3.2).
 
+
+### 3.10 Known residual risks (owner-accepted, D-025)
+
+The owner has accepted the following for the slice. They are stated here in the spec body, not only in the log.
+
+- **Critical-inspector route.** The company engages and pays the inspector. An inspector can sign off a defect without a proper test, and the hazard persists while residents bear it.
+- **Non-critical route.** Vendor-recorded closures clear the RS driver and floor-card drivers, can release the brake at RS 62, and reduce failure chance through the non-critical term. These closures are not inspector-signed.
+- **No reopen in the slice.** The slice does not generate reopen events. A false closure costs nothing in play, and the 90-day reopen rule is not exercised. Criterion 6 and the readiness checklist can both be met on closures alone, and a player can reach Stable without any inspector ever failing a job.
+- **Rejections.** A rejection costs the company only the fee. The order stays open with its resident-facing penalty.
+- **Competence rule as it works.** Each defect class has a required certification (§3.8). Engagements that do not match, or whose certification has expired, are blocked. Certification is a game rule. Whether it reflects real licensing is for the owner to verify.
+- **Reversal condition.** Before any P1 release: panel and rotation, a formal competence review, and reopen modeling are in place. The owner is the decision-maker.
+
 ---
 
 ## 4. Core entity model (P0-4)
@@ -433,6 +449,8 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 | **Lender** | id, name, product, limit, rate, criteria, appetite, relationship score | Holds facilities and covenants | Covenant test, review scheduled, line drawn, approval or decline |
 | **Covenant** | id, lender, metric, threshold, test frequency, status | Belongs to a facility | Test passed, test failed |
 | **Vendor** | id, name, trade, rate card, reliability score | Performs work orders | Invoice late, job complete, vendor failure |
+| **Inspector** | id, name, certifications by class, certification expiry, engagement log | Signs off critical repairs; engaged and paid by the company | Engaged, sign-off accepted, sign-off rejected, engagement blocked |
+| **Affiliation roster** | firm, ownership, management, staff, subcontract and referral ties, repeat-work history by date; maintained by the company, updated when a firm joins | Checked against each inspector attestation | Attestation checked, engagement blocked |
 | **City** | id, name, compliance record, relationship score | Issues inspections | Inspection scheduled, inspection failed, complaint received |
 | **Work order** | id, community, unit, severity, age, cost estimate band, vendor | Belongs to a community; assigned to a vendor or employee | Opened, aged past threshold, closed |
 | **Inspection** | id, community, city, due date, status, findings | Belongs to a community and city | Scheduled, passed, failed |
@@ -576,19 +594,17 @@ The ethics re-review returned Hold on v0.2. v0.3 responds to it:
 
 ## 10. Game figures for rent, notice, deposits, and late fees
 
-**Owner decision (D-024): these are fictional game values chosen for play, not legal guidance and not a statement of California law.** The source notes below are background only and were not verified against current statutes. Do not treat any figure as a real-world rule.
+**Owner decision (D-024):** these are fictional game values chosen for play. They are not legal guidance and not a statement of any real law. Source notes are kept outside this spec in `outputs/Property_Empire_AI_Legal_Verification_Notes.md`, for the owner or counsel to verify.
 
-These come from secondary sources (law-firm pages, property-management guides, and a San Francisco Rent Board notice). They are not statute text. Each needs confirmation on leginfo.legislature.ca.gov or with counsel before it is treated as fact.
+| Item | Game value (fictional) | Owner to verify (item) |
+|---|---|---|
+| Rent increase cap | 5% plus the game's CPI input, capped at 10% | CPI input and cap scope (§10.1) |
+| Notice for increases | 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10% | Notice periods (§10.2) |
+| Mailing | Not modeled | Mailing rules (§10.2) |
+| Security deposit | Return and itemize within 21 days; bad-faith retention costs up to twice the deposit (not modeled in mechanics) | Deposit rules (§10.3) |
+| Late fees | No amount modeled | Late-fee rules (§10.3) |
 
-| Item | Source value (not used as law) | Sources | Used in spec? |
-|---|---|---|---|
-| Rent increase cap | 5% plus local CPI change, capped at 10% (game value) | [TenantCloud](https://www.tenantcloud.com/rent-collection/california-rent-increase-laws); [City of Downey](https://www.downeyca.org/our-city/departments/community-development/housing-division/ab1482) | Current CPI figure conflicts across sources; owner to fill from the HCD site. Exemptions (for example, newer buildings) not checked. |
-| Notice for increases | 30 days if cumulative 12-month increase is 10% or less; 90 days if above 10% | [Costa-Hawkins on AB 1110](https://costa-hawkins.com/ca-legislative-update/rent-increases-above-10-percent-now-require-90-days-notice-not-60/); [SF Rent Board archive](https://www.sf.gov/reports--december-2019--san-francisco-rent-board-news-archive-2019) | Some law-firm pages still say 60 days; these predate the 2020 change. Confirm §827. |
-| Mailing | Not modeled | Auditor: the 5-day add-on comes from general civil procedure rules, not the notice statute | Removed from the spec |
-| Security deposit | Return and itemize within 21 days; bad faith can cost up to 2× the deposit | [terms.law, CA Security Deposit Hub](https://terms.law/CA-Security-Deposit-Hub/) | Secondary source; confirm §1950.5. One source claims a one-month deposit cap for leases after July 1, 2024. Conflicting; not used in this spec. |
-| Late fees | No fixed cap; must be a reasonable estimate of loss (Civil Code §1671) | [Tellus](https://www.tellusapp.com/blog/late-fees-in-california/) | Confirm §1671. The 5% figure is a market convention, not law. The spec does not model a late-fee amount. |
-
-**v0.4 correction (auditor):** Outcome tiers now cover every combination: 6 or 7 criteria with RS below 65 is Struggling (§1.7).
+No statute is cited in this spec.
 
 ## 11. v0.5 changes (ethics Hold on v0.4)
 
@@ -694,3 +710,16 @@ Applied from the review: a rejected sign-off leaves the order open, with no re-e
 - **Affiliation:** a 12-month look-back for repeat work, in both directions. The inspector signs an attestation per engagement, and the simulation checks it against the affiliation roster.
 
 **Still open:** the brake release at RS 62 needs two service tiers to be reachable (any change returns to ethics); reserve-shortfall wording (absorbed versus billed to the owner); compliance-record closure rules; real-world licensing requirements (owner to verify); ethics re-review and auditor recheck of v1.4.
+
+## 21. v1.5 changes (owner answers to the v1.4 Hold)
+
+- **Rejections:** a rejection costs only the fee. No compliance record is added for a rejection; the open order keeps its resident-facing penalty (D-026).
+- **Certifications:** heat (HVAC technician), water (plumber), gas (gas fitter), electrical (electrician), locks (locksmith), sewage (plumber, drain specialist), pests (licensed pest control operator), fire safety (fire protection technician). Engagement is blocked on mismatch or expiry (§3.8; D-026).
+- **Hazard list:** the eight classes are complete for the slice (D-026).
+- **Affiliation roster:** company-maintained, checked on each engagement, with a logged block on failure (§4.1; D-026).
+- **Entities:** Inspector and affiliation roster added to §4.1.
+- **Standing residual risks:** §3.10, in the spec body.
+- **Stable scope note:** added to §1.7 (D-025).
+- **§10:** statute names and legal characterisations removed from the spec. Sources moved to `outputs/Property_Empire_AI_Legal_Verification_Notes.md`, for owner or counsel verification.
+
+**Still open:** the brake release at RS 62 needs two service tiers to be reachable (any change returns to ethics); the reserve-shortfall wording (absorbed versus billed to the owner); compliance-record closure rules; the owner's verification of certifications and §10; ethics re-review and auditor recheck of v1.5.

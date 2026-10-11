@@ -291,3 +291,19 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Affected systems:** Inspector sign-off, affiliation, certification, residual-risk disclosure, §10 labelling.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.4, §20
 
+## D-026 — P0 spec v1.5: owner answers to the v1.4 ethics Hold
+
+**Status:** Proposed — pending ethics re-review and auditor recheck  
+**Date:** 2026-10-11  
+**Owner decisions:**
+1. Rejections carry only the fee. A rejected sign-off costs the company its fee, and no compliance record is added. The open order keeps its resident-facing penalty.
+2. Certifications by defect class (game rule): heat — HVAC technician; water — plumber; gas — gas fitter; electrical — electrician; locks — locksmith; sewage — plumber (drain specialist); pests — licensed pest control operator; fire safety — fire protection technician. Engagement is blocked on a mismatch or an expired certification, and the attempt is logged. Real licensing requirements are for the owner to verify.
+3. The eight classes are the complete life-safety list for the slice. Anything else is non-critical.
+4. The affiliation roster is company-maintained, updated when a firm joins, and checked on each engagement. A failed check blocks the engagement and is logged.
+
+**Reason:** The ethics review of v1.4 returned Hold on the rejection incentive, the missing certification mapping and entities, the affiliation rule's direction and roster, the residual-risk section's placement in the spec body, the Stable scope note, and statute citations in §10.  
+**Affected systems:** Sign-off, rejections, certifications, affiliation, entities (§4.1), residual risks (§3.10), §1.7 scope note, §10, and the sources file.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.5, §21
+
+**D-025 addendum (v1.5):** the competence gap is closed for the slice by the certification rule in §3.8, which is a game rule. D-025's P1 reversal condition now lists a formal competence review as a P1 item. This reconciles the two statements.
+
