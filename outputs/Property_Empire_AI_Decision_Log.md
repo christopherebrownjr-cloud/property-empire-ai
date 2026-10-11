@@ -323,3 +323,18 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 **D-025 correction (v1.6):** the D-025 addendum's statement that the competence gap is "closed" is superseded. The game-level certification rule is in place (§3.8). Whether it matches real competence is open and is listed in the §3.10 reversal condition.
 
+## D-028 — P0 spec v1.7: owner answers to the v1.6 Hold
+
+**Status:** Proposed — pending ethics re-review and auditor recheck  
+**Date:** 2026-10-11  
+**Owner decisions:**
+1. Two inspector firms per defect class (eight firms in total, §4.5).
+2. A rejected inspector may not sign the same order again. This restores the v1.2 rule that v1.6 had dropped without a log entry.
+3. After two rejections on a critical order, an owner decision card opens. The order stays open at full penalty. The owner chooses vendor rework followed by a new order (counted against the cap separately), or accepting the open penalty.
+4. Repeat work means two or more completed engagements in the 12-month look-back, for vendor and company ties.
+
+**Corrections applied:** the duplicate §4.2 is renumbered §4.5, and the roster reference points to §4.1. Pool expiries are game values set to 2028, pending owner confirmation of the game year.  
+**Reason:** The ethics review of v1.6 returned Hold on an unclosable critical order after two rejections, the single-firm pool, the same-inspector loophole, and repeat-work ambiguity. The auditor found the unlogged restoration of the same-inspector rule and the duplicate section number.  
+**Affected systems:** Engagements, cap, inspector pool, affiliation, owner decision cards.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.7, §23
+
