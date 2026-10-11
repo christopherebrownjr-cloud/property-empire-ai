@@ -1,10 +1,10 @@
 # Property Empire AI — P0 Design Locks
 
 **Status:** Approved by owner (2026-10-11), with the ethics Hold overridden and residual risks recorded (D-029; §3.10)
-**Date:** 2026-10-11 (v1.7: revisions recorded as D-013 to D-028)
+**Date:** 2026-10-11 (v1.8: revisions recorded as D-013 to D-030)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
-**Logged as:** D-008 to D-028 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2, D-024 v1.3, D-025 v1.4, D-026 v1.5, D-027 v1.6, D-028 v1.7).
+**Logged as:** D-008 to D-030 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2, D-024 v1.3, D-025 v1.4, D-026 v1.5, D-027 v1.6, D-028 v1.7, D-029 override, D-030 v1.8).
 
 | P0 item (GDD §13) | Section | Decision Log |
 |---|---|---|
@@ -375,8 +375,8 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 **Life-safety repairs (decision D-017).**
 - A critical safety work order must be repaired. The company has no option to decline or defer one. An owner cannot order deferral.
 - A defect is one cause at one unit or system, with one work order (not one invoice). Defect IDs are assigned by the simulation; the player cannot split or merge them. Reserve draws per community are capped at $5,000 in any rolling 30 days. Each draw is listed in the owner notice within 24 hours. The −5 sentiment trigger applies once per defect.
-- Funding order: (1) the Capital Reserve, within a cap of $5,000 per community per 30 days; (2) the company's revolving line, if available; (3) corporate cash, advanced and billed to the owner. Step 3 may take corporate cash below zero, and Level 5 rules then apply. The repair proceeds in every case. Where steps 1 and 2 are unavailable, the vendor is paid from corporate cash. A shortfall registers as a distress event (§3.5), not a deferral. The company absorbs it; finance sizes the revolving line and cash buffer so step 3 is rare.
-- Step 1 covers the remaining 30-day reserve cap, up to $5,000 per community per 30 days. Steps 2 and 3 fund the rest, and the company bills the owner. Owner sentiment drops 5 once when a defect's company-funded amount exceeds $5,000, or when a reserve draw above the 30-day cap is company-funded (owner to confirm).
+- **Emergency repair funding is set by the management contract and the budget (D-030).** Each contract states the owner's emergency repair authority (default: draws up to $5,000 per community per rolling 30 days from the Capital Reserve), the reserve level the owner funds, and the replenishment deadline (default: 30 days). The annual budget for each community carries the reserve. If the reserve cannot cover a critical repair, the contract's terms apply. Where the contract is silent, the company advances the repair from corporate cash and bills the owner on the default terms. The repair always proceeds.
+- Per defect, the draw is limited by the contract's authority. Owner sentiment drops 5 once when a defect's company-funded amount exceeds the contract authority, or when the company advances under a silent contract (owner-approved values, D-024).
 - The lender covenant does not excuse a repair. Finance-designer models any covenant effect.
 - **Certifications by class (game rule, D-026):** heat: HVAC technician; water: plumber; gas: gas fitter; electrical: electrician; locks: locksmith; sewage: plumber (drain specialist); pests: licensed pest control operator; fire safety: fire protection technician. An engagement whose inspector lacks the class certification, or holds an expired one, is blocked and logged. Real licensing requirements are for the owner to verify.
 - **Hazard list:** the eight classes above are the complete life-safety list for the slice (D-026). Any hazard not on it is non-critical and closes on vendor completion alone.
@@ -610,19 +610,17 @@ The ethics re-review returned Hold on v0.2. v0.3 responds to it:
 - Ethics re-review and auditor recheck of v0.4 before approval.
 - Owner decision: should Promising require the floor as well as RS ≥65? (v0.4 does not.)
 
-## 10. Game figures for rent, notice, deposits, and late fees
+## 10. Game values for rent, notice, deposits, and late fees
 
-**Owner decision (D-024):** these are fictional game values chosen for play. They are not legal guidance and not a statement of any real law. Source notes are kept outside this spec in `outputs/Property_Empire_AI_Legal_Verification_Notes.md`, for the owner or counsel to verify.
+These are game values chosen for play. No real-world legal review is part of this project (owner decision, D-030), and no statute, source, or legal rule is cited.
 
-| Item | Game value (fictional) | Owner to verify (item) |
-|---|---|---|
-| Rent increase cap | 5% plus the game's CPI input, capped at 10% | CPI input and cap scope (Legal Notes, rent cap) |
-| Notice for increases | 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10% | Notice periods (Legal Notes, notice) |
-| Mailing | Not modeled | Mailing rules (Legal Notes, notice) |
-| Security deposit | Return and itemize within 21 days (game value); no penalty modeled | Deposit rules (Legal Notes, deposits) |
-| Late fees | No amount modeled | Late-fee rules (Legal Notes, late fees) |
-
-No statute is cited in this spec.
+| Item | Game value |
+|---|---|
+| Rent increase cap | 5% plus the game's CPI input, capped at 10% |
+| Notice for increases | 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10% |
+| Mailing | Not modeled |
+| Security deposit | Return and itemize within 21 days; no penalty modeled |
+| Late fees | No amount modeled |
 
 ## 11. v0.5 changes (ethics Hold on v0.4)
 
@@ -651,7 +649,7 @@ Fixes: the RS formula now includes the displacement, missed-inspection, and floo
 - Collections push: a single lever with the same effect regardless of tactics. Should become a choice among permitted tactics with their own costs.
 - Above-market new-lease asks carry only the small P_gap penalty. Consider a resident-side cost.
 - Bid table has no resident-outcome modifier. Consider one for portfolio RS below 55 or open compliance records.
-- Legal items in §10 remain unverified and parked by the owner.
+- §10 holds game values only. No legal review is part of this project (D-030).
 - Owner and lender reputation (§2.4) have no update rules in §3.2 yet.
 - Leasing fee allocation: reconciled in v1.1 (§17). Unit-weighted new-lease fee $345; renewal fees only where the contract has them. Opening net −$402/month.
 - Renewal volume: the 12.5-RS-per-month figure assumes about 5.3 renewals a month at Larkspur, while §1.4 books 4 a month across all 132 units. Reconcile.
@@ -763,3 +761,12 @@ Applied from the review: a rejected sign-off leaves the order open, with no re-e
 - **Expiries:** set to 2028 as game values. The owner should confirm the game year.
 
 **Still open:** the brake release at RS 62 needs two service tiers (any change returns to ethics); the reserve-shortfall wording; compliance-record closure rules; the owner's verification of certifications and the §10 game values; the real-firm name check; reopen inheritance of the cap (a P1 gate); ethics re-review and auditor recheck of v1.7.
+
+## 24. v1.8 changes (owner decisions)
+
+- **Reserve shortfall (D-030):** emergency repair funding is set by the management contract and the annual budget, not by a game mechanic. The contract defaults are a $5,000 per community per 30 days draw authority and a 30-day replenishment deadline. Where the contract is silent, the company advances and bills the owner.
+- **Legal (D-030):** no legal review is part of the project. §10 is game values only, and the Legal Verification Notes file is removed.
+- **Names (D-030):** the placeholder names are invented. The owner has waived the real-firm check.
+- **Game year (D-030):** 2028 confirmed for the inspector expiries.
+
+**Still open:** the brake release at resident satisfaction 62 (owner decision pending).

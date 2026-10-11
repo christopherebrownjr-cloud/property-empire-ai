@@ -366,3 +366,16 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Affected systems:** All P0 design locks (D-008 to D-028); implementation may begin under GDD §14.  
 **Source:** `outputs/Ethics_Review_P0_v1.7.md`; P0 spec v1.7 §3.10
 
+## D-030 — Contract and budget govern emergency funding; no legal review; names waived; 2028 confirmed
+
+**Status:** Approved (owner decision)  
+**Date:** 2026-10-11  
+**Owner decisions:**
+1. **Reserve shortfall:** emergency repair funding belongs in the management contract and the annual budget. Each contract sets the emergency repair authority (default $5,000 per community per rolling 30 days), the reserve the owner funds, and the replenishment deadline (default 30 days). Where a contract is silent, the company advances and bills the owner on the default terms. The repair always proceeds. Replaces the open reserve-shortfall item.
+2. **Legal:** no legal review is part of this project. §10 holds game values only. The Legal Verification Notes file is removed from the repo (it remains in git history).
+3. **Names:** the placeholder names are invented. The owner has waived the real-firm check (CLAUDE.md rule 5).
+4. **Game year:** 2028 is confirmed for the inspector firm expiries.
+
+**Still open:** the brake release at resident satisfaction 62.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.8, §24
+
