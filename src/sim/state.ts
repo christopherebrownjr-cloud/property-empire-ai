@@ -11,5 +11,6 @@ export function newGame(): GameState {
     communities: OPENING_COMMUNITIES.map((c) => ({ ...c })),
     staff: OPENING_STAFF.map((s) => ({ ...s })),
     assistantHired: false,
+    history: [],
   };
 }

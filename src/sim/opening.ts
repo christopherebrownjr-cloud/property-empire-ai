@@ -13,6 +13,10 @@ export interface Community {
   renewalFee: number;     // §1.5 (150, 150, none)
   occupancy: number;      // §3.2 pinned opening occupancy (93.4%, 94.4%, 90.4%)
   rs: number;             // §3.2 opening resident satisfaction
+  askRent: number;        // §3.2 P_gap: asking rent; opening = market
+  renewalIncrease: number; // §3.8 decision: renewal increase (0.03 = 3%); opening 0
+  rentIndex: number;      // rent base relative to opening; opening 1
+  pushThisMonth: boolean; // §3.5 collections push, set by decision before close
 }
 
 export interface Staff {
@@ -25,15 +29,17 @@ export interface Staff {
   burnout: number;        // §1.3 starting burnout
 }
 
-export const COLLECTION_FACTOR = 0.965; // §3.2 delinquency 3.5%
 
 export const OPENING_COMMUNITIES: Community[] = [
   { id: "larkspur", name: "Larkspur Court", units: 64, avgRent: 1780, baseOcc: 0.91, feePct: 0.06,
-    minFee: 0, newLeaseFee: 350, renewalFee: 150, occupancy: 0.934, rs: 60 },
+    minFee: 0, newLeaseFee: 350, renewalFee: 150, occupancy: 0.934, rs: 60,
+    askRent: 1780, renewalIncrease: 0, rentIndex: 1, pushThisMonth: false },
   { id: "stillwater", name: "Stillwater Terrace", units: 40, avgRent: 1950, baseOcc: 0.92, feePct: 0.055,
-    minFee: 1200, newLeaseFee: 300, renewalFee: 150, occupancy: 0.944, rs: 60 },
+    minFee: 1200, newLeaseFee: 300, renewalFee: 150, occupancy: 0.944, rs: 60,
+    askRent: 1950, renewalIncrease: 0, rentIndex: 1, pushThisMonth: false },
   { id: "cinder", name: "Cinder Hollow Flats", units: 28, avgRent: 1650, baseOcc: 0.88, feePct: 0.07,
-    minFee: 1500, newLeaseFee: 400, renewalFee: 0, occupancy: 0.904, rs: 60 },
+    minFee: 1500, newLeaseFee: 400, renewalFee: 0, occupancy: 0.904, rs: 60,
+    askRent: 1650, renewalIncrease: 0, rentIndex: 1, pushThisMonth: false },
 ];
 
 // §1.4: six new leases and four renewals a month, split by unit share (§17).

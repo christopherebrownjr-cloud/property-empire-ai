@@ -1,5 +1,9 @@
-import { advanceMonth, hireAssistant, type GameState } from "../sim/engine";
+import {
+  advanceMonth, canRunCollectionsPush, DECISION, hireAssistant, setAskRent, setRenewalIncrease,
+  toggleCollectionsPush, type GameState,
+} from "../sim/engine";
 import { newGame } from "../sim/state";
+import { scorecard } from "../sim/scorecard";
 
 const money = (n: number) => (n < 0 ? "-$" : "$") + Math.abs(Math.round(n)).toLocaleString("en-US");
 const pct = (n: number) => (n * 100).toFixed(1) + "%";
@@ -10,11 +14,8 @@ const app = document.getElementById("app")!;
 
 function render(): void {
   const r = state.lastResult;
-  const net = r ? r.net : null;
-  const revenue = r ? r.revenue : null;
-  const expenses = r ? r.expenses : null;
-  const burn = r ? r.runwayMonths : null;
   const rows = r ? r.communities : [];
+  const card = scorecard(state);
   app.innerHTML = `
     <main>
       <header>
@@ -24,8 +25,8 @@ function render(): void {
       <section class="kpis">
         <div><span>Month</span><strong>${MONTHS[state.month - 1]} ${state.year}</strong></div>
         <div><span>Corporate cash</span><strong>${money(state.cash)}</strong></div>
-        <div><span>Net last month</span><strong>${net === null ? "—" : money(net)}</strong></div>
-        <div><span>Runway</span><strong>${burn === null ? "cash-positive" : burn.toFixed(1) + " months"}</strong></div>
+        <div><span>Net last month</span><strong>${r ? money(r.net) : "—"}</strong></div>
+        <div><span>Runway</span><strong>${r && r.runwayMonths !== null ? r.runwayMonths.toFixed(1) + " months" : r ? "cash-positive" : "—"}</strong></div>
       </section>
       <section class="controls">
         <button id="advance">Close month</button>
@@ -34,18 +35,26 @@ function render(): void {
         </button>
       </section>
       <section>
-        <h2>Communities</h2>
+        <h2>Communities and decisions</h2>
         <table>
-          <thead><tr><th>Community</th><th>Units</th><th>Occupancy</th><th>Collected rent</th><th>Fee</th><th>Leasing fees</th><th>Resident satisfaction</th></tr></thead>
+          <thead><tr><th>Community</th><th>Units</th><th>Ask rent</th><th>Renewal increase</th><th>Occupancy</th><th>Resident satisfaction</th><th>Collections push</th><th>Last close revenue</th></tr></thead>
           <tbody>
             ${state.communities.map((c) => {
               const row = rows.find((x) => x.id === c.id);
+              const canPush = canRunCollectionsPush(c);
               return `<tr>
-                <td>${c.name}</td><td>${c.units}</td><td>${pct(c.occupancy)}</td>
-                <td>${row ? money(row.collectedRent) : "—"}</td>
-                <td>${row ? money(row.fee) : "—"}</td>
-                <td>${row ? money(row.leasingFee) : "—"}</td>
+                <td>${c.name}</td><td>${c.units}</td>
+                <td><button data-act="ask" data-id="${c.id}" data-d="-${DECISION.askStep}">−</button>
+                    ${money(c.askRent)}
+                    <button data-act="ask" data-id="${c.id}" data-d="${DECISION.askStep}">+</button></td>
+                <td><button data-act="inc" data-id="${c.id}" data-d="-${DECISION.increaseStep}">−</button>
+                    ${(c.renewalIncrease * 100).toFixed(0)}%
+                    <button data-act="inc" data-id="${c.id}" data-d="${DECISION.increaseStep}">+</button></td>
+                <td>${pct(c.occupancy)}</td>
                 <td>${Math.round(c.rs)}</td>
+                <td><button data-act="push" data-id="${c.id}" ${canPush || c.pushThisMonth ? "" : "disabled"}>
+                    ${c.pushThisMonth ? "On for next close" : canPush ? "Run push" : "Blocked (RS below 60)"}</button></td>
+                <td>${row ? money(row.revenue) : "—"}</td>
               </tr>`;
             }).join("")}
           </tbody>
@@ -56,19 +65,38 @@ function render(): void {
         <table>
           <thead><tr><th>Person</th><th>Role</th><th>Utilization</th><th>Burnout</th></tr></thead>
           <tbody>
-            ${state.staff.map((s) => `<tr><td>${s.name}</td><td>${s.role}</td>
-              <td>${(s.workload / s.capacity * 100).toFixed(0)}%</td><td>${Math.round(s.burnout)}</td></tr>`).join("")}
+            ${state.staff.map((s) => {
+              const u = state.assistantHired && s.id === "coordinator" ? s.workload - 52.8 : s.workload;
+              return `<tr><td>${s.name}</td><td>${s.role}</td><td>${(u / s.capacity * 100).toFixed(0)}%</td><td>${Math.round(s.burnout)}</td></tr>`;
+            }).join("")}
           </tbody>
         </table>
       </section>
       <section>
-        <h2>Last month</h2>
-        <p>Revenue ${revenue === null ? "—" : money(revenue)} · Expenses ${expenses === null ? "—" : money(expenses)}</p>
+        <h2>Twelve-month scorecard</h2>
+        <table>
+          <thead><tr><th>#</th><th>Criterion</th><th>Status</th><th>Detail</th></tr></thead>
+          <tbody>
+            ${card.map((c) => `<tr><td>${c.id}</td><td>${c.name}</td><td class="st-${c.status.replace(" ", "-")}">${c.status}</td><td>${c.detail}</td></tr>`).join("")}
+          </tbody>
+        </table>
       </section>
-      <footer>Milestone 1: monthly close, staffing, and the opening P&amp;L. Events, the collections push, and the remaining screens are not built yet.</footer>
+      <footer>Milestone 2: decisions (ask rent, renewal increase, collections push under the brake) and the scorecard. Not built yet: events, trust-account ledger, bids, inspections, owner statements, and the remaining screens.</footer>
     </main>`;
+
   document.getElementById("advance")!.addEventListener("click", () => { state = advanceMonth(state); render(); });
   document.getElementById("hire")!.addEventListener("click", () => { state = hireAssistant(state); render(); });
+  app.querySelectorAll<HTMLButtonElement>("button[data-act]").forEach((b) => {
+    b.addEventListener("click", () => {
+      const id = b.dataset.id!;
+      const d = Number(b.dataset.d);
+      const c = state.communities.find((x) => x.id === id)!;
+      if (b.dataset.act === "ask") state = setAskRent(state, id, Math.max(0, c.askRent + d));
+      if (b.dataset.act === "inc") state = setRenewalIncrease(state, id, c.renewalIncrease + d);
+      if (b.dataset.act === "push") state = toggleCollectionsPush(state, id);
+      render();
+    });
+  });
 }
 
 render();
