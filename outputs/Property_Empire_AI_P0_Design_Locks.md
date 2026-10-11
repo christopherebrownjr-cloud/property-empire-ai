@@ -1,10 +1,10 @@
 # Property Empire AI — P0 Design Locks
 
 **Status:** Proposed — pending owner review and approval (GDD §14: no implementation until P0 locks are approved)
-**Date:** 2026-10-11 (v1.5: revisions recorded as D-013 to D-026)
+**Date:** 2026-10-11 (v1.6: revisions recorded as D-013 to D-027)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
-**Logged as:** D-008 to D-026 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2, D-024 v1.3, D-025 v1.4, D-026 v1.5).
+**Logged as:** D-008 to D-027 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2, D-024 v1.3, D-025 v1.4, D-026 v1.5, D-027 v1.6).
 
 | P0 item (GDD §13) | Section | Decision Log |
 |---|---|---|
@@ -359,7 +359,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 ### 3.8 Resident-facing consequences (v0.6)
 
 **Glossary.**
-- *Company-engaged inspector sign-off (critical items):* the vendor completes the repair, and one third-party inspector, engaged and paid by the company, signs it off. The inspector must hold the certification for the defect class (§3.8). The inspector may not be the repairing vendor or any affiliated firm. A firm is affiliated if it shares ownership, management, or staff with the company, the vendor, or the owner, or if the firm and the vendor have subcontracted to or referred work for each other, in either direction, in the 12 months before engagement, or have done repeat work for each other in that period. Ownership, staff, and subcontract ties are checked as of the engagement date. The inspector signs an independence attestation for each engagement. The simulation checks each attestation against the company-maintained affiliation roster (§4.1). A failed check blocks the engagement and is logged. Company staff cannot sign off. The inspector's fee is paid by the company on every engagement, including rejected sign-offs. A rejected sign-off leaves the order open; the company pays only the fee, and no compliance record is added for a rejection. The 14-day clock runs from the original open date. A rejected inspector may not be re-engaged on that order, and every engagement is logged. Sign-off requires the inspector to confirm the defect is resolved and to perform an on-site functional test, recording the result. Tests by defect class: heat (required room temperature reached); water (flow and pressure restored); gas (leak test passed); electrical (test passed, no exposed hazard); locks (door secures and locks); sewage (flow clear, no backup); pests (no activity on re-inspection); fire safety (device operates). A reopen within 90 days needs a new sign-off. Panel, rotation, and sampling audit are P1 (D-021).
+- *Company-engaged inspector sign-off (critical items):* the vendor completes the repair, and one third-party inspector, engaged and paid by the company, signs it off. The inspector must hold the certification for the defect class (§3.8) and must be on the affiliation roster with a current, dated attestation (§4.2). The inspector may not be the repairing vendor or any affiliated firm. Affiliation is decided by the simulation from its own records: ownership, management, and staff ties (company-entered, dated, change-logged); and subcontract, referral, and repeat-work ties (derived from the engagement and subcontract logs). The look-back is 12 months before the check, applied to every tie type in both directions. Repeat work means one or more completed engagements in that period. Company repeat work counts: an inspector the company has engaged repeatedly in the look-back is affiliated with the company. Affiliation is checked at engagement and again at sign-off. Company staff cannot sign off. The inspector's fee is paid by the company on every engagement, including rejected sign-offs. A rejected sign-off leaves the order open; the company pays only the fee, and no compliance record is added for a rejection. The 14-day clock runs from the original open date. Each order allows at most two engagements. After two rejections the order stays open at its full penalty and no further inspector may be engaged. Every engagement and every blocked attempt is logged per order. Sign-off requires the inspector to confirm the defect is resolved and to perform an on-site functional test, recording the result. Tests by defect class: heat (required room temperature reached); water (flow and pressure restored); gas (leak test passed); electrical (test passed, no exposed hazard); locks (door secures and locks); sewage (flow clear, no backup); pests (no activity on re-inspection); fire safety (device operates). A reopen within 90 days needs a new sign-off. Panel, rotation, and sampling audit are P1 (D-021).
 - *Closed work order:* for critical items, inspector sign-off. For non-critical items, vendor completion confirmed by the simulation. Only critical closures count for the §3.4 readiness checklist and the §3.2 sentiment gate; both classes clear the §3.2 RS driver. Floor-card drivers count as cleared under these same rules (D-023).
 - *Critical safety work order (approved list):* one with a defect on this list: no heat, no water, gas leak, electrical hazard, lock or door-security failure, sewage backup, pest infestation, or fire-safety defect.
 - *Adverse action (P1):* a filing (eviction or non-renewal notice), a rent increase above 3%, or a service reduction, issued to a complainant.
@@ -427,7 +427,7 @@ The owner has accepted the following for the slice. They are stated here in the 
 - **Critical-inspector route.** The company engages and pays the inspector. An inspector can sign off a defect without a proper test, and the hazard persists while residents bear it.
 - **Non-critical route.** Vendor-recorded closures clear the RS driver and floor-card drivers, can release the brake at RS 62, and reduce failure chance through the non-critical term. These closures are not inspector-signed.
 - **No reopen in the slice.** The slice does not generate reopen events. A false closure costs nothing in play, and the 90-day reopen rule is not exercised. Criterion 6 and the readiness checklist can both be met on closures alone, and a player can reach Stable without any inspector ever failing a job.
-- **Rejections.** A rejection costs the company only the fee. The order stays open with its resident-facing penalty.
+- **Rejections.** A rejection costs the company only the fee. The order stays open with its resident-facing penalty. Each order allows at most two engagements; after two rejections no further inspector is engaged.
 - **Competence rule as it works.** Each defect class has a required certification (§3.8). Engagements that do not match, or whose certification has expired, are blocked. Certification is a game rule. Whether it reflects real licensing is for the owner to verify.
 - **Reversal condition.** Before any P1 release: panel and rotation, a formal competence review, and reopen modeling are in place. The owner is the decision-maker.
 
@@ -450,7 +450,7 @@ The owner has accepted the following for the slice. They are stated here in the 
 | **Covenant** | id, lender, metric, threshold, test frequency, status | Belongs to a facility | Test passed, test failed |
 | **Vendor** | id, name, trade, rate card, reliability score | Performs work orders | Invoice late, job complete, vendor failure |
 | **Inspector** | id, name, certifications by class, certification expiry, engagement log | Signs off critical repairs; engaged and paid by the company | Engaged, sign-off accepted, sign-off rejected, engagement blocked |
-| **Affiliation roster** | firm, ownership, management, staff, subcontract and referral ties, repeat-work history by date; maintained by the company, updated when a firm joins | Checked against each inspector attestation | Attestation checked, engagement blocked |
+| **Affiliation roster** | firm, ownership, management, and staff ties (company-entered, dated, change-logged); subcontract, referral, and repeat-work ties (derived from engagement and subcontract logs); current attestation date | Allowlist: only listed firms with a current attestation may be engaged | Engagement blocked and logged for an unlisted firm; a false attestation found against the logs is a logged compliance event and blocks the firm |
 | **City** | id, name, compliance record, relationship score | Issues inspections | Inspection scheduled, inspection failed, complaint received |
 | **Work order** | id, community, unit, severity, age, cost estimate band, vendor | Belongs to a community; assigned to a vendor or employee | Opened, aged past threshold, closed |
 | **Inspection** | id, community, city, due date, status, findings | Belongs to a community and city | Scheduled, passed, failed |
@@ -487,6 +487,18 @@ The owner has accepted the following for the slice. They are stated here in the 
 |---|---|---|---|
 | Founder-CEO | Owner reporting 30 + inspections 8 + open work orders 12.5 + one active bid 15 | 65.5 | 0.66 |
 | Leasing & Resident Coordinator | Resident service 52.8 + new leases 36 + renewals 8 | 96.8 | 0.97 |
+
+
+### 4.2 Inspector pool (fictional; names to be checked under CLAUDE.md rule 5)
+
+| Inspector firm | Certifications held | Expiry | On roster |
+|---|---|---|---|
+| Corvane Inspection Co | HVAC technician (heat); electrician (electrical) | 2027-12-31 | Yes |
+| Tallow Field Testing | Gas fitter (gas); plumber (water) | 2027-06-30 | Yes |
+| Brisk Ridge Safety | Locksmith (locks); fire protection technician (fire safety) | 2027-09-30 | Yes |
+| Mosswell Compliance | Plumber, drain specialist (sewage); licensed pest control operator (pests) | 2027-03-31 | Yes |
+
+The pool covers all eight classes. Test cases the slice must exercise: a valid pass; a certification mismatch (blocked); an expired certification (blocked); a firm the company has repeat-engaged in the look-back (blocked); a firm affiliated with the vendor (blocked); and an unlisted firm (blocked and logged).
 
 ---
 
@@ -723,3 +735,14 @@ Applied from the review: a rejected sign-off leaves the order open, with no re-e
 - **§10:** statute citations removed from the rule text. The §10 table holds game values only. Sources moved to `outputs/Property_Empire_AI_Legal_Verification_Notes.md`, for owner or counsel verification.
 
 **Still open:** the brake release at RS 62 needs two service tiers to be reachable (any change returns to ethics); the reserve-shortfall wording (absorbed versus billed to the owner); compliance-record closure rules; the owner's verification of certifications and §10; ethics re-review and auditor recheck of v1.5.
+
+## 22. v1.6 changes (owner answers to the v1.5 Hold)
+
+- **Re-engagement cap (owner):** at most two engagements per order. After two rejections the order stays open at full penalty (§3.8, §3.10).
+- **Company repeat work (owner):** an inspector the company has engaged repeatedly in the look-back is affiliated with the company.
+- **Allowlist:** only roster firms with a current, dated attestation may be engaged; unlisted firms are blocked and logged (§3.8, §4.1).
+- **Derived ties:** subcontract, referral, and repeat-work ties come from the simulation's own logs, not company entry. Company entry is limited to dated ownership, management, and staff ties.
+- **One look-back:** 12 months, applied to every tie type, in both directions. Affiliation is checked at engagement and at sign-off.
+- **Inspector pool:** four fictional firms covering all eight classes, with the required test cases (§4.2). Names are subject to the rule 5 check.
+
+**Still open:** the brake release at RS 62 needs two service tiers (any change returns to ethics); the reserve-shortfall wording; compliance-record closure rules; the owner's verification of certifications and §10 game values; the real-firm name check; ethics re-review and auditor recheck of v1.6.

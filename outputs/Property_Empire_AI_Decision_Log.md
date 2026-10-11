@@ -307,3 +307,19 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 **D-025 addendum (v1.5):** the competence gap is closed for the slice by the certification rule in §3.8, which is a game rule. D-025's P1 reversal condition now lists a formal competence review as a P1 item. This reconciles the two statements.
 
+## D-027 — P0 spec v1.6: re-engagement cap, company repeat work, allowlist, inspector pool
+
+**Status:** Proposed — pending ethics re-review and auditor recheck  
+**Date:** 2026-10-11  
+**Owner decisions:**
+1. At most two inspector engagements per order. After two rejections the order stays open at its full penalty.
+2. Company repeat work counts for affiliation: an inspector the company has engaged repeatedly in the 12-month look-back is affiliated with the company.
+
+**Applied from the review:** only allowlisted firms with a current dated attestation may be engaged; subcontract, referral, and repeat-work ties are derived from the simulation's logs; company entry is limited to dated ownership, management, and staff; one 12-month look-back for every tie type, in both directions, checked at engagement and at sign-off; "repeat work" is defined; a false attestation is a logged compliance event and blocks the firm; a fictional inspector pool with test cases (§4.2).
+
+**Reason:** The ethics review of v1.5 returned Hold on unlimited re-engagement, the unrecorded-firm bypass, the affiliation time basis and definition, company dependence, and the missing pool.  
+**Affected systems:** Sign-off, engagements, affiliation, roster, inspector pool, compliance events.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.6, §22
+
+**D-025 correction (v1.6):** the D-025 addendum's statement that the competence gap is "closed" is superseded. The game-level certification rule is in place (§3.8). Whether it matches real competence is open and is listed in the §3.10 reversal condition.
+
