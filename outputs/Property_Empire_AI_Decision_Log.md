@@ -379,3 +379,13 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Still open:** the brake release at resident satisfaction 62.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.8, §24
 
+## D-031 — Brake no longer blocks rent; releases at RS 60
+
+**Status:** Approved (owner decision)  
+**Date:** 2026-10-11  
+**Owner decision:** rent increases are not blocked by the brake. The owner's answer: rents can still be raised; the cost is lower occupancy and higher turnover. The brake now blocks only the collections push, from RS below 60, and releases at RS 60. The floor card closes at RS 60 to match.  
+**Supersedes:** the brake and card-close terms in D-021 (release and close at 62), the rent-increase block in D-023 (above-market new-lease asks), and D-024's note on the RS 62 release.  
+**Reason:** with one service tier the score settles at 62, so a release at 62 was unreachable. The owner also chose that rent increases stay available.  
+**Affected systems:** Brake, collections push, floor card, rent increases, occupancy and turnover effects.  
+**Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.9, §25
+

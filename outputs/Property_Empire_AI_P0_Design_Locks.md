@@ -1,7 +1,7 @@
 # Property Empire AI — P0 Design Locks
 
 **Status:** Approved by owner (2026-10-11), with the ethics Hold overridden and residual risks recorded (D-029; §3.10)
-**Date:** 2026-10-11 (v1.8: revisions recorded as D-013 to D-030)
+**Date:** 2026-10-11 (v1.9: revisions recorded as D-013 to D-031)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
 **Logged as:** D-008 to D-031 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2, D-024 v1.3, D-025 v1.4, D-026 v1.5, D-027 v1.6, D-028 v1.7, D-029 override, D-030 v1.8, D-031 v1.9).
@@ -388,7 +388,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 - **Notice:** 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10%. The 90-day branch is reachable only if the verified cap structure allows it; it stays as a placeholder.
 - **Resident cost:** each renewal above 3% costs 0.5 RS per percentage point above 3, scaled to 100 units. Monthly, this is summed across that month's renewals. Example (before the brake applies): at the portfolio's 4 renewals a month, Larkspur has about 1.9 renewals a month. A sustained 6% increase on each costs about 4.5 RS per month, which settles RS near 51 under the drift.
 - **Market check:** each renewal priced above market costs 0.5 RS, scaled to 100 units, and adds the P_gap penalty (§3.2).
-- Renewal increases above 3%, above-market renewals, and above-market new-lease asks are unavailable in any community whose §3.9 brake is active or whose floor card is open.
+- Rent increases are not blocked by the brake (D-031). Their cost appears through occupancy, turnover, and resident satisfaction.
 
 **Re-letting and avoidable turnover.**
 - For 12 months after any avoidable move-out, the unit may be re-let at no more than the prior rent plus the cap. The company earns no new-lease fee on it.
@@ -412,12 +412,12 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 ### 3.9 Resident satisfaction floor (v0.6)
 
 - **Trigger:** month-end RS below 55 for two consecutive month-ends. Owner sentiment −5 once, and a card opens. Breaching the floor fails criterion 8 explicitly (§1.7).
-- **While the card is open:** renewal increases above 3% are unavailable in that community, and owner sentiment −2 each month.
+- **While the card is open:** owner sentiment drops 2 each month until RS reaches 60 or higher. Rent increases are not blocked (D-031).
 - **Options:**
   - *Fund targeted repairs* of the named drivers: $2,000–$5,000 from Owner Trust, with a 30-day lag. RS +1 per month for three months once the drivers clear.
   - *Add a service investment tier* for this community: $1,500 per month, +5 ServiceScore (§3.5).
-- The card closes at the first month-end with RS of 62 or higher, aligned with the brake release (D-021).
-- **Brake (D-019, amended in D-021, D-023):** from any month-end RS below 60, until RS is 62 or higher, the company may not raise any renewal above 3%, set any renewal or new-lease ask above market, or run the collections push in that community. Release at 62 generally needs investment, since the drift returns RS toward 60 only when ServiceScore is 60 (§3.2).
+- The card closes at the first month-end with RS of 60 or higher (D-031).
+- **Brake (D-031):** from any month-end RS below 60, until RS is 60 or higher, the company may not run the collections push in that community. Rent increases and new-lease asks are not blocked. Their cost shows through occupancy, turnover, and resident satisfaction.
 
 
 ### 3.10 Known residual risks (owner-accepted, D-025)
@@ -425,7 +425,7 @@ About 60% of events have a warning signal, so the player can prepare or mitigate
 The owner has accepted the following for the slice. They are stated here in the spec body, not only in the log.
 
 - **Critical-inspector route.** The company engages and pays the inspector. An inspector can sign off a defect without a proper test, and the hazard persists while residents bear it.
-- **Non-critical route.** Vendor-recorded closures clear the RS driver and floor-card drivers, can release the brake at RS 62, and reduce failure chance through the non-critical term. These closures are not inspector-signed.
+- **Non-critical route.** Vendor-recorded closures clear the RS driver and floor-card drivers, can release the brake at RS 60, and reduce failure chance through the non-critical term. These closures are not inspector-signed.
 - **No reopen in the slice.** The slice does not generate reopen events. A false closure costs nothing in play, and the 90-day reopen rule is not exercised. Criterion 6 and the readiness checklist can both be met on closures alone, and a player can reach Stable without any inspector ever failing a job.
 - **Rejections.** A rejection costs the company only the fee. The order stays open with its resident-facing penalty. Each order allows at most two engagements, each by a different inspector. After two rejections an owner decision card opens and the order stays open at full penalty.
 - **Competence rule as it works.** Each defect class has a required certification (§3.8). Engagements that do not match, or whose certification has expired, are blocked. Certification is a game rule. Whether it reflects real licensing is for the owner to verify.
@@ -721,7 +721,7 @@ Applied from the review: a rejected sign-off leaves the order open, with no re-e
 
 ## 20. v1.4 changes (owner answers)
 
-- **Residual risk accepted in full (D-025):** the owner accepts the expanded list: the critical-inspector route with its blind spot, and the non-critical route, where vendor-recorded closures clear the RS driver and floor-card drivers, can release the brake at RS 62, and reduce failure chance. The competence gap is closed by the certification rule.
+- **Residual risk accepted in full (D-025):** the owner accepts the expanded list: the critical-inspector route with its blind spot, and the non-critical route, where vendor-recorded closures clear the RS driver and floor-card drivers, can release the brake at RS 60, and reduce failure chance. The competence gap is closed by the certification rule.
 - **Inspector qualification:** a recognised trade certification for the defect class (game rule).
 - **Affiliation:** a 12-month look-back for repeat work, in both directions. The inspector signs an attestation per engagement, and the simulation checks it against the affiliation roster.
 
@@ -769,4 +769,10 @@ Applied from the review: a rejected sign-off leaves the order open, with no re-e
 - **Names (D-030):** the placeholder names are invented. The owner has waived the real-firm check.
 - **Game year (D-030):** 2028 confirmed for the inspector expiries.
 
-**Still open:** the brake release at resident satisfaction 62 (owner decision pending).
+**Resolved (D-031):** the brake releases at RS 60 and no longer blocks rent increases.
+
+## 25. v1.9 changes (owner decision on the brake)
+
+- The brake no longer blocks rent increases or new-lease asks. The owner's answer: rents can still rise; the cost shows as lower occupancy and higher turnover (D-031).
+- The brake blocks only the collections push, from RS below 60, and releases at RS 60. Release at 60 is reachable with one service tier.
+- The floor card closes at RS 60, to match the brake.
