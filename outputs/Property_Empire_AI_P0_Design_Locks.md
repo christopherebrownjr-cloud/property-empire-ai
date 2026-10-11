@@ -4,7 +4,7 @@
 **Date:** 2026-10-11 (v1.8: revisions recorded as D-013 to D-030)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
-**Logged as:** D-008 to D-030 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2, D-024 v1.3, D-025 v1.4, D-026 v1.5, D-027 v1.6, D-028 v1.7, D-029 override, D-030 v1.8).
+**Logged as:** D-008 to D-031 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2, D-024 v1.3, D-025 v1.4, D-026 v1.5, D-027 v1.6, D-028 v1.7, D-029 override, D-030 v1.8, D-031 v1.9).
 
 | P0 item (GDD §13) | Section | Decision Log |
 |---|---|---|
