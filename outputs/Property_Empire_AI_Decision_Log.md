@@ -313,9 +313,9 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Date:** 2026-10-11  
 **Owner decisions:**
 1. At most two inspector engagements per order. After two rejections the order stays open at its full penalty.
-2. Company repeat work counts for affiliation: an inspector the company has engaged repeatedly in the 12-month look-back is affiliated with the company.
+2. Company repeat work counts for affiliation: an inspector the company has engaged two or more times in the 12-month look-back is affiliated with the company.
 
-**Applied from the review:** only allowlisted firms with a current dated attestation may be engaged; subcontract, referral, and repeat-work ties are derived from the simulation's logs; company entry is limited to dated ownership, management, and staff; one 12-month look-back for every tie type, in both directions, checked at engagement and at sign-off; "repeat work" is defined; a false attestation is a logged compliance event and blocks the firm; a fictional inspector pool with test cases (§4.2).
+**Applied from the review:** only allowlisted firms with a current dated attestation may be engaged; subcontract, referral, and repeat-work ties are derived from the simulation's logs; company entry is limited to dated ownership, management, and staff; one 12-month look-back for every tie type, in both directions, checked at engagement and at sign-off; "repeat work" is defined; a false attestation is a logged compliance event and blocks the firm; a fictional inspector pool with test cases (§4.5).
 
 **Reason:** The ethics review of v1.5 returned Hold on unlimited re-engagement, the unrecorded-firm bypass, the affiliation time basis and definition, company dependence, and the missing pool.  
 **Affected systems:** Sign-off, engagements, affiliation, roster, inspector pool, compliance events.  
@@ -333,6 +333,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 3. After two rejections on a critical order, an owner decision card opens. The order stays open at full penalty. The owner chooses vendor rework followed by a new order (counted against the cap separately), or accepting the open penalty.
 4. Repeat work means two or more completed engagements in the 12-month look-back, for vendor and company ties.
 
+**Supersedes:** D-027 item 1 (order stays open with no escalation; replaced by the owner decision card after two rejections) and the "repeat work means one or more completed engagements" wording in D-027 item 2.  
 **Corrections applied:** the duplicate §4.2 is renumbered §4.5, and the roster reference points to §4.1. Pool expiries are game values set to 2028, pending owner confirmation of the game year.  
 **Reason:** The ethics review of v1.6 returned Hold on an unclosable critical order after two rejections, the single-firm pool, the same-inspector loophole, and repeat-work ambiguity. The auditor found the unlogged restoration of the same-inspector rule and the duplicate section number.  
 **Affected systems:** Engagements, cap, inspector pool, affiliation, owner decision cards.  
