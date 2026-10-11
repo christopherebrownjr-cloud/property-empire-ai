@@ -1,6 +1,6 @@
 # Property Empire AI — P0 Design Locks
 
-**Status:** Proposed — pending owner review and approval (GDD §14: no implementation until P0 locks are approved)
+**Status:** Approved by owner (2026-10-11), with the ethics Hold overridden and residual risks recorded (D-029; §3.10)
 **Date:** 2026-10-11 (v1.7: revisions recorded as D-013 to D-028)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.

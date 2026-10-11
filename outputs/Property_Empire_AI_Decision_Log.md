@@ -50,7 +50,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-008 — Vertical slice uses market-rate residential management
 
-**Status:** Proposed — pending owner approval (P0 lock review)  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** The vertical slice and tuning baseline use market-rate residential management in Sacramento: three communities, 132 units, one coordinator, one founder-CEO, three management contracts, and one prospect (L-01). Twelve-month success criteria and outcome tiers are defined in P0 spec §1.  
 **Reason:** Monthly leasing and collections give the fastest feedback, and fee economics and compliance load are simplest, so cash, staffing, and reputation systems can be tested first.  
@@ -60,7 +60,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-009 — Corporate and client/property funds are separate ledgers
 
-**Status:** Proposed — pending owner approval (P0 lock review)  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** Seven ledger types are kept separate: Corporate Operating, Owner Trust (per community), Security Deposit Trust (per community), Owner Capital Reserve (restricted), Receivables, Payables (corporate and owner tagged separately), and Debt and Credit. The company may never spend trust funds outside the scheduled fee sweep. Management fees are recognized at month close even when cash is not yet collected. Pass-through items are recorded gross in trust and are never company revenue.  
 **Reason:** Prevents the accounting ambiguity identified by the design board. Makes profitability and liquidity visibly different.  
@@ -70,7 +70,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-010 — Realistic CEO formulas, visibility tiers, and recovery ladder
 
-**Status:** Proposed — pending owner approval (P0 lock review)  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** Realistic CEO is implemented through documented formulas for occupancy, collections, staffing and burnout, bid odds, and lender approval, with no hidden multipliers. Information is tiered as Exact, Band, or Signal. Random events have warning signals about 60% of the time. Distress runs from Level 0 (Stable) through Level 5 (Insolvency), and every level has a non-destructive lever. The default hard stop is insolvency only; a stop-loss threshold is opt-in.  
 **Reason:** Realistic CEO is defined as demanding, legible, causal, and recoverable (D-006). The formulas make each cause visible.  
@@ -80,7 +80,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-011 — Core entity and event model
 
-**Status:** Proposed — pending owner approval (P0 lock review)  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** The core entities are company, employee, community, unit, resident cohort (aggregate in the slice), contract, owner, lender, covenant, vendor, city, work order, inspection, prospect or bid, event, ledger, ledger entry, and decision card. Ledger entries are append-only, corrections are reversals, time advances in monthly ticks with day-level cash events, and the save carries a `schema_version`.  
 **Reason:** Gives the simulation a shared vocabulary and supports deterministic replay, testing, and balancing.  
@@ -90,7 +90,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-012 — Vertical-slice dashboard organized around decisions
 
-**Status:** Proposed — pending owner approval (P0 lock review)  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** The slice has seven screens: Executive Snapshot, Decision Inbox, Communities, People, Contracts and Pipeline, Finance, and Relationships. Each screen answers one question and supports a short, named list of decisions. Interfaces are exception-first, explain every number, and never rely on color alone. The Strategy screen is deferred to P2.  
 **Reason:** Addresses the dashboard-overload risk identified by the design board. Keeps the player a CEO making decisions rather than an analyst reading reports.  
@@ -100,7 +100,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-013 — P0 spec v0.2 revisions
 
-**Status:** Proposed — pending owner approval (P0 lock review)  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** Revise the Proposed D-008 to D-012 as follows. The owner delegated these choices ("You choose"). None changes a locked decision.
 
@@ -118,7 +118,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-014 — P0 spec v0.3: ethics re-review fixes
 
-**Status:** Proposed — pending ethics re-review and owner approval  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** Revise the Proposed P0 spec to v0.3 in response to the ethics re-review (Hold on v0.2). Changes:
 
@@ -138,7 +138,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-015 — P0 spec v0.4: auditor and ethics fixes, service upside, legal figures
 
-**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** Revise the Proposed P0 spec to v0.4. Changes:
 
@@ -168,7 +168,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-016 — P0 spec v0.5: owner decisions and ethics Hold fixes
 
-**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** Owner answers to the v0.4 Hold: (1) for a refused life-safety repair, the company uses the owner's capital reserve up to $5,000 per repair, with owner notice within 24 hours; (2) re-letting after a company non-renewal is capped at the renewal limit, with a reason code; (3) the rent-increase cap is cumulative over 12 months; (4) service tiers stay at three ($4,500/month at full investment, which depends on financing). The v0.5 revisions to the spec then address the remaining ethics blockers B1, B2, B4, and B5 and required changes R1–R10 (P0 spec §3.8, §3.9, §11). No locked decision (D-001 to D-007) changed.  
 **Reason:** The ethics re-review of v0.4 returned Hold.  
@@ -177,7 +177,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-017 — Critical safety repairs are mandatory; reserve authority widened
 
-**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** The owner chose, in answer to the v0.5 review, that critical safety repairs are mandatory. The company has no decline option. Repairs up to $5,000 may be funded from the owner's Capital Reserve with owner notice within 24 hours. Above $5,000 the company advances the repair and bills the owner. This widens D-016, which covered only refused repairs, and so it is logged separately. Also chosen: Dismiss is removed from fair-housing complaints; the floor card's Accept option stays with a recurring cost; verified correction must be independent. No locked decision (D-001 to D-007) changed.  
 **Reason:** The ethics re-review of v0.5 returned Hold on the permissive repair wording and the cheapest-path fair-housing option.  
@@ -188,7 +188,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-018 — P0 spec v0.7: owner decisions on the v0.6 Hold; re-letting scope
 
-**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** Owner decisions on the v0.6 ethics Hold: (1) fair-housing complaints get Investigate only; Settle is removed; (2) verification of repairs and corrections is by a third-party inspector engaged and paid by the company, never the repairing vendor or an owner-affiliated party; (3) the floor card's Accept option is removed; (4) the default critical safety list is approved (§3.8 glossary). Recorded here for the first time, since they are owner decisions:  
 - **Re-letting scope (unlogged change, flagged for owner confirmation):** D-016 capped re-letting at the renewal limit with a reason code, and only after a company non-renewal. Spec v0.5 onward applies a cap of prior rent plus the cap to every avoidable move-out for 12 months, with no reason code in that rule. Avoidable move-outs include above-market renewals, increases above 3%, and any move-out in a month when RS is below 50. D-018 supersedes D-016 on re-letting scope, and supersedes D-017's Accept option and its verification wording. The owner should confirm this scope or narrow it back to D-016.  
@@ -200,7 +200,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-019 — P0 spec v0.8: scope move to P1 and floor-card brake
 
-**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** The owner chose two things in answer to the v0.7 Hold: (1) fair-housing complaint outcomes, retaliation, community flags, and the verifier panel, rotation, and audit rules move out of P0 and into P1. The slice keeps a complaint placeholder with an Investigate option only. (2) The floor card's brake applies from the first month-end below 60: company non-renewals, renewals above 3%, collections push, discretionary cuts, and staff hour or layoff cuts are blocked in that community until RS is 60 or higher. The card closes at 60.  
 **Reason:** Reviews of v0.2 through v0.7 kept finding new routes in the complaint, retaliation, and verification mechanics. Moving them to P1 removes the routes from the slice until those rules can be designed and reviewed on their own.  
@@ -212,7 +212,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-020 — P0 spec v0.9: simplified slice
 
-**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** The owner chose to simplify the slice to its core rules in answer to the v0.8 Hold. Changes: (1) third-party verification of repair closures is removed from the slice and deferred to P1; completion is company-recorded. (2) City-ordered repairs are not modeled in the slice (P1). (3) Company-initiated non-renewals are removed from the slice. (4) Discretionary cuts and staff hour or layoff cuts are removed from the slice. (5) The brake covers renewals above 3% and the collections push, from RS below 60, released at 62 (a band that prevents flipping at 60). (6) Per-defect funding; the funding step from the reserve is capped at $5,000 per defect, and corporate cash may go below zero at step 3.  
 **Known risk (accepted by the owner's choice, to be confirmed):** critical repairs close on the company's own completion record. The ethics reviewer has flagged this as a resident-safety route. The owner should reverse (1) if verification must stay in the slice.  
@@ -222,7 +222,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-021 — P0 spec v1.0: verification restored; brake and defect fixes
 
-**Status:** Proposed — pending ethics review, auditor recheck, and owner approval  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** The owner chose to restore independent verification in the slice. This withdraws the known risk recorded in D-020 item 1. Each critical repair needs one third-party inspector's sign-off, engaged and paid by the company. The inspector may not be the repairing vendor or owner-affiliated. Panel, rotation, and sampling audit are P1. Also in v1.0: contract sale and layoffs are not offered in the slice; the brake adds above-market renewals and releases at RS 62, with the floor card also closing at 62; reserve draws are capped at $5,000 per community per 30 days, with one work order per defect; owner-request options are listed with their effects.  
 **Reason:** The ethics review of v0.9 returned Hold on company-recorded completion (a safety route), layoffs and sale in Level 4, unbraked above-market renewals, the defect-splitting route, and unlisted owner-request options.  
@@ -232,7 +232,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-022 — P0 opening P&L baseline reconciled (v1.1)
 
-**Status:** Proposed — pending ethics review, auditor recheck, and owner approval  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** The owner chose the reconciled baseline for the opening P&L. The new-lease fee is unit-weighted across the three contracts ($345 across six leases). Renewal fees ($150 × 4) apply only where the contract has them, which excludes Cinder Hollow's unit share. Opening revenue is $15,435; the opening net is −$402/month; the post-hire net is about −$4,875/month; runway after the first hire is about 9.8 months; founder-as-distribution is +$3,598/month. These figures supersede the −$247 headline in D-008 and D-013, which are not edited.  
 **Reason:** The §12 reconciliation found that the blended fees overstated renewal income by about $155 a month. The owner chose to use the contract-accurate figures rather than keep the overstated headline.  
@@ -241,7 +241,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-023 — P0 spec v1.2: owner decisions on the v1.0 Hold
 
-**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision:** Owner decisions: (1) non-critical work-order closures are vendor-recorded and confirmed by the simulation. They do not count for the readiness checklist or the owner-sentiment gate, and they clear the RS driver. Floor-card drivers count as cleared under the same rules. (2) The brake covers above-market new-lease asks as well as renewals, from RS below 60, until RS is 62 or higher. (3) The verifier-structure risk in D-021 is accepted as a documented owner override. Applied from the review in v1.2: rejected sign-offs leave the order open, a rejected inspector may not be re-engaged on that order, company-affiliated firms are excluded, the inspector fee is paid inside the repair's funding step, defect IDs are assigned by the simulation, the reserve cap is rolling 30 days, critical items are excluded from owner requests, and the complaint placeholder never shows as resolved.  
 **Residual risk (owner override):** the company engages and pays the critical-repair inspector. This structural conflict is mitigated only by P1 panel and rotation. It is accepted for the slice.  
@@ -252,7 +252,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-024 — P0 spec v1.3: owner answers to open items; names; residual risk
 
-**Status:** Proposed — pending ethics re-review, auditor recheck, and owner approval  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Decision (owner answers):**
 1. Renewal volume: 4 a month across the portfolio. The §3.8 example is recomputed (Larkspur about 1.9 renewals a month; a sustained 6% increase settles RS near 51). The 12.5-point figure is withdrawn.
@@ -276,7 +276,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-025 — P0 spec v1.4: owner accepts the residual-risk list; certification and affiliation rules
 
-**Status:** Proposed — pending ethics re-review and auditor recheck. The owner's acceptance below is recorded; D-024 remains Proposed until the re-review.  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-10  
 **Owner decisions:**
 1. The owner accepts the expanded residual-risk list in full:
@@ -293,7 +293,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-026 — P0 spec v1.5: owner answers to the v1.4 ethics Hold
 
-**Status:** Proposed — pending ethics re-review and auditor recheck  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-11  
 **Owner decisions:**
 1. Rejections carry only the fee. A rejected sign-off costs the company its fee, and no compliance record is added. The open order keeps its resident-facing penalty.
@@ -309,7 +309,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-027 — P0 spec v1.6: re-engagement cap, company repeat work, allowlist, inspector pool
 
-**Status:** Proposed — pending ethics re-review and auditor recheck  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-11  
 **Owner decisions:**
 1. At most two inspector engagements per order. After two rejections the order stays open at its full penalty.
@@ -325,7 +325,7 @@ Any future change to a locked decision must be recorded here with a new entry, t
 
 ## D-028 — P0 spec v1.7: owner answers to the v1.6 Hold
 
-**Status:** Proposed — pending ethics re-review and auditor recheck  
+**Status:** Approved (owner override of ethics Hold, 2026-10-11; see D-029)
 **Date:** 2026-10-11  
 **Owner decisions:**
 1. Two inspector firms per defect class (eight firms in total, §4.5).
@@ -338,4 +338,31 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Reason:** The ethics review of v1.6 returned Hold on an unclosable critical order after two rejections, the single-firm pool, the same-inspector loophole, and repeat-work ambiguity. The auditor found the unlogged restoration of the same-inspector rule and the duplicate section number.  
 **Affected systems:** Engagements, cap, inspector pool, affiliation, owner decision cards.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.7, §23
+
+## D-029 — Owner override of the ethics Hold on P0 v1.7; approval of D-008 to D-028
+
+**Status:** Approved (owner override)  
+**Date:** 2026-10-11  
+**Decision:** The owner overrides the binding ethics Hold on P0 spec v1.7 (commit 4c3c1ff; review at `outputs/Ethics_Review_P0_v1.7.md`) and approves D-008 through D-028 as the P0 design locks. Approval lets implementation begin under GDD §14. The owner accepts the blocking items below as residual risks. They are recorded here and in P0 spec §3.10, in the same form as D-025.
+
+**Accepted residual risks (from the ethics review):**
+- **B1, rework then reorder:** the engagement cap, the same-inspector bar, and the 14-day clock are keyed to the work order, so a rework-then-new-order cycle can give the same firms another attempt, and the resident penalty and criterion 6 restart. Accepted as a residual for the slice.
+- **B2, accepting an open critical repair:** the "accept the open penalty" option is retained as written in v1.7. This is accepted as a residual that departs from D-017's rule that critical repairs must be fixed. It is an owner-accepted deviation, and the resident cost is one critical order open past 14 days, which settles RS near 50 at ServiceScore 60.
+- **B3, repeat-work definition:** "engaged" (D-027) and "completed" (D-028) conflict. The owner accepts the D-028 reading ("completed") for the slice.
+- **B4, pool coverage:** the eight fictional firms cover four pairs of classes, so a shortage in one class can reduce another. Accepted for the slice, unsized against modeled incidence.
+- **B5, pass/fail and visibility:** no written pass/fail rule for sign-off and no visible "no eligible inspector" state. Accepted for the slice.
+- **B6, attestation windows:** the "current" and "dated" windows are undefined. Accepted for the slice.
+- **B7, company-entered ties:** ownership, management, and staff ties are company-entered and cannot be checked against derived records. Accepted as a residual.
+- **B8, hazard list completeness:** the eight classes are treated as complete for the slice. Carbon monoxide, structural, hot-water, and alarm classes are not on the list and close on vendor completion alone. Accepted as a residual.
+
+**Open items not overridden (must still be done or confirmed):**
+- The real-firm name check (CLAUDE.md rule 5) has not been run on the invented names. This is open.
+- The 2028 game-year expiry for the inspector firms is unconfirmed.
+- The brake release at resident satisfaction 62 is unreachable with one service tier. It needs a design decision.
+- The reserve-shortfall wording (company absorbs versus billed to owner) and compliance-record closure rules are unresolved.
+- Real-world certification requirements and the §10 game values are unverified. They are game values, not legal guidance.
+
+**Reason:** The owner chose to proceed to approval and accepted the listed residuals, since the game is the purpose and the risks are now written down.  
+**Affected systems:** All P0 design locks (D-008 to D-028); implementation may begin under GDD §14.  
+**Source:** `outputs/Ethics_Review_P0_v1.7.md`; P0 spec v1.7 §3.10
 
