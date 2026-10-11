@@ -244,7 +244,7 @@ export function advanceMonth(state: GameState): GameState {
     deposits.push(flow);
     return {
       ...c, occupancy, rentIndex, rs, pushThisMonth: false,
-      depositHeld: flow.held, reserveDrawnThisMonth: 0,                   // the draw cap resets each close
+      depositHeld: flow.held, refundsPayable: flow.payable, reserveDrawnThisMonth: 0,  // the draw cap resets each close
     };
   });
 

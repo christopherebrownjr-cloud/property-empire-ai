@@ -389,3 +389,23 @@ Any future change to a locked decision must be recorded here with a new entry, t
 **Affected systems:** Brake, collections push, floor card, rent increases, occupancy and turnover effects.  
 **Source:** `outputs/Property_Empire_AI_P0_Design_Locks.md` v1.9, §25
 
+## D-032 — Security deposits and move-out refund timing
+
+**Status:** Approved (owner decision, deposit timing); deposit amounts open
+**Date:** 2026-10-11
+**Owner decisions:**
+1. **Refund timing:** move-out refunds are spread over the 21-day return window (§10). Move-outs are spread across the 30-day close period, so 30% of a close's refunds are paid in that close and 70% in the next. Trust cash equals resident deposits held plus refunds still owed.
+2. **Deposit amount:** each deposit is set for the specific bedroom count and may depend on resident credit. Build status: the amount currently uses one month's rent for every unit (provisional, flagged in code). The bedroom schedule needs the unit mix per community, which the owner has not yet supplied. **Credit-based deposits are not built.** A deposit that depends on credit is a screening-adjacent rule. Screening is not in the slice (P0 spec §3, Screening). Any such rule needs uniform criteria and an ethics review before it is built.
+
+**Affected systems:** Security Deposit Trust, owner statements (no change), trust cash, dashboard.
+**Source:** `src/sim/ledgers.ts`; P0 spec §10 (21-day return window), §3 Screening.
+
+## D-033 — Owner direction: ethics review of D-031 waived; ethics routing for new rules
+
+**Status:** Approved (owner decision)
+**Date:** 2026-10-11
+**Owner decision:** the D-031 rent change is not sent to ethics-reviewer before implementation. The owner also asked that the ethics reviewer not hold production work. This decision does not remove the review gate for future changes that touch residents or compliance. For each such change, the owner decides whether to route it, and any new screening or credit rule is routed to ethics-reviewer before build.
+**Reason:** the owner's judgment that the review cycle is blocking production. The D-029 override already covers the P0 ethics Hold.
+**Affected systems:** Brake and rent increases (D-031); any future resident-facing rule.
+**Source:** owner direction recorded in session, 2026-10-11.
+

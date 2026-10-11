@@ -22,25 +22,39 @@ export function reserveTransfer(c: Community, trustAfterSweep: number): number {
   return Math.min(need, Math.max(0, trustAfterSweep));
 }
 
+// Move-out refunds are due 21 days after the move-out (D-032). Move-outs are spread evenly
+// across a 30-day close period. A move-out on day d is due on day d + 21, so the share paid in
+// the same close is (30 − 21) / 30 = 0.3 and the rest falls due in the next close.
+export const REFUND_WINDOW_DAYS = 21;
+export const DAYS_PER_CLOSE = 30;
+export const REFUND_SAME_CLOSE = Math.max(0, 1 - REFUND_WINDOW_DAYS / DAYS_PER_CLOSE);
+
 export interface DepositFlow {
   id: string;
   movesIn: number;     // new leases this close, by unit share (§17)
   moveOuts: number;    // derived from occupancy: occupied before + move-ins − occupied after
   received: number;    // deposits paid by new residents (move-ins × deposit at current rent)
-  refunded: number;    // deposits returned to move-outs, at the average held per occupied unit
-  held: number;        // Security Deposit Trust balance after this close
+  refundDue: number;   // deposits of this close's move-outs, now owed back
+  refunded: number;    // refunds paid out of the trust this close
+  payable: number;     // refunds still owed at the end of this close (refundsPayable)
+  held: number;        // deposits owed to current residents after this close (depositHeld)
 }
 
 // Security deposits are resident money held in trust. They never enter corporate cash (P0 §2.4).
-// Refunds are shown at the close they occur in. The 21-day return window is not split across closes.
+// Trust cash = held + payable. Only the refunds paid move trust cash out.
 export function depositFlow(c: Community, movesIn: number, occupancyAfter: number): DepositFlow {
   const occBefore = c.units * c.occupancy;
   const occAfter = c.units * occupancyAfter;
   const moveOuts = Math.max(0, occBefore + movesIn - occAfter);
   const avgHeld = occBefore > 0 ? c.depositHeld / occBefore : 0;
   const received = movesIn * DEPOSIT_MONTHS * c.avgRent * c.rentIndex;
-  const refunded = moveOuts * avgHeld;
-  return { id: c.id, movesIn, moveOuts, received, refunded, held: c.depositHeld + received - refunded };
+  const refundDue = moveOuts * avgHeld;
+  const refunded = c.refundsPayable + REFUND_SAME_CLOSE * refundDue;   // last close's remainder, plus this close's early share
+  const payable = c.refundsPayable + refundDue - refunded;
+  return {
+    id: c.id, movesIn, moveOuts, received, refundDue, refunded, payable,
+    held: c.depositHeld + received - refundDue,
+  };
 }
 
 // A reserve draw (P0 §3.8): one cause, one work order, capped per window. Covers what the

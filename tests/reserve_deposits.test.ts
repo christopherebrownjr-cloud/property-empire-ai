@@ -104,14 +104,41 @@ describe("security deposit trust (P0 §2.1, §2.4)", () => {
       { id: "t", name: "t", units: 10, avgRent: 1000, baseOcc: 0.9, feePct: 0, minFee: 0, newLeaseFee: 0,
         renewalFee: 0, occupancy: 0.5, rs: 60, askRent: 1000, renewalIncrease: 0, rentIndex: 1.1,
         pushThisMonth: false, ownerTrust: 0, feesOwed: 0, reserve: 0, reserveDrawnThisMonth: 0,
-        depositHeld: 5000 },
+        depositHeld: 5000, refundsPayable: 0 },
       2,      // move-ins
       0.5,    // occupancy after: 5 occupied, unchanged, so move-outs = 2
     );
     expect(flow.moveOuts).toBeCloseTo(2, 9);
     expect(flow.received).toBeCloseTo(2 * 1000 * 1.1, 9);        // deposits at current rent
-    expect(flow.refunded).toBeCloseTo(2 * (5000 / 5), 9);         // average held per occupied unit
-    expect(flow.held).toBeCloseTo(5000 + 2200 - 2000, 9);
+    expect(flow.refundDue).toBeCloseTo(2 * (5000 / 5), 9);        // average held per occupied unit
+    expect(flow.refunded).toBeCloseTo(0.3 * 2000, 9);             // 21 of 30 days: 9/30 falls due in this close
+    expect(flow.payable).toBeCloseTo(0.7 * 2000, 9);              // the rest is paid at the next close
+    expect(flow.held).toBeCloseTo(5000 + 2200 - 2000, 9);         // owed to residents
+  });
+
+  it("spreads refunds across the 21-day window: 30% paid at the close, 70% at the next", () => {
+    let g = newGame();
+    // Asking above market raises move-outs, so refunds are non-zero in each close.
+    g = setAskRent(g, "larkspur", 1900);
+    g = advanceMonth(g);
+    const first = g.lastResult!.deposits.find((f) => f.id === "larkspur")!;
+    expect(first.refunded).toBeCloseTo(0.3 * first.refundDue, 6);
+    g = advanceMonth(g);
+    const second = g.lastResult!.deposits.find((f) => f.id === "larkspur")!;
+    expect(second.refunded).toBeCloseTo(0.7 * first.refundDue + 0.3 * second.refundDue, 6);
+  });
+
+  it("keeps trust cash equal to residents' deposits plus refunds still owed", () => {
+    let g = setAskRent(newGame(), "larkspur", 1900);
+    for (let i = 0; i < 6; i++) {
+      const prevCash = g.communities.map((c) => c.depositHeld + c.refundsPayable);
+      g = advanceMonth(g);
+      g.communities.forEach((c, k) => {
+        const f = g.lastResult!.deposits[k];
+        const cash = prevCash[k] + f.received - f.refunded;
+        expect(Math.abs(cash - (c.depositHeld + c.refundsPayable))).toBeLessThan(1e-6);
+      });
+    }
   });
 
   it("never reaches corporate cash: cash moves only by sweeps and expenses across closes", () => {

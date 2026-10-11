@@ -81,13 +81,13 @@ function render(): void {
         <h2>Owner Capital Reserve and security deposits (P0 §2.1)</h2>
         <p class="note">The reserve is owner money, restricted to capital and emergency repairs. Security deposits are resident money held in trust. Neither is company cash.</p>
         <table>
-          <thead><tr><th>Community</th><th>Owner Capital Reserve (target ${money(RESERVE_TARGET)})</th><th>Security deposits held (residents)</th><th>Move-ins, last close</th><th>Move-outs, last close</th><th>Deposits refunded, last close</th></tr></thead>
+          <thead><tr><th>Community</th><th>Owner Capital Reserve (target ${money(RESERVE_TARGET)})</th><th>Security deposits held (residents)</th><th>Move-ins, last close</th><th>Move-outs, last close</th><th>Deposits refunded, last close</th><th>Refunds still owed (21-day window)</th></tr></thead>
           <tbody>
             ${state.communities.map((c) => {
               const f = r ? r.deposits.find((x) => x.id === c.id) : undefined;
               return `<tr><td>${c.name}</td><td>${money(c.reserve)}</td><td>${money(c.depositHeld)}</td>
                 <td>${f ? f.movesIn.toFixed(1) : "—"}</td><td>${f ? f.moveOuts.toFixed(1) : "—"}</td>
-                <td>${f ? money(f.refunded) : "—"}</td></tr>`;
+                <td>${f ? money(f.refunded) : "—"}</td><td>${money(c.refundsPayable)}</td></tr>`;
             }).join("")}
           </tbody>
         </table>
@@ -113,7 +113,7 @@ function render(): void {
           </tbody>
         </table>
       </section>
-      <footer>Milestone 4: owner capital reserve transfers, security deposit trust, and the reserve draw cap. Not built yet: random events, reserve draws from repairs, bids, inspections, and the remaining screens.</footer>
+      <footer>Milestone 4: owner capital reserve transfers, security deposit trust, 21-day refund timing, and the reserve draw cap. Not built yet: random events, reserve draws from repairs, bids, inspections, and the remaining screens.</footer>
     </main>`;
 
   document.getElementById("advance")!.addEventListener("click", () => { state = advanceMonth(state); render(); });
