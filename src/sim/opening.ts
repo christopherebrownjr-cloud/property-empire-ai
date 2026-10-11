@@ -17,6 +17,8 @@ export interface Community {
   renewalIncrease: number; // §3.8 decision: renewal increase (0.03 = 3%); opening 0
   rentIndex: number;      // rent base relative to opening; opening 1
   pushThisMonth: boolean; // §3.5 collections push, set by decision before close
+  ownerTrust: number;    // §2.1 Owner Trust balance (opening 0: no opening balance is specified)
+  feesOwed: number;      // §2.2 fees and leasing income accrued to the company, not yet swept (opening set in newGame)
 }
 
 export interface Staff {
@@ -33,13 +35,13 @@ export interface Staff {
 export const OPENING_COMMUNITIES: Community[] = [
   { id: "larkspur", name: "Larkspur Court", units: 64, avgRent: 1780, baseOcc: 0.91, feePct: 0.06,
     minFee: 0, newLeaseFee: 350, renewalFee: 150, occupancy: 0.934, rs: 60,
-    askRent: 1780, renewalIncrease: 0, rentIndex: 1, pushThisMonth: false },
+    askRent: 1780, renewalIncrease: 0, rentIndex: 1, pushThisMonth: false, ownerTrust: 0, feesOwed: 0 },
   { id: "stillwater", name: "Stillwater Terrace", units: 40, avgRent: 1950, baseOcc: 0.92, feePct: 0.055,
     minFee: 1200, newLeaseFee: 300, renewalFee: 150, occupancy: 0.944, rs: 60,
-    askRent: 1950, renewalIncrease: 0, rentIndex: 1, pushThisMonth: false },
+    askRent: 1950, renewalIncrease: 0, rentIndex: 1, pushThisMonth: false, ownerTrust: 0, feesOwed: 0 },
   { id: "cinder", name: "Cinder Hollow Flats", units: 28, avgRent: 1650, baseOcc: 0.88, feePct: 0.07,
     minFee: 1500, newLeaseFee: 400, renewalFee: 0, occupancy: 0.904, rs: 60,
-    askRent: 1650, renewalIncrease: 0, rentIndex: 1, pushThisMonth: false },
+    askRent: 1650, renewalIncrease: 0, rentIndex: 1, pushThisMonth: false, ownerTrust: 0, feesOwed: 0 },
 ];
 
 // §1.4: six new leases and four renewals a month, split by unit share (§17).

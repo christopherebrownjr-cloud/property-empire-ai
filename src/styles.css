@@ -18,3 +18,4 @@ footer { margin-top: 24px; color: #5a6270; font-size: 13px; }
 .st-not-met { color: #a12a2a; font-weight: 600; }
 .st-not-modeled { color: #7a6a1f; }
 td button, th button { padding: 2px 8px; font-size: 13px; }
+.note { color: #5a6270; font-size: 13px; margin: 6px 0; }

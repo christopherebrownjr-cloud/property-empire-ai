@@ -1,5 +1,13 @@
 // Monthly close for the vertical slice (P0 spec v1.9, §2–§3).
 // Pure functions: state in, state out. No randomness yet.
+//
+// Money flows (P0 §2):
+//   Resident rent and collections recoveries post to each community's Owner Trust.
+//   Fees and leasing income accrue to the company at the close and are swept from the
+//   Owner Trust in the following month. A shortfall stays owed by the owner (feesOwed).
+//   Owner distributions leave the Owner Trust after the sweep, above the minimum reserve.
+//   Corporate cash changes by sweeps received less expenses paid (cash basis).
+//   P&L revenue and net are accrual figures for the close, as in P0 §1.4.
 
 import {
   NEW_LEASES_PER_MONTH, OPERATING_COSTS, RENEWALS_PER_MONTH,
@@ -16,30 +24,34 @@ export const ASSISTANT: Staff = {
   burnout: 0,
 };
 
-// Decision and model constants with their spec sources.
 export const DECISION = {
-  collectionsPushRecovery: 2000,   // §3.5 recovers up to $2,000 per use
-  collectionsPushRsCost: 2,        // §3.5 RS −2 in each month the push is active
+  collectionsPushRecovery: 2000,        // §3.5 recovers up to $2,000 per use
+  collectionsPushRsCost: 2,             // §3.5 RS −2 in each month the push is active
   collectionsPushDelinquencyCut: 0.005, // §3.2 −0.5 pt
-  brakeRsThreshold: 60,            // D-031: brake applies below 60
-  rentCapFreeOfRs: 3,              // §3.8 renewal increases above 3% cost RS
-  askStep: 50,                     // dashboard step for asking rent
-  increaseStep: 0.01,              // dashboard step for renewal increase
-  leasingEffect: 0.04 * 70 / 100,  // §3.2 pinned opening leasing score 70
+  brakeRsThreshold: 60,                 // D-031: brake applies below 60
+  rentCapFreeOfRs: 3,                   // §3.8 renewal increases above 3% cost RS
+  askStep: 50,                          // dashboard step for asking rent
+  increaseStep: 0.01,                   // dashboard step for renewal increase
+  leasingEffect: 0.04 * 70 / 100,       // §3.2 pinned opening leasing score 70
   serviceEffect: 0.03 * (60 - 50) / 50, // §3.2 pinned opening service score 60
-  pGapSlope: 0.10,                 // §3.2 P_gap
+  pGapSlope: 0.10,                      // §3.2 P_gap
 };
+
+// ASSUMPTION (not in the spec): minimum Owner Trust balance kept before distributions.
+// The spec says distributions go out "if reserve minimum is met" but gives no amount.
+export const MIN_TRUST_RESERVE = 0;
 
 export interface GameState {
   year: number;
   month: number;             // 1–12
   monthsElapsed: number;     // 0 at opening
-  cash: number;
+  cash: number;              // corporate operating cash
   revolverLimit: number;
   communities: Community[];
   staff: Staff[];
   assistantHired: boolean;
   history: MonthRecord[];    // one per closed month, for the scorecard
+  statements: OwnerStatement[];  // one per community per closed month (P0 §2.5)
   lastResult?: MonthResult;
 }
 
@@ -60,14 +72,28 @@ export interface MonthResult {
   year: number;
   month: number;
   communities: CommunityResult[];
-  revenue: number;
+  revenue: number;         // accrual, P0 §1.4
   expenses: number;
-  net: number;
-  cashAfter: number;
-  runwayMonths: number | null;   // §3.5 opening cash ÷ monthly burn; null = cash-positive
+  net: number;             // accrual, P0 §1.4
+  cashAfter: number;       // corporate cash after this close (cash basis)
+  sweepsReceived: number;  // fee sweeps from Owner Trusts this close
+  runwayMonths: number | null; // §3.5 opening cash ÷ monthly burn; null = cash-positive
 }
 
-// What each month leaves behind, for the scorecard.
+// Owner statement for one community and one close (P0 §2.5).
+export interface OwnerStatement {
+  id: string;
+  year: number;
+  month: number;
+  collectedRent: number;
+  recoveries: number;      // collections push recoveries posted to the trust
+  feesAccrued: number;     // fees and leasing income charged this close
+  feesSwept: number;       // paid to the company from the trust this close
+  feesOwedAfter: number;   // still owed to the company after the sweep (shortfall)
+  distribution: number;    // paid to the owner this close
+  endingTrust: number;
+}
+
 export interface MonthRecord {
   year: number;
   month: number;
@@ -107,7 +133,6 @@ export function serviceQuality(state: GameState): number {
   return Math.max(0.6, Math.min(1, 1 - 0.4 * Math.max(0, utilization(state, "coordinator") - 1)));
 }
 
-// Share of the portfolio's monthly renewals and new leases that fall in each community (§17).
 function leaseShare(c: Community, totalUnits: number) {
   const share = c.units / totalUnits;
   return { newLeases: NEW_LEASES_PER_MONTH * share, renewals: RENEWALS_PER_MONTH * share };
@@ -149,42 +174,65 @@ export function computeMonth(state: GameState): MonthResult {
   const expenses = staffAll(state).reduce((a, s) => a + s.monthlyCost, 0)
     + OPERATING_COSTS.reduce((a, o) => a + o.amount, 0);
   const net = revenue - expenses;
-  const cashAfter = state.cash + net;
   return {
-    year: state.year, month: state.month, communities: results, revenue, expenses, net, cashAfter,
-    runwayMonths: net < 0 ? state.cash / -net : null,
+    year: state.year, month: state.month, communities: results, revenue, expenses, net,
+    cashAfter: state.cash, sweepsReceived: 0,
+    runwayMonths: net < 0 ? state.cash / -net : null,   // §3.5
   };
 }
 
-// Advance one month: post the close, then roll occupancy, rent, resident satisfaction, and burnout.
-export function advanceMonth(state: GameState): GameState {
-  const result = computeMonth(state);
-  const totalUnits = state.communities.reduce((a, c) => a + c.units, 0);
-  const q = serviceQuality(state);                 // §3.2 service quality (before this month's roll)
-  const serviceScore = Math.max(0, Math.min(100, 60 * q));  // §3.2 ServiceScore, no cuts or investments in the slice
-  const season = seasonFor(state.month);
+// Opening leasing score 70 and service score 60 are pinned (§3.2).
+const OCC = { leasingEffect: DECISION.leasingEffect, serviceEffect: DECISION.serviceEffect };
 
-  const communities = state.communities.map((c) => {
+// Advance one month: post the close, run the trust ledgers, then roll occupancy, rent, RS, burnout.
+export function advanceMonth(state: GameState): GameState {
+  const pnl = computeMonth(state);
+  const totalUnits = state.communities.reduce((a, c) => a + c.units, 0);
+  const season = seasonFor(state.month);
+  const serviceScore = Math.max(0, Math.min(100, 60 * serviceQuality(state)));  // §3.2, no cuts or investments in the slice
+
+  // --- Trust ledgers (P0 §2): receipts, fee sweep, owner distribution, statement, fee accrual. ---
+  let sweepsTotal = 0;
+  const statements: OwnerStatement[] = [];
+  const ledgered = state.communities.map((c, i) => {
+    const r = pnl.communities[i];
+    const recovered = c.pushThisMonth ? DECISION.collectionsPushRecovery : 0;
+    let trust = c.ownerTrust + r.collectedRent + recovered;               // resident receipts post to the trust
+    const sweep = Math.min(Math.max(0, trust), c.feesOwed);               // day 5 sweep, capped at trust balance
+    trust -= sweep;
+    const owedAfterSweep = c.feesOwed - sweep;                             // shortfall stays owed by the owner
+    const distribution = Math.max(0, trust - MIN_TRUST_RESERVE);          // day 15 distribution
+    trust -= distribution;
+    const feesOwed = owedAfterSweep + r.revenue;                           // this close's fees accrue to the company
+    sweepsTotal += sweep;
+    statements.push({
+      id: c.id, year: state.year, month: state.month,
+      collectedRent: r.collectedRent, recoveries: recovered, feesAccrued: r.revenue,
+      feesSwept: sweep, feesOwedAfter: feesOwed, distribution, endingTrust: trust,
+    });
+    return { ...c, ownerTrust: trust, feesOwed };
+  });
+
+  // Corporate cash: sweeps received less expenses paid (cash basis).
+  const cashAfter = state.cash + sweepsTotal - pnl.expenses;
+
+  // --- Operating roll (P0 §3.2) ---
+  const communities = ledgered.map((c) => {
     const share = leaseShare(c, totalUnits);
-    // Occupancy: moves 35% of the gap toward target (§3.2).
-    const target = c.baseOcc + DECISION.leasingEffect + DECISION.serviceEffect - pGap(c) + season;
-    const occupancy = c.occupancy + 0.35 * (target - c.occupancy);
-    // Renewals reprice the rent base at this month's increase (§3.8).
+    const target = c.baseOcc + OCC.leasingEffect + OCC.serviceEffect - pGap(c) + season;
+    const occupancy = c.occupancy + 0.35 * (target - c.occupancy);          // 35% of gap per month
     const rentIndex = c.rentIndex * (1 + c.renewalIncrease * share.renewals / c.units);
-    // Renewal RS cost: 0.5 per point above 3%, per renewal, scaled to 100 units (§3.8).
     const pointsAbove = Math.max(0, c.renewalIncrease * 100 - DECISION.rentCapFreeOfRs);
-    const renewalRsCost = 0.5 * pointsAbove * (100 / c.units) * share.renewals;
-    const pushRsCost = c.pushThisMonth ? DECISION.collectionsPushRsCost : 0;
-    // RS(t+1) = RS + 0.2(SS−60) + 0.5(60−RS) − event terms (§3.2).
+    const renewalRsCost = 0.5 * pointsAbove * (100 / c.units) * share.renewals;   // §3.8
+    const pushRsCost = c.pushThisMonth ? DECISION.collectionsPushRsCost : 0;     // §3.5
     const rs = Math.max(0, Math.min(100,
-      c.rs + 0.2 * (serviceScore - 60) + 0.5 * (60 - c.rs) - renewalRsCost - pushRsCost));
+      c.rs + 0.2 * (serviceScore - 60) + 0.5 * (60 - c.rs) - renewalRsCost - pushRsCost));  // §3.2
     return { ...c, occupancy, rentIndex, rs, pushThisMonth: false };
   });
 
   const staff = state.staff.map((s) => ({
     ...s,
-    // Burnout: B(t+1) = clamp(0, 100, B + 20(U − 0.90)) (§3.2).
-    burnout: Math.max(0, Math.min(100, s.burnout + 20 * (utilization(state, s.id) - 0.9))),
+    burnout: Math.max(0, Math.min(100, s.burnout + 20 * (utilization(state, s.id) - 0.9))),  // §3.2
   }));
 
   const nextMonth = state.month === 12 ? 1 : state.month + 1;
@@ -192,17 +240,18 @@ export function advanceMonth(state: GameState): GameState {
   const record: MonthRecord = {
     year: state.year, month: state.month,
     occupancy: Object.fromEntries(communities.map((c) => [c.id, c.occupancy])),
-    rs: Object.fromEntries(result.communities.map((r) => [r.id, r.rs])),
+    rs: Object.fromEntries(pnl.communities.map((r) => [r.id, r.rs])),
     burnout: Object.fromEntries(staffAll(state).map((s) => [s.id, s.burnout])),
-    expenses: result.expenses,
-    cash: result.cashAfter,
+    expenses: pnl.expenses,
+    cash: cashAfter,
   };
   return {
     ...state,
     year: nextYear, month: nextMonth, monthsElapsed: state.monthsElapsed + 1,
-    cash: result.cashAfter, communities, staff,
+    cash: cashAfter, communities, staff,
     history: [...state.history, record],
-    lastResult: result,
+    statements: [...state.statements, ...statements],
+    lastResult: { ...pnl, cashAfter, sweepsReceived: sweepsTotal },
   };
 }
 
@@ -210,7 +259,6 @@ export function hireAssistant(state: GameState): GameState {
   return { ...state, assistantHired: true };
 }
 
-// Decisions: each returns the new state, or the same state if the decision is not allowed.
 export function setAskRent(state: GameState, id: string, askRent: number): GameState {
   return { ...state, communities: state.communities.map((c) => (c.id === id ? { ...c, askRent } : c)) };
 }

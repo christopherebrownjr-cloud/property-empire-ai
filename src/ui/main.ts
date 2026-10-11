@@ -61,6 +61,22 @@ function render(): void {
         </table>
       </section>
       <section>
+        <h2>Owner trusts and statements (P0 §2)</h2>
+        <p class="note">Owner Trusts are held separately from corporate cash. Fees reach the company only through the sweep on the following close.</p>
+        <table>
+          <thead><tr><th>Community</th><th>Owner Trust</th><th>Fees owed to company</th><th>Last sweep to company</th><th>Last owner distribution</th><th>Last collected rent</th></tr></thead>
+          <tbody>
+            ${state.communities.map((c) => {
+              const last = [...state.statements].reverse().find((x) => x.id === c.id);
+              return `<tr><td>${c.name}</td><td>${money(c.ownerTrust)}</td><td>${money(c.feesOwed)}</td>
+                <td>${last ? money(last.feesSwept) : "—"}</td><td>${last ? money(last.distribution) : "—"}</td>
+                <td>${last ? money(last.collectedRent) : "—"}</td></tr>`;
+            }).join("")}
+          </tbody>
+        </table>
+        <p class="note">Last close: sweeps received by the company ${r ? money(r.sweepsReceived) : "—"}. Owner statements issued: ${state.statements.length}.</p>
+      </section>
+      <section>
         <h2>Staff</h2>
         <table>
           <thead><tr><th>Person</th><th>Role</th><th>Utilization</th><th>Burnout</th></tr></thead>
@@ -81,7 +97,7 @@ function render(): void {
           </tbody>
         </table>
       </section>
-      <footer>Milestone 2: decisions (ask rent, renewal increase, collections push under the brake) and the scorecard. Not built yet: events, trust-account ledger, bids, inspections, owner statements, and the remaining screens.</footer>
+      <footer>Milestone 3: trust ledgers, fee sweep, owner distributions, and owner statements. Not built yet: events, security deposits, owner capital reserve transfers, bids, inspections, and the remaining screens.</footer>
     </main>`;
 
   document.getElementById("advance")!.addEventListener("click", () => { state = advanceMonth(state); render(); });
