@@ -27,12 +27,13 @@ Agents live in `.claude/agents/`. The owner (human user) is the top of the chain
 
 | Agent | Reports to | Checked by | Owns |
 |---|---|---|---|
+| `chief-of-staff` | Owner | `design-auditor` | Owner's decision queue, blockers, routing, status. Read-only; does not decide. |
 | `design-director` | Owner | `design-auditor` | GDD, Decision Log, P0 status, change control. **Start here.** |
 | `systems-designer` | `design-director` | `finance-designer` (money numbers), `design-auditor` | Formulas, balance, staffing and burnout, bid odds |
 | `finance-designer` | `design-director` | `systems-designer` (formula inputs), `design-auditor` | Ledgers, revenue recognition, cash timing, lender criteria |
 | `narrative-designer` | `design-director` | `ux-designer` (player-facing), `design-auditor` | Characters, relationships, conversations |
 | `ux-designer` | `design-director` | `narrative-designer` (conversation content), `design-auditor` | Dashboard, decision cards, visibility |
 | `ethics-reviewer` | `design-director` | `design-auditor` | Review gate for residents, fair housing, compliance. Holds are binding. |
-| `design-auditor` | Owner | None (read-only; reports to the owner so it can check the director) | Checks every agent's output: arithmetic, log hygiene, consistency, scope |
+| `design-auditor` | Owner | None (read-only; reports to the owner so it can check the director and chief of staff) | Checks every agent's output: arithmetic, log hygiene, consistency, scope |
 
 Routing: a change that touches a locked decision goes to `design-director` first. Anything touching residents or compliance also goes to `ethics-reviewer` before approval. Every agent's output goes through its checker before it is treated as settled.
