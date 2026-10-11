@@ -1,7 +1,7 @@
 # Property Empire AI — P0 Design Locks
 
 **Status:** Proposed — pending owner review and approval (GDD §14: no implementation until P0 locks are approved)
-**Date:** 2026-10-10 (v1.5: revisions recorded as D-013 to D-026)
+**Date:** 2026-10-11 (v1.5: revisions recorded as D-013 to D-026)
 **Governing documents:** Master Game Design Document §13 (P0 list); Decision Log D-001 to D-007 (locked, not changed here)
 **Scope:** Design specification only. No code, data pipelines, or deployment.
 **Logged as:** D-008 to D-026 in the Decision Log (D-013 v0.2, D-014 v0.3, D-015 v0.4, D-016 v0.5, D-017 v0.6, D-018 v0.7, D-019 v0.8, D-020 v0.9, D-021 v1.0, D-022 v1.1, D-023 v1.2, D-024 v1.3, D-025 v1.4, D-026 v1.5).
@@ -598,11 +598,11 @@ The ethics re-review returned Hold on v0.2. v0.3 responds to it:
 
 | Item | Game value (fictional) | Owner to verify (item) |
 |---|---|---|
-| Rent increase cap | 5% plus the game's CPI input, capped at 10% | CPI input and cap scope (§10.1) |
-| Notice for increases | 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10% | Notice periods (§10.2) |
-| Mailing | Not modeled | Mailing rules (§10.2) |
-| Security deposit | Return and itemize within 21 days; bad-faith retention costs up to twice the deposit (not modeled in mechanics) | Deposit rules (§10.3) |
-| Late fees | No amount modeled | Late-fee rules (§10.3) |
+| Rent increase cap | 5% plus the game's CPI input, capped at 10% | CPI input and cap scope (Legal Notes, rent cap) |
+| Notice for increases | 30 days if the cumulative 12-month increase is 10% or less; 90 days if above 10% | Notice periods (Legal Notes, notice) |
+| Mailing | Not modeled | Mailing rules (Legal Notes, notice) |
+| Security deposit | Return and itemize within 21 days (game value); no penalty modeled | Deposit rules (Legal Notes, deposits) |
+| Late fees | No amount modeled | Late-fee rules (Legal Notes, late fees) |
 
 No statute is cited in this spec.
 
@@ -720,6 +720,6 @@ Applied from the review: a rejected sign-off leaves the order open, with no re-e
 - **Entities:** Inspector and affiliation roster added to §4.1.
 - **Standing residual risks:** §3.10, in the spec body.
 - **Stable scope note:** added to §1.7 (D-025).
-- **§10:** statute names and legal characterisations removed from the spec. Sources moved to `outputs/Property_Empire_AI_Legal_Verification_Notes.md`, for owner or counsel verification.
+- **§10:** statute citations removed from the rule text. The §10 table holds game values only. Sources moved to `outputs/Property_Empire_AI_Legal_Verification_Notes.md`, for owner or counsel verification.
 
 **Still open:** the brake release at RS 62 needs two service tiers to be reachable (any change returns to ethics); the reserve-shortfall wording (absorbed versus billed to the owner); compliance-record closure rules; the owner's verification of certifications and §10; ethics re-review and auditor recheck of v1.5.
