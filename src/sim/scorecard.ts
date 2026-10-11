@@ -32,7 +32,7 @@ export function scorecard(state: GameState): Criterion[] {
   }
 
   // 3. Trust integrity: owner-statement timing is not modeled.
-  out.push({ id: 3, name: "Trust integrity", status: "not modeled", detail: "Owner statements and trust violations are not modeled yet." });
+  out.push({ id: 3, name: "Trust integrity", status: "not modeled", detail: "Ledgers reconcile at every close. Violation actions (§2.4) are not built, so this criterion is not scored yet." });
 
   // 4. Occupancy: 12-month average ≥ 93%; no community below 90% for 2+ consecutive months.
   if (h.length < 12) {

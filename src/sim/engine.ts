@@ -5,7 +5,9 @@
 //   Resident rent and collections recoveries post to each community's Owner Trust.
 //   Fees and leasing income accrue to the company at the close and are swept from the
 //   Owner Trust in the following month. A shortfall stays owed by the owner (feesOwed).
-//   Owner distributions leave the Owner Trust after the sweep, above the minimum reserve.
+//   The Owner Capital Reserve takes its required transfer after the sweep (§2.1, ledgers.ts).
+//   Owner distributions leave the Owner Trust after the sweep and the reserve transfer.
+//   Security deposits sit in their own trust and never reach corporate cash (§2.4).
 //   Corporate cash changes by sweeps received less expenses paid (cash basis).
 //   P&L revenue and net are accrual figures for the close, as in P0 §1.4.
 
@@ -13,6 +15,7 @@ import {
   NEW_LEASES_PER_MONTH, OPERATING_COSTS, RENEWALS_PER_MONTH,
   type Community, type Staff,
 } from "./opening";
+import { depositFlow, drawReserve, reserveTransfer, type DepositFlow } from "./ledgers";
 
 export const ASSISTANT: Staff = {
   id: "assistant",
@@ -78,6 +81,7 @@ export interface MonthResult {
   cashAfter: number;       // corporate cash after this close (cash basis)
   sweepsReceived: number;  // fee sweeps from Owner Trusts this close
   runwayMonths: number | null; // §3.5 opening cash ÷ monthly burn; null = cash-positive
+  deposits: DepositFlow[]; // Security Deposit Trust movements this close (resident money, not cash)
 }
 
 // Owner statement for one community and one close (P0 §2.5).
@@ -90,6 +94,8 @@ export interface OwnerStatement {
   feesAccrued: number;     // fees and leasing income charged this close
   feesSwept: number;       // paid to the company from the trust this close
   feesOwedAfter: number;   // still owed to the company after the sweep (shortfall)
+  reserveTransfer: number; // paid into the Owner Capital Reserve this close (§2.1)
+  reserveEnding: number;   // Owner Capital Reserve balance after this close
   distribution: number;    // paid to the owner this close
   endingTrust: number;
 }
@@ -178,20 +184,22 @@ export function computeMonth(state: GameState): MonthResult {
     year: state.year, month: state.month, communities: results, revenue, expenses, net,
     cashAfter: state.cash, sweepsReceived: 0,
     runwayMonths: net < 0 ? state.cash / -net : null,   // §3.5
+    deposits: [],
   };
 }
 
 // Opening leasing score 70 and service score 60 are pinned (§3.2).
 const OCC = { leasingEffect: DECISION.leasingEffect, serviceEffect: DECISION.serviceEffect };
 
-// Advance one month: post the close, run the trust ledgers, then roll occupancy, rent, RS, burnout.
+// Advance one month: post the close, run the trust ledgers, then roll occupancy, rent, RS, burnout,
+// and the security deposit trust.
 export function advanceMonth(state: GameState): GameState {
   const pnl = computeMonth(state);
   const totalUnits = state.communities.reduce((a, c) => a + c.units, 0);
   const season = seasonFor(state.month);
   const serviceScore = Math.max(0, Math.min(100, 60 * serviceQuality(state)));  // §3.2, no cuts or investments in the slice
 
-  // --- Trust ledgers (P0 §2): receipts, fee sweep, owner distribution, statement, fee accrual. ---
+  // --- Trust ledgers (P0 §2): receipts, fee sweep, reserve transfer, owner distribution, statement, fee accrual. ---
   let sweepsTotal = 0;
   const statements: OwnerStatement[] = [];
   const ledgered = state.communities.map((c, i) => {
@@ -201,22 +209,27 @@ export function advanceMonth(state: GameState): GameState {
     const sweep = Math.min(Math.max(0, trust), c.feesOwed);               // day 5 sweep, capped at trust balance
     trust -= sweep;
     const owedAfterSweep = c.feesOwed - sweep;                             // shortfall stays owed by the owner
+    const toReserve = reserveTransfer(c, trust);                           // §2.1 required transfer to the Owner Capital Reserve
+    trust -= toReserve;
     const distribution = Math.max(0, trust - MIN_TRUST_RESERVE);          // day 15 distribution
     trust -= distribution;
     const feesOwed = owedAfterSweep + r.revenue;                           // this close's fees accrue to the company
+    const reserve = c.reserve + toReserve;
     sweepsTotal += sweep;
     statements.push({
       id: c.id, year: state.year, month: state.month,
       collectedRent: r.collectedRent, recoveries: recovered, feesAccrued: r.revenue,
-      feesSwept: sweep, feesOwedAfter: feesOwed, distribution, endingTrust: trust,
+      feesSwept: sweep, feesOwedAfter: feesOwed, reserveTransfer: toReserve, reserveEnding: reserve,
+      distribution, endingTrust: trust,
     });
-    return { ...c, ownerTrust: trust, feesOwed };
+    return { ...c, ownerTrust: trust, feesOwed, reserve };
   });
 
   // Corporate cash: sweeps received less expenses paid (cash basis).
   const cashAfter = state.cash + sweepsTotal - pnl.expenses;
 
-  // --- Operating roll (P0 §3.2) ---
+  // --- Operating roll (P0 §3.2) and security deposit trust (P0 §2.1) ---
+  const deposits: DepositFlow[] = [];
   const communities = ledgered.map((c) => {
     const share = leaseShare(c, totalUnits);
     const target = c.baseOcc + OCC.leasingEffect + OCC.serviceEffect - pGap(c) + season;
@@ -227,7 +240,12 @@ export function advanceMonth(state: GameState): GameState {
     const pushRsCost = c.pushThisMonth ? DECISION.collectionsPushRsCost : 0;     // §3.5
     const rs = Math.max(0, Math.min(100,
       c.rs + 0.2 * (serviceScore - 60) + 0.5 * (60 - c.rs) - renewalRsCost - pushRsCost));  // §3.2
-    return { ...c, occupancy, rentIndex, rs, pushThisMonth: false };
+    const flow = depositFlow(c, share.newLeases, occupancy);               // move-ins and move-outs follow occupancy
+    deposits.push(flow);
+    return {
+      ...c, occupancy, rentIndex, rs, pushThisMonth: false,
+      depositHeld: flow.held, reserveDrawnThisMonth: 0,                   // the draw cap resets each close
+    };
   });
 
   const staff = state.staff.map((s) => ({
@@ -251,7 +269,20 @@ export function advanceMonth(state: GameState): GameState {
     cash: cashAfter, communities, staff,
     history: [...state.history, record],
     statements: [...state.statements, ...statements],
-    lastResult: { ...pnl, cashAfter, sweepsReceived: sweepsTotal },
+    lastResult: { ...pnl, cashAfter, sweepsReceived: sweepsTotal, deposits },
+  };
+}
+
+// Emergency draw on a community's Owner Capital Reserve (P0 §3.8). Capped per close period (D-016).
+// The remainder is returned, not funded: the contract and budget terms decide it (D-030).
+export function drawOwnerReserve(state: GameState, id: string, amount: number) {
+  const c = state.communities.find((x) => x.id === id);
+  if (!c) return { state, covered: 0, remainder: amount };
+  const result = drawReserve(c, amount);
+  return {
+    state: { ...state, communities: state.communities.map((x) => (x.id === id ? result.community : x)) },
+    covered: result.covered,
+    remainder: result.remainder,
   };
 }
 

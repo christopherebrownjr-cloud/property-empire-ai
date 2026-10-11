@@ -4,6 +4,7 @@ import {
 } from "../sim/engine";
 import { newGame } from "../sim/state";
 import { scorecard } from "../sim/scorecard";
+import { RESERVE_TARGET } from "../sim/ledgers";
 
 const money = (n: number) => (n < 0 ? "-$" : "$") + Math.abs(Math.round(n)).toLocaleString("en-US");
 const pct = (n: number) => (n * 100).toFixed(1) + "%";
@@ -77,6 +78,21 @@ function render(): void {
         <p class="note">Last close: sweeps received by the company ${r ? money(r.sweepsReceived) : "—"}. Owner statements issued: ${state.statements.length}.</p>
       </section>
       <section>
+        <h2>Owner Capital Reserve and security deposits (P0 §2.1)</h2>
+        <p class="note">The reserve is owner money, restricted to capital and emergency repairs. Security deposits are resident money held in trust. Neither is company cash.</p>
+        <table>
+          <thead><tr><th>Community</th><th>Owner Capital Reserve (target ${money(RESERVE_TARGET)})</th><th>Security deposits held (residents)</th><th>Move-ins, last close</th><th>Move-outs, last close</th><th>Deposits refunded, last close</th></tr></thead>
+          <tbody>
+            ${state.communities.map((c) => {
+              const f = r ? r.deposits.find((x) => x.id === c.id) : undefined;
+              return `<tr><td>${c.name}</td><td>${money(c.reserve)}</td><td>${money(c.depositHeld)}</td>
+                <td>${f ? f.movesIn.toFixed(1) : "—"}</td><td>${f ? f.moveOuts.toFixed(1) : "—"}</td>
+                <td>${f ? money(f.refunded) : "—"}</td></tr>`;
+            }).join("")}
+          </tbody>
+        </table>
+      </section>
+      <section>
         <h2>Staff</h2>
         <table>
           <thead><tr><th>Person</th><th>Role</th><th>Utilization</th><th>Burnout</th></tr></thead>
@@ -97,7 +113,7 @@ function render(): void {
           </tbody>
         </table>
       </section>
-      <footer>Milestone 3: trust ledgers, fee sweep, owner distributions, and owner statements. Not built yet: events, security deposits, owner capital reserve transfers, bids, inspections, and the remaining screens.</footer>
+      <footer>Milestone 4: owner capital reserve transfers, security deposit trust, and the reserve draw cap. Not built yet: random events, reserve draws from repairs, bids, inspections, and the remaining screens.</footer>
     </main>`;
 
   document.getElementById("advance")!.addEventListener("click", () => { state = advanceMonth(state); render(); });

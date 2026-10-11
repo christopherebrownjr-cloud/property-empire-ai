@@ -38,35 +38,35 @@ describe("fee sweep and cash timing", () => {
 });
 
 describe("trust reconciliation (P0 §2.1, §2.5)", () => {
-  it("each statement reconciles: ending trust = opening + receipts − sweep − distribution", () => {
+  it("each statement reconciles: ending trust = opening + receipts − sweep − reserve − distribution", () => {
     let g = newGame();
     for (let i = 0; i < 3; i++) {
       const before = Object.fromEntries(g.communities.map((c) => [c.id, c.ownerTrust]));
       g = advanceMonth(g);
       for (const s of stmtsFor(g, g.month === 1 ? 2026 : g.year, g.month === 1 ? 12 : g.month - 1)) {
         const opening = before[s.id];
-        const end = opening + s.collectedRent + s.recoveries - s.feesSwept - s.distribution;
+        const end = opening + s.collectedRent + s.recoveries - s.feesSwept - s.reserveTransfer - s.distribution;
         expect(Math.abs(s.endingTrust - end)).toBeLessThan(1e-6);
       }
     }
   });
 
-  it("with no reserve minimum, the trust is emptied to the owner each close", () => {
+  it("with no reserve minimum, the trust is emptied to the owner or the reserve each close", () => {
     const g = advanceMonth(newGame());
     expect(g.communities.every((c) => Math.abs(c.ownerTrust) < 1e-9)).toBe(true);
   });
 
-  it("money is conserved: corporate cash plus trusts move only by receipts, expenses and distributions", () => {
+  it("money is conserved: corporate cash plus owner money (trust and reserve) move only by receipts, expenses and distributions", () => {
     let g = newGame();
     for (let i = 0; i < 3; i++) {
       const cash0 = g.cash;
-      const trust0 = sum(g.communities.map((c) => c.ownerTrust));
+      const trust0 = sum(g.communities.map((c) => c.ownerTrust + c.reserve));
       g = advanceMonth(g);
       const s = stmtsFor(g, g.month === 1 ? 2026 : g.year, g.month === 1 ? 12 : g.month - 1);
       const receipts = sum(s.map((x) => x.collectedRent + x.recoveries));
       const dist = sum(s.map((x) => x.distribution));
       const expenses = g.lastResult!.expenses;
-      const trust1 = sum(g.communities.map((c) => c.ownerTrust));
+      const trust1 = sum(g.communities.map((c) => c.ownerTrust + c.reserve));
       const total0 = cash0 + trust0;
       const total1 = g.cash + trust1;
       expect(Math.abs((total1 - total0) - (receipts - expenses - dist))).toBeLessThan(1e-6);

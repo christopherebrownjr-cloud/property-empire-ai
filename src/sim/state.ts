@@ -1,5 +1,6 @@
 import { OPENING_CASH, OPENING_COMMUNITIES, OPENING_MONTH, OPENING_STAFF, REVOLVER_LIMIT } from "./opening";
 import { computeMonth, type GameState } from "./engine";
+import { DEPOSIT_MONTHS } from "./ledgers";
 
 // Opening state. Fees accrued in the opening month are owed to the company and are swept
 // on the first close (P0 §2.2). That opening receivable is set to one month of accrued
@@ -20,6 +21,11 @@ export function newGame(): GameState {
   const accrued = computeMonth(base).communities;
   return {
     ...base,
-    communities: base.communities.map((c, i) => ({ ...c, feesOwed: accrued[i].revenue })),
+    communities: base.communities.map((c, i) => ({
+      ...c,
+      feesOwed: accrued[i].revenue,
+      // Deposits held for the occupied units at opening (P0 §2.1). Resident money, not company cash.
+      depositHeld: c.units * c.occupancy * c.avgRent * DEPOSIT_MONTHS,
+    })),
   };
 }
