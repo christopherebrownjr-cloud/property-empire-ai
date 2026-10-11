@@ -131,8 +131,9 @@ export function utilization(state: GameState, staffId: string): number {
   return workloadFor(state, staffId) / s.capacity;   // §3.2, SkillFit and Morale 1.0 at opening
 }
 
+// The assistant joins the staff roll at hire, so its workload, cost, and burnout are tracked.
 export function staffAll(state: GameState): Staff[] {
-  return state.assistantHired ? [...state.staff, ASSISTANT] : state.staff;
+  return state.staff;
 }
 
 export function serviceQuality(state: GameState): number {
@@ -255,11 +256,12 @@ export function advanceMonth(state: GameState): GameState {
 
   const nextMonth = state.month === 12 ? 1 : state.month + 1;
   const nextYear = state.month === 12 ? state.year + 1 : state.year;
+  // Month-end snapshot (P0 §1.7): occupancy, satisfaction and burnout after this close's updates.
   const record: MonthRecord = {
     year: state.year, month: state.month,
     occupancy: Object.fromEntries(communities.map((c) => [c.id, c.occupancy])),
-    rs: Object.fromEntries(pnl.communities.map((r) => [r.id, r.rs])),
-    burnout: Object.fromEntries(staffAll(state).map((s) => [s.id, s.burnout])),
+    rs: Object.fromEntries(communities.map((c) => [c.id, c.rs])),
+    burnout: Object.fromEntries(staff.map((s) => [s.id, s.burnout])),
     expenses: pnl.expenses,
     cash: cashAfter,
   };
@@ -287,7 +289,8 @@ export function drawOwnerReserve(state: GameState, id: string, amount: number) {
 }
 
 export function hireAssistant(state: GameState): GameState {
-  return { ...state, assistantHired: true };
+  if (state.assistantHired) return state;
+  return { ...state, assistantHired: true, staff: [...state.staff, { ...ASSISTANT }] };
 }
 
 export function setAskRent(state: GameState, id: string, askRent: number): GameState {

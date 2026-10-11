@@ -15,8 +15,8 @@ export function scorecard(state: GameState): Criterion[] {
   const h = state.history;
   const out: Criterion[] = [];
 
-  // 1. Contracts: the slice has no termination mechanic, so all three contracts stay active.
-  out.push({ id: 1, name: "Contracts", status: "met", detail: "All three agreements active (no termination mechanic in the slice)." });
+  // 1. Contracts: owner terminations depend on owner sentiment, which is not modeled. Never "met" by default.
+  out.push({ id: 1, name: "Contracts", status: "not modeled", detail: "Owner terminations depend on owner sentiment, which is not modeled yet." });
 
   // 2. Liquidity: cash ≥ 2.0 × monthly expenses. Distress-level tracking is not modeled.
   const last = h[h.length - 1];
@@ -38,7 +38,9 @@ export function scorecard(state: GameState): Criterion[] {
   if (h.length < 12) {
     out.push({ id: 4, name: "Occupancy", status: "not modeled", detail: `${h.length} of 12 months closed.` });
   } else {
-    const avg = h.reduce((a, m) => a + Object.values(m.occupancy).reduce((x, y) => x + y, 0) / 3, 0) / h.length;
+    // Unit-weighted portfolio occupancy (P0 §1.7 and §3.2), averaged over the twelve months.
+    const totalUnits = state.communities.reduce((a, c) => a + c.units, 0);
+    const avg = h.reduce((a, m) => a + state.communities.reduce((x, c) => x + (m.occupancy[c.id] ?? 0) * c.units, 0) / totalUnits, 0) / h.length;
     const streak = worstStreak(state, (id, idx) => h[idx].occupancy[id] < 0.90);
     const ok = avg >= 0.93 && streak < 2;
     out.push({ id: 4, name: "Occupancy", status: ok ? "met" : "not met",

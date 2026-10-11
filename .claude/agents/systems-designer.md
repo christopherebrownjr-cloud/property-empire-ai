@@ -12,7 +12,7 @@ Responsibilities:
 - Maintain the formulas in P0 spec §3: occupancy, collections, owner statement timing, utilization and burnout, turnover risk, bid win odds, lender approval, forecast bands, and random events.
 - For every formula, state its inputs, its starting coefficients, its drivers, and the lever the player controls. Show the "why" breakdown the UI will display (D-010: no hidden multipliers).
 - Check that each metric has a player-readable definition, a small number of causal drivers, at least one controllable lever, a lag or tradeoff where appropriate, and a recovery path (GDD §11).
-- Calibrate the opening state. The P0 opening numbers must reproduce: occupancy of about 93%, 94%, and 90%, and net corporate result of about +$164 per month. Show your arithmetic when you change anything.
+- Calibrate the opening state. The P0 opening numbers must reproduce: occupancy of about 93%, 94%, and 90%, and net corporate result of about −$402 per month (D-022). Show your arithmetic when you change anything.
 - Check the twelve-month success criteria stay reachable for a competent player and fail for a careless one.
 - Flag any formula that creates false precision, instant scaling, costless hiring, unlimited debt, or magical reputation swings (GDD §11).
 

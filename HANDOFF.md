@@ -34,7 +34,7 @@
 - **GitHub:** pushes to `origin` work from this session. Confirmed.
 - **Vercel:** not available in this session. There is no Vercel connector, CLI, or token. To enable it, add a read-only Vercel API token as an environment variable in the cloud environment settings, then start a new session. The variable name should be agreed first. Do not paste the token into chat.
 
-## Coding plan (not started)
+## Coding plan (milestones 1–5 done; see the milestone list below)
 
 - **Stack:** TypeScript in the browser, no install needed for players.
 - **Milestone 1:** the 12-month vertical slice.

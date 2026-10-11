@@ -185,7 +185,7 @@ Avoid false precision, instant scaling, costless hiring, unlimited debt, magical
 
 ### P0 — Required design locks
 
-**Status (2026-10-11):** Approved in `Property_Empire_AI_P0_Design_Locks.md` (v1.7) as D-008 to D-028 in the Decision Log. Approved by owner override of the ethics Hold (D-029); implementation may begin under §14.
+**Status (2026-10-11):** Approved in `Property_Empire_AI_P0_Design_Locks.md` (v1.9) as D-008 to D-028 in the Decision Log; D-030 to D-033 were added later by the owner (contract funding, brake, deposit timing, ethics routing). Approved by owner override of the ethics Hold (D-029); implementation may begin under §14.
 
 1. Define the first specialization’s exact opening portfolio, staff, contracts, and twelve-month success criteria.
 2. Write the accounting model separating corporate operations from client/property funds.
